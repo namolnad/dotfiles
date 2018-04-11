@@ -16,7 +16,7 @@ alias gitstat="git status -sb"
 alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
 alias gplease="git push origin --force-with-lease"
 alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
-alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c'
+alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p'
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
 
 #   ---------------------------
