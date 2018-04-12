@@ -24,7 +24,9 @@
     "extensions.ignoreRecommendations": true,
     "window.title": "${rootName}${separator}${activeEditorMedium}",
     "explorer.sortOrder": "mixed",
-    "railsTestRunner.rspecCommand": "bin/rspec", 
+    "railsTestRunner.rspecCommand": "bin/rspec",
+    "workbench.startupEditor": "newUntitledFile",
+    "files.trimTrailingWhitespace": true,
     // "gitlens.advanced.messages": {
     //     "suppressWelcomeNotice": true
     // },
