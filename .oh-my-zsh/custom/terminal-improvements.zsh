@@ -1,7 +1,7 @@
 
 
 #   -----------------------------
-#   2.  MAKE TERMINAL BETTER
+#   MAKE TERMINAL BETTER
 #   -----------------------------
 
 alias cp='cp -iv'                           # Preferred 'cp' implementation
@@ -30,7 +30,7 @@ ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in Ma
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
 #   ---------------------------
-#   6.  NETWORKING
+#   NETWORKING
 #   ---------------------------
 
 alias myip='curl https://4.ifcfg.me/'               # myip:         Public facing IP Address
@@ -47,7 +47,7 @@ alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rul
 
 
 #   ---------------------------
-#   8. ii :  display useful host related informaton
+#   HOST RELATED INFO
 #   ---------------------------
 
 ii() {

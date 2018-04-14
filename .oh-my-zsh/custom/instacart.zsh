@@ -1,5 +1,5 @@
 #   ---------------------------
-#   12. INSTACART
+#   INSTACART
 #   ---------------------------
 
 alias ishopper="cd ~/code/instashopper-ios;pwd"

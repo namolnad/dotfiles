@@ -34,6 +34,5 @@ eval "$(rbenv init -)"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="atom ~/.zshrc"
-alias ohmyzsh="atom ~/.oh-my-zsh"
-export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+alias zshconfig="e ~/.zshrc"
+alias ohmyzsh="e ~/.oh-my-zsh"

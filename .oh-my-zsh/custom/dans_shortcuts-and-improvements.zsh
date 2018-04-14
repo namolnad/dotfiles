@@ -1,11 +1,11 @@
 #   ---------------------------
-#   7. XCODE
+#   XCODE
 #   ---------------------------
 
 alias xcode_clean="rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf ~/Library/Caches/com.apple.dt.Xcode/*"
 
 #   ---------------------------
-#   9. GIT
+#   GIT
 #   ---------------------------
 
 alias git=hub
@@ -16,35 +16,42 @@ alias gitstat="git status -sb"
 alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
 alias gplease="git push origin --force-with-lease"
 alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
-alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p'
+alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_`TEMPLATE -o -e -c -p'
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
 
+cherry-pick-latest() {
+  gco master
+  ggpull
+  g rev-parse head | pbcopy
+  gco "releases/$1" && ggpull && gcp $(pbpaste)
+}
+
 #   ---------------------------
-#   11. EDITORS
+#   EDITORS
 #   ---------------------------
 
-alias e=atom                                         # Edit atom
-alias edit='atom'                                    # edit: Opens any file in atom editor
+alias e=code                                         # Edit in VSCode
+alias edit='code'                                    # edit: Opens any file in VSCode editor
 alias subl='sublime'                                    # Open sublime with subl
 
-export EDITOR='atom'
+export EDITOR='code'
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='atom'
+  export EDITOR='code'
 else
   export EDITOR='vim'
 fi
 
 #   ---------------------------
-#   13. DAN's
+#   DAN's
 #   ---------------------------
 
 export PATH="/usr/local/sbin:$PATH"
 
 alias lg=". ~/code/dans-scripts/daily_work_log.sh"
 
-standup() { 
-  ( . /usr/bin/cd ~/code; git standup "$@"; ) 
+standup() {
+  ( . /usr/bin/cd ~/code; git standup "$@"; )
 }
 
 start_pianobar() {
@@ -55,9 +62,10 @@ start_pianobar() {
   fi;
 }
 
-cherry-pick-latest() {
-  gco master
-  ggpull
-  g rev-parse head | pbcopy
-  gco "releases/$1" && ggpull && gcp $(pbpaste)
-}
+
+#   ---------------------------
+#   KEY BINDINGS
+#   ---------------------------
+
+bindkey '^ ' forward-word
+bindkey '^[[[CE' end-of-line
