@@ -67,5 +67,7 @@ start_pianobar() {
 #   KEY BINDINGS
 #   ---------------------------
 
-bindkey '^ ' forward-word
-bindkey '^[[[CE' end-of-line
+if [ "$0" != "bash" ]; then
+  bindkey '^ ' forward-word
+  bindkey '^[[[CE' end-of-line
+fi
