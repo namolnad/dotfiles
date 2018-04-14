@@ -5,6 +5,7 @@
         "editor.background": "#1b1b1f"
     },
     "workbench.panel.defaultLocation": "bottom",
+    "workbench.editor.enablePreview": false,
     "search.quickOpen.includeSymbols": true,
     "search.exclude": {
         "**/node_modules": true,
