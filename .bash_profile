@@ -1,7 +1,6 @@
 source /dev/stdin < <(
   for config_file in ~/.oh-my-zsh/custom/*.zsh; do
-    set -e
-    if [[ ! "$config_file" =~ "theme.zsh" ]] && [[ ! "$config_file" =~ "autocompletion-config.zsh" ]]; then                                                                      14.04.18
+    if [[ ! "$config_file" =~ "theme.zsh" ]] && [[ ! "$config_file" =~ "autocompletion-config.zsh" ]]; then
       cat $config_file
     fi
   done
