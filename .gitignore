@@ -1,0 +1,10 @@
+# Ignore all files and subdirectories by default
+/*
+/*/
+
+# Allow oh-my-zsh customizations
+!/.oh-my-zsh/
+/.oh-my-zsh/*
+/.oh-my-zsh/custom/plugins/
+
+# Allow .zshrc
