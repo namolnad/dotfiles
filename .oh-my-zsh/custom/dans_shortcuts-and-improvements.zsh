@@ -71,3 +71,10 @@ if [ "$0" != "bash" ]; then
   bindkey '^ ' forward-word
   bindkey '^[[[CE' end-of-line
 fi
+
+
+#   ---------------------------
+#   ORGANIZATION
+#   ---------------------------
+
+alias add-dock-spacer='defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock'
