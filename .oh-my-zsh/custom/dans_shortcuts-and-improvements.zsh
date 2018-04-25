@@ -62,6 +62,7 @@ start_pianobar() {
   fi;
 }
 
+alias kill_pianobar="pgrep pianobar | xargs kill -15"
 
 #   ---------------------------
 #   KEY BINDINGS
