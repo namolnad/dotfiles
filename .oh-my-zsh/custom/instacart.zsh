@@ -2,15 +2,15 @@
 #   INSTACART
 #   ---------------------------
 
-alias ishopper="cd ~/code/instashopper-ios;pwd"
-alias ashopper="cd ~/code/instashopper-android;pwd"
-alias iconsumer="cd ~/code/instacart-ios;pwd"
-alias instacart="cd ~/code/carrot/customers/instacart;pwd"
-alias railss="cd ~/code/carrot/customers/instacart;pwd;myip;echo foreman run rails s -b 0.0.0.0;foreman run rails s -b 0.0.0.0"
-alias shoppers="cd ~/code/carrot/shoppers/shopper-api;pwd;myip;echo bundle exec rails server -b 0.0.0.0 -p 5000;bundle exec rails server -b 0.0.0.0 -p 5000"
-alias railsc="cd ~/code/carrot/customers/instacart;pwd;echo foreman run rails console;foreman run rails console"
-alias railsm="cd ~/code/carrot/migrations;pwd;echo bundle exec rake db:migrate;bundle exec rake db:migrate"
-alias clipscript="cat ~/code/dans-scripts/work/isc-scripts.rb | pbcopy"
+alias ishopper="cd ~/Code/Instashopper-ios;pwd"
+alias ashopper="cd ~/Code/Instashopper-android;pwd"
+alias iconsumer="cd ~/Code/Instacart-ios;pwd"
+alias instacart="cd ~/Code/Carrot/customers/instacart;pwd"
+alias railss="cd ~/Code/Carrot/customers/instacart;pwd;myip;echo foreman run rails s -b 0.0.0.0;foreman run rails s -b 0.0.0.0"
+alias shoppers="cd ~/Code/Carrot/shoppers/shopper-api;pwd;myip;echo bundle exec rails server -b 0.0.0.0 -p 5000;bundle exec rails server -b 0.0.0.0 -p 5000"
+alias railsc="cd ~/Code/Carrot/customers/instacart;pwd;echo foreman run rails console;foreman run rails console"
+alias railsm="cd ~/Code/Carrot/migrations;pwd;echo bundle exec rake db:migrate;bundle exec rake db:migrate"
+alias clipscript="cat ~dans-scripts/work/isc-scripts.rb | pbcopy"
 alias localsync="instacart;pgsync zones,warehouse_zones,regions,warehouses,delivery_hours,applicant_variants,applicant_experiments,postal_codes;pgsync users \"where email='dan.loman@instacart.com'\""
 alias identity-permission-fix="ssh-add -A"
 alias rs="psql -h sherlock.cwripsh2edcd.us-east-1.redshift.amazonaws.com -U danloman -d analytics -p 5439"
@@ -28,7 +28,7 @@ alias console-prod="(instacart; script/console --country US --pbi instacart --se
 kill_old_server() {
   #!/bin/bash
 
-  file="~/Code/carrot/customers/instacarttmp/pids/server.pid"
+  file="~/Code/Carrot/customers/instacarttmp/pids/server.pid"
   if [ -f $file ] ; then
     rm $file
   fi
