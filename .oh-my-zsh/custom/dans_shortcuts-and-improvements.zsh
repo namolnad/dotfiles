@@ -26,6 +26,10 @@ cherry-pick-latest() {
   gco "releases/$1" && ggpull && gcp $(pbpaste)
 }
 
+recent-branches() {
+  git for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)' | head -n 10
+}
+
 #   ---------------------------
 #   EDITORS
 #   ---------------------------
