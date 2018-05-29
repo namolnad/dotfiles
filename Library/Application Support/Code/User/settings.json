@@ -28,6 +28,7 @@
     "railsTestRunner.rspecCommand": "bin/rspec",
     "workbench.startupEditor": "newUntitledFile",
     "files.trimTrailingWhitespace": true,
+    "window.zoomLevel": 0,
     // "gitlens.advanced.messages": {
     //     "suppressWelcomeNotice": true
     // },
