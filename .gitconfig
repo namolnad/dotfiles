@@ -7,7 +7,7 @@
 [diff]
 	mnemonicprefix = true
 [push]
-	default = tracking
+	default = current
 [merge]
 	stat = true
 	tool = opendiff
@@ -23,7 +23,7 @@
 	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
