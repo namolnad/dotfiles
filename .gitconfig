@@ -17,11 +17,12 @@
 	name = Dan L
 	email = daniel.h.loman@gmail.com
 [alias]
+	amend = commit -a --amend --no-edit
+	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 	stf = stashfiles
 	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/
-	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
