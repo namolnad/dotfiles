@@ -9,15 +9,17 @@ alias xcode_clean="rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf ~/Li
 #   ---------------------------
 
 function git() { hub $@; }
+alias gap="git add -p"
+alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
 alias gfpa="git fetch --prune --all"
 alias gitlog="git log -15 --oneline --reverse"
-alias mergetool="git mergetool -t opendiff"
 alias gitstat="git status -sb"
-alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
 alias gplease="git push origin --force-with-lease"
-alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
 alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p'
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
+alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
+alias mergetool="git mergetool -t opendiff"
+
 
 cherry-pick-latest() {
   gco master
