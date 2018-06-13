@@ -18,6 +18,7 @@
 	email = daniel.h.loman@gmail.com
 [alias]
 	amend = commit -a --amend --no-edit
+	ap = add -p
 	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
