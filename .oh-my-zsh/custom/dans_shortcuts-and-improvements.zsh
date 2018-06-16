@@ -57,7 +57,7 @@ export PATH="/usr/local/sbin:$PATH"
 alias lg=". ~/code/dans-scripts/daily_work_log.sh"
 
 standup() {
-  ( . /usr/bin/cd ~/code; git standup "$@"; )
+  ( . /usr/bin/cd ~/code; git standup -d 7 "$@"; )
 }
 
 stand-up() {
