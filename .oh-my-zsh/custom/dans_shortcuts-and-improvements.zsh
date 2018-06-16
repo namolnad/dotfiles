@@ -60,6 +60,24 @@ standup() {
   ( . /usr/bin/cd ~/code; git standup "$@"; )
 }
 
+stand-up() {
+  CUR_DIR=`pwd`
+  builtin cd ~/Code
+  BASE_DIR=`pwd`
+  PROJECT_DIRS=( $(find -L . -maxdepth 2 -mindepth 0 -name .git) )
+  for DIR in ${PROJECT_DIRS}; do
+    builtin cd $(echo $DIR | awk -F'.git' '{print $1}')
+    if [[ ! -d ".git" || -f ".git" ]] ; then
+      builtin cd ${BASE_DIR}
+      continue
+    fi
+    pwd
+    git stand-up
+    builtin cd ${BASE_DIR}
+  done
+  builtin cd ${CUR_DIR}
+}
+
 start_pianobar() {
   echo 'Do you want to start pianobar? [y/N]'
   read x;
