@@ -72,7 +72,7 @@ stand-up() {
       continue
     fi
     pwd
-    git stand-up
+    echo "$(git stand-up)"
     builtin cd ${BASE_DIR}
   done
   builtin cd ${CUR_DIR}
