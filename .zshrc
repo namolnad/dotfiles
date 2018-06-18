@@ -29,7 +29,6 @@ source $ZSH/oh-my-zsh.sh
 # rbenv
 eval "$(rbenv init -)"
 
-
 # Aliases can be found in ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
