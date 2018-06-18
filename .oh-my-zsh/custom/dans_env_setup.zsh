@@ -11,3 +11,5 @@ export SLACK_URL="https://hooks.slack.com/services/T0258G2C6/B0Y71AD3L/8Kw4ONZl4
 
 #Fastlane
 export FASTLANE_USERNAME='apple@instacart.com'
+
+source $HOME/.quip/credentials
