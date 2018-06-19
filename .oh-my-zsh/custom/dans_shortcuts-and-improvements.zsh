@@ -65,25 +65,20 @@ export PATH="/usr/local/sbin:$PATH"
 alias lg=". ~/code/dans-scripts/daily_work_log.sh"
 
 standup() {
-  ( . /usr/bin/cd ~/code; git standup -d 7 "$@"; )
+  ( . /usr/bin/cd ~/Code; git standup -d 7 "$@"; )
 }
 
 stand-up() {
-  CUR_DIR=`pwd`
-  builtin cd ~/Code
-  BASE_DIR=`pwd`
-  PROJECT_DIRS=( $(find -L . -maxdepth 2 -mindepth 0 -name .git) )
+  CODE_DIR="$HOME/Code"
+
+  PROJECT_DIRS=( $(builtin cd $CODE_DIR; find -L . -maxdepth 2 -mindepth 0 -name .git) )
   for DIR in ${PROJECT_DIRS}; do
-    builtin cd $(echo $DIR | awk -F'.git' '{print $1}')
     if [[ ! -d ".git" || -f ".git" ]] ; then
-      builtin cd ${BASE_DIR}
       continue
     fi
-    pwd
-    echo "$(git stand-up)"
-    builtin cd ${BASE_DIR}
+
+    echo "$(builtin cd "$CODE_DIR/$(echo $DIR | awk -F'.git' '{print $1}')"; pwd; echo "$(git stand-up)")"
   done
-  builtin cd ${CUR_DIR}
 }
 
 start_pianobar() {
