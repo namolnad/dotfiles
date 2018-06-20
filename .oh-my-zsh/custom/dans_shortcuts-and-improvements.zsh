@@ -19,7 +19,7 @@ alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEM
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
 alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
 alias mergetool="git mergetool -t opendiff"
-
+alias gcmp='git-compare-releases'
 
 cherry-pick-latest() {
   gco master
@@ -90,6 +90,10 @@ start_pianobar() {
 }
 
 alias kill_pianobar="pgrep pianobar | xargs kill -15"
+
+git-compare-releases() {
+  git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short "releases/$1...releases/$2"
+}
 
 #   ---------------------------
 #   KEY BINDINGS
