@@ -110,3 +110,17 @@ fi
 #   ---------------------------
 
 alias add-dock-spacer="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
+
+#   ---------------------------
+#   NETWORK
+#   ---------------------------
+
+port() {
+  lsof -i ":$1"
+}
+
+kill_port() {
+  for PID in $(port $1 | awk '/a/ {print $2 }');
+    do kill -9 "$PID";
+  done;
+}
