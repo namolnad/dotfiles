@@ -125,5 +125,7 @@ kill_port() {
   done;
 }
 
+alias start_home_server="nohup python $HOME/code/google-home-notifier-python/main.py &"
+
 # background forwarding from 5830 -> 5835 on home machine
 # ssh -g -L 5830:10.0.0.205:5835 -f -N danloman@10.0.0.205
