@@ -26,6 +26,8 @@
 	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/
 	stand-up-yesterday = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
+	compare-commits = "!_() { git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short origin/releases/$1...origin/releases/$2; }; _"
+	compare-files = "!_() { git diff --name-status origin/releases/$1..origin/releases/$2 | grep ^M; }; _"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
