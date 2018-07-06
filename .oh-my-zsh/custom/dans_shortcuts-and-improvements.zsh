@@ -22,6 +22,11 @@ alias mergetool="git mergetool -t opendiff"
 alias gcmp='git compare-commits'
 alias gcmpf='git compare-files'
 
+format-version-diff() {
+  version_diff=$(git log --left-right --graph --cherry-pick --oneline --format=format:'&&&%H&&& - @@@%s@@@###%ae###' --date=short origin/releases/$1...origin/releases/$2)
+  DiffFormatter "$version_diff" --version=$2 --manager=$(git config --get user.email)
+}
+
 cherry-pick-latest() {
   gco master
   ggpull
