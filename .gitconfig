@@ -21,6 +21,7 @@
 	ap = add -p
 	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
+	find = log --pretty=\"format:%C(cyan)%ad %C(yellow)%H %Creset%s\" --name-status --grep
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 	stf = stashfiles
 	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/
