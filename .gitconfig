@@ -19,6 +19,7 @@
 [alias]
 	amend = commit -a --amend --no-edit
 	ap = add -p
+	ci = commit
 	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
 	find = log --pretty=\"format:%C(cyan)%ad %C(yellow)%H %Creset%s\" --name-status --grep
@@ -35,11 +36,5 @@
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
   trustExitCode = true
-#[mergetool "sourcetree"]
-#	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-#	trustExitCode = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-[mergetool "diffconflicts"]
-	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
-	trustExitCode = true
