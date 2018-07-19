@@ -10,7 +10,7 @@
 	default = current
 [merge]
 	stat = true
-	tool = opendiff
+	tool = diffconflicts
 [credential]
 	helper = osxkeychain
 [user]
@@ -37,3 +37,6 @@
 	trustExitCode = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[mergetool "diffconflicts"]
+	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true
