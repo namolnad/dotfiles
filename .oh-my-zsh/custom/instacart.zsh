@@ -2,6 +2,8 @@
 #   INSTACART
 #   ---------------------------
 
+export SUDO_USER='dan.loman'
+
 alias ishopper="cd ~/Code/Instashopper-ios;pwd"
 alias ashopper="cd ~/Code/Instashopper-android;pwd"
 alias iconsumer="cd ~/Code/Instacart-ios;pwd"
