@@ -97,6 +97,10 @@ start_pianobar() {
 
 alias kill_pianobar="pgrep pianobar | xargs kill -15"
 
+simulator_screen_recording() {
+  xcrun simctl io booted recordVideo "$1.mov"
+}
+
 #   ---------------------------
 #   KEY BINDINGS
 #   ---------------------------
