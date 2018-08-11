@@ -6,6 +6,7 @@
     },
     "workbench.panel.defaultLocation": "bottom",
     "workbench.editor.enablePreview": false,
+    "search.followSymlinks": false,
     "search.quickOpen.includeSymbols": true,
     "search.exclude": {
         "**/node_modules": true,
