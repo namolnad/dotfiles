@@ -23,7 +23,7 @@ alias gcmp='git compare-commits'
 alias gcmpf='git compare-files'
 
 format-version-diff() {
-  DiffFormatter $@ --release-manager=$(git config --get user.email)
+  DiffFormatter $@ --project-dir="$HOME/Code/Instacart-ios" --release-manager=$(git config --get user.email)
 }
 
 cherry-pick-latest() {
