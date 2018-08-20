@@ -10,7 +10,7 @@ alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 ls() { command ls -FGlAhp; }                # Preferred 'ls' implementation
 alias lc='colorls -lA --sd'
 alias less='less -FSRXc'                    # Preferred 'less' implementation
-cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
+cd() { builtin cd "$@"; lc; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
