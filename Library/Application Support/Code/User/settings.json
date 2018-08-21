@@ -42,7 +42,7 @@
     // "python.disablePromptForFeatures": [
     //     "pylint"
     // ],
-
+    "terminal.integrated.fontFamily": "DroidSansMono Nerd Font",
     //-------- Remote VSCode configuration --------
     // Port number to use for connection.
     "remote.port": 52698,
