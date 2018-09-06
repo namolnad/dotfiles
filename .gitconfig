@@ -22,14 +22,15 @@
 	ci = commit
 	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
+	compare-commits = "!_() { git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short origin/releases/$1...origin/releases/$2; }; _"
+	compare-files = "!_() { git diff --name-status origin/releases/$1..origin/releases/$2 | grep ^M; }; _"
 	find = log --pretty=\"format:%C(cyan)%ad %C(yellow)%H %Creset%s\" --name-status --grep
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 	stf = stashfiles
 	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/
+	squash-branch = "!_() { git reset $(git merge-base master $(git rev-parse --abbrev-ref @)); git commit -am \"$1\"; }; _"
 	stand-up-yesterday = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
-	compare-commits = "!_() { git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short origin/releases/$1...origin/releases/$2; }; _"
-	compare-files = "!_() { git diff --name-status origin/releases/$1..origin/releases/$2 | grep ^M; }; _"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
