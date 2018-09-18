@@ -8,7 +8,6 @@ alias xcode_clean="rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf ~/Li
 #   GIT
 #   ---------------------------
 
-function git() { hub $@; }
 alias gap="git add -p"
 alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
 alias gfpa="git fetch --prune --all"

@@ -7,8 +7,6 @@
 alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-ls() { command ls -FGlAhp; }                # Preferred 'ls' implementation
-alias lc='colorls -lA --sd'
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 cd() { builtin cd "$@"; lc; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
@@ -29,6 +27,11 @@ mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and ju
 trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
+
+# Delgations to more powerful implementatios
+cat() { bat $@; }                           # Delegate cat to bat
+git() { hub $@; }                           # Delegate git to hub
+ls() { colorls -lA --sd; }                  # Delegate ls to colorls
 
 #   ---------------------------
 #   NETWORKING
