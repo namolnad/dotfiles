@@ -1,5 +1,5 @@
 {
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.colorTheme": "Hopscotch",
     "workbench.colorCustomizations": {
         "editor.background": "#1b1b1f"
