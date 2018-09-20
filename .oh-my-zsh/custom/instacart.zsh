@@ -12,6 +12,7 @@ alias vpn-connect="osascript -e 'tell application \"/Applications/Tunnelblick.ap
 
 # iOS
 alias iconsumer="cd ~/Code/Instacart-ios;pwd"
+alias iconsumer-exp="cd ~/Code/Experimental/Exp:instacart-ios"
 alias reload_iconsumer="((killall Xcode || true); iconsumer; xed .)"
 alias carthage_publish="AWS_PROFILE=default AWS_REGION='us-east-1' bundle exec carthage_cache publish -b instacart-ios-consumer-cache --trace"
 alias carthage_force_install="AWS_PROFILE=default AWS_REGION='us-east-1' bundle exec carthage_cache install -b instacart-ios-consumer-cache --trace --force"
