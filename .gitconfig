@@ -19,6 +19,7 @@
 [alias]
 	amend = commit -a --amend --no-edit
 	ap = add -p
+	build-number = rev-list @ --count
 	ci = commit
 	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
 	co = checkout
