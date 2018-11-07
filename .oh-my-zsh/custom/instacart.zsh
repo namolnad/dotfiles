@@ -14,8 +14,12 @@ alias vpn-connect="osascript -e 'tell application \"/Applications/Tunnelblick.ap
 alias iconsumer="cd ~/Code/Instacart-ios;pwd"
 alias iconsumer-exp="cd ~/Code/Experimental/Exp:instacart-ios"
 alias reload_iconsumer="((killall Xcode || true); iconsumer; xed .)"
-alias carthage_publish="AWS_PROFILE=default AWS_REGION='us-east-1' bundle exec carthage_cache publish -b instacart-ios-consumer-cache --trace"
 alias carthage_force_install="AWS_PROFILE=default AWS_REGION='us-east-1' bundle exec carthage_cache install -b instacart-ios-consumer-cache --trace --force"
+fabric_release_url() {
+  version=$(command cat Configs/Version.xcconfig | sed 's/IC_BUNDLE_VERSION = //g')
+  build_num=$(git rev-list @ --count)
+  echo "https://fabric.io/instacart-inc/ios/apps/com.instacart/dashboard/latest_release/launch_status?build=$version%20($build_num)"
+}
 
 # Rails
 alias instacart="cd ~/Code/Carrot/customers/instacart;pwd"
