@@ -1,0 +1,81 @@
+"
+" A configuration file for https://github.com/XVimProject/XVim2
+"
+"
+
+" Comments
+nnoremap gcc :xcmenucmd Comment Selection<CR>
+vnoremap gc  :xcmenucmd Comment Selection<CR>
+
+" Emulate CTRL-P
+noremap <C-p> :xccmd openQuickly<CR>
+
+" Case-insensitive searching.
+set ignorecase
+" But case-sensitive if expression contains a capital letter.
+set smartcase
+
+set hlsearch
+
+nnoremap <Space>4 /~<CR>
+
+" Setup the number line
+set number
+
+" Use the system pasteboard
+" set clipboard=unnamed
+
+" noremap <space>b to toggle a breakpoint at the current line
+nnoremap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
+
+" Better navigation
+" nnoremap H ^
+" nnoremap L $
+
+" Window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Tab noremappings
+nnoremap ,tt :xccmd newTab<CR>
+nnoremap ,tc :tabclose<CR>
+
+" Make computers make sense
+nnoremap Y y$
+
+" I'd like the following command to save too
+" it doesn't seem like xvim supports this: \| update<CR>
+vnoremap s :sort ui<CR>
+
+" vim-unimpared knock off
+nnoremap ]e "udd"up
+nnoremap [e "uddk"uP
+
+" Center after find
+nnoremap n nzz
+nnoremap N Nzz
+
+" Change the background color for searches
+highlight Search guibg=orange
+
+nmap <S-Enter> O<Esc>j
+nmap <CR> o<Esc>k
+"
+" " The Silver Searcher
+" if executable('ag')
+"   " Use ag over grep
+"   set grepprg=ag\ --nogroup\ --nocolor
+"
+"   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"
+"   " ag is fast enough that CtrlP doesn't need to cache
+"   let g:ctrlp_use_caching = 0
+" endif
+"
+" " bind K to grep word under cursor
+" nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+"
+" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
