@@ -32,6 +32,7 @@
 	squash-branch = "!_() { git reset $(git merge-base master $(git rev-parse --abbrev-ref @)); git commit -am \"$1\"; }; _"
 	stand-up-yesterday = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
+  img-diffs = !"git diff @ --cached --name-only | grep .png | xargs imgcat"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
