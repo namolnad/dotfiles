@@ -1,3 +1,6 @@
 [submodule ".vim/bundle/vim-colors-solarized"]
 	path = .vim/bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "/Users/Pantheon/.oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+	path = /Users/Pantheon/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
