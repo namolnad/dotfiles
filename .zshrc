@@ -2,7 +2,7 @@
 # If you come from bash you might have to change your $PATH.
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/danloman/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
