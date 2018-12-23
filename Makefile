@@ -1,6 +1,6 @@
 setup:
 	cd ~
-	gem install bundler
-	bundle install
-	brew bundle
+	gem install bundler --conservative
+	bundle exec bundle install
+	bundle exec brew bundle
 
