@@ -1,10 +1,10 @@
 tap "homebrew/cask"
 tap "caskroom/fonts"
+brew "bat"
+brew "hub"
 cask "font-hack-nerd-font"
 cask "gitup"
 cask "iterm2"
 cask "alfred"
 cask "visual-studio-code"
-brew "bat"
-brew "hub"
 
