@@ -1,3 +1,5 @@
+.PHONY: setup
+
 setup:
 	@cd ~ $@
 	@mkdir -p ~/.custom_credentials $@
@@ -11,4 +13,4 @@ setup:
 	bundle exec brew bundle --verbose
 	@echo "\nTasks remaining:\n1) Download and install Xcode, Dropbox, 1Password, BetterSnapTool\n2) Ensure Dropbox syncing is set up\n3) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n4) Install xVim and resign XCode"
 
-# Need to add better snap tool settings to syncing; instructions about xVim
+# Need to add better snap tool settings to syncing
