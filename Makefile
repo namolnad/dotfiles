@@ -4,11 +4,11 @@ all: setup
 
 setup: ## Setup machine, dependencies and dev environment
 	@cd ~ $@
-	$(MAKE) custom_credentials
-	$(MAKE) keyboard_speed
-	$(MAKE) dependencies
-	$(MAKE) utilities
-	$(MAKE) manual_task_instructions
+	@$(MAKE) custom_credentials
+	@$(MAKE) keyboard_speed
+	@$(MAKE) dependencies
+	@$(MAKE) utilities
+	@$(MAKE) manual_task_instructions
 
 custom_credentials: ## Setup custom credentials directory
 	@echo "\nCreate custom_credentials directory (if not exists)"
@@ -25,8 +25,13 @@ dependencies: ## Install required dependencies
 
 utilities: ## Install default utilities
 	@echo "\nInstalling default utilities:"
-	bundle exec bundle install # --verbose
-	bundle exec brew bundle # --verbose
+ifdef VERBOSE
+	bundle exec bundle install --verbose
+	bundle exec brew bundle --verbose
+else
+	bundle exec bundle install
+	bundle exec brew bundle
+endif
 
 manual_task_instructions: ## Echo manual tasks remaining
 	@echo "\nTasks remaining:\n1) Download and install Xcode, Dropbox, 1Password, BetterSnapTool\n2) Ensure Dropbox syncing is set up\n3) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n4) Install xVim and resign XCode"

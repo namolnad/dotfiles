@@ -18,4 +18,4 @@ cask 'iterm2' unless app_exists?('iTerm')
 cask 'alfred' unless app_exists?('Alfred 3')
 cask 'visual-studio-code' unless app_exists?('Visual Studio Code')
 
-puts "Install(s) skipped becuase app(s) already exist: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
+puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
