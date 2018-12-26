@@ -8,10 +8,11 @@ def app_exists?(app_name)
   exists
 end
 
-tap 'homebrew/cask'
-tap 'caskroom/fonts'
+brew 'rbenv'
 brew 'bat'
 brew 'hub'
+tap 'homebrew/cask'
+tap 'caskroom/fonts'
 cask 'font-hack-nerd-font'
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')

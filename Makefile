@@ -26,10 +26,10 @@ dependencies: ## Install required dependencies
 utilities: ## Install default utilities
 	@echo "\nInstalling default utilities:"
 ifdef VERBOSE
-	bundle exec bundle install --verbose
+	bundle install --verbose
 	bundle exec brew bundle --verbose
 else
-	bundle exec bundle install
+	bundle install
 	bundle exec brew bundle
 endif
 
