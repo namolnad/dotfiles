@@ -10,7 +10,6 @@ alias xcode_clean="rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf ~/Li
 
 alias gap="git add -p"
 alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
-alias gfpa="git fetch --prune --all"
 alias gitlog="git log -15 --oneline --reverse"
 alias gitstat="git status -sb"
 alias gplease="git push origin --force-with-lease"
@@ -42,7 +41,6 @@ recent-branches() {
 
 alias e=code                                         # Edit in VSCode
 alias edit='code'                                    # edit: Opens any file in VSCode editor
-alias subl='sublime'                                    # Open sublime with subl
 
 export EDITOR='code'
 # Preferred editor for local and remote sessions

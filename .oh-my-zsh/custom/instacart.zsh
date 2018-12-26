@@ -6,10 +6,6 @@ export SUDO_USER='dan.loman'
 export DEFAULT_COUNTRY_SLUG='US'
 export DEFAULT_PBI_SLUG='instacart'
 
-# General
-alias vpn-disconnect="osascript -e 'tell application \"/Applications/Tunnelblick.app\"' -e 'disconnect \"Instacart\"' -e 'end tell'"
-alias vpn-connect="osascript -e 'tell application \"/Applications/Tunnelblick.app\"' -e 'connect \"Instacart\"' -e 'end tell'"
-
 # iOS
 alias iconsumer="cd ~/Code/Instacart-ios;pwd"
 alias iconsumer-exp="cd ~/Code/Experimental/Exp:instacart-ios"
