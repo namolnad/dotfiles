@@ -1,6 +1,6 @@
 .PHONY: all setup
 
-all: setup
+all: setup custom_credentials keyboard_speed dependencies utilities manual_task_instructions
 
 setup: ## Setup machine, dependencies and dev environment
 	@cd ~ $@
