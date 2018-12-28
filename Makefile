@@ -16,8 +16,8 @@ custom_credentials: ## Setup custom credentials directory
 
 keyboard_speed: ## Adjust keyboard repeat rate
 	@echo "\nSetting up keyboard repeat rate:"
-	defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-	defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+	defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
+	defaults write -g KeyRepeat -int 2 # normal minimum is 2 (30 ms)
 
 dependencies: ## Install required dependencies
 	@echo "\nInstalling bundler:"
