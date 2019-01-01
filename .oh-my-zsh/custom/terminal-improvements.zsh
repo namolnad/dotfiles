@@ -31,7 +31,7 @@ alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file
 # Delgations to more powerful implementatios
 cat() { bat $@; }                           # Delegate cat to bat
 git() { hub $@; }                           # Delegate git to hub
-ls() { colorls -lA --sd; }                  # Delegate ls to colorls
+alias ls='colorls -lA --sd'                  # Delegate ls to colorls
 
 #   ---------------------------
 #   NETWORKING
