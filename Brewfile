@@ -11,6 +11,7 @@ end
 brew 'rbenv'
 brew 'bat'
 brew 'hub'
+brew 'the_silver_searcher'
 tap 'homebrew/cask'
 tap 'caskroom/fonts'
 cask 'font-hack-nerd-font'
