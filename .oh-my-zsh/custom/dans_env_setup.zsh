@@ -9,3 +9,6 @@ export HOME_IMAC='69678529'
 for f in $(find $HOME/.custom_credentials -type f); do
   source $f
 done
+
+# Modify PATH
+export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
