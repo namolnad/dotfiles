@@ -14,15 +14,17 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'jceb/vim-orgmode'
 Plugin 'whiteinge/diffconflicts'
 Plugin 'vim-scripts/utl.vim'
-Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'keith/swift.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-speeddating'
 Plugin 'chrisbra/NrrwRgn'
-Plugin 'tpope/vim-pathogen'
-Plugin 'mattn/calendar-vim'
+Plugin 'itchyny/calendar.vim'
 Plugin 'inkarkat/vim-SyntaxRange'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-pathogen'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()            " required
 
@@ -134,3 +136,13 @@ endif
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+" Map ctrl-movement keys to window switching
+map <C-k> <C-w><Up>
+map <C-j> <C-w><Down>
+map <C-l> <C-w><Right>
+map <C-h> <C-w><Left>
+
+" Switch to alternate file
+map <C-Tab> :bnext<cr>
+map <C-S-Tab> :bprevious<cr>
