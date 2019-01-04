@@ -11,6 +11,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'jceb/vim-orgmode'
 Plugin 'whiteinge/diffconflicts'
 Plugin 'vim-scripts/utl.vim'
 Plugin 'tpope/vim-repeat'
