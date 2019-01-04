@@ -146,3 +146,7 @@ map <C-h> <C-w><Left>
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
+
+" Calendar "
+" let g:calendar_google_calendar = 1
+" let g:calendar_google_task = 1
