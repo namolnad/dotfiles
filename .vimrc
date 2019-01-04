@@ -5,33 +5,57 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+
 call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'whiteinge/diffconflicts'
+Plugin 'vim-scripts/utl.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'keith/swift.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-speeddating'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'tpope/vim-pathogen'
+Plugin 'mattn/calendar-vim'
+Plugin 'inkarkat/vim-SyntaxRange'
 
 call vundle#end()            " required
-filetype plugin indent on    " required
+
+" required
+filetype plugin indent on
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
 " END PLUGINS
 
 execute pathogen#infect()
-syntax on
-filetype plugin indent on
 
+syntax on
+
+" Colors "
 let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
-set hlsearch
-
 set t_Co=256
 
+set hlsearch
+
+set backspace=2
 set tabstop=2 " a tab is two spaces
 set shiftwidth=2 " an autoindent (with <<) is two spaces
 set expandtab " use spaces, not tabs
 set list " Show invisible characters
-set backspace=2
 
 set number
 
