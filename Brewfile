@@ -31,4 +31,4 @@ mas 'AutoMute', id: 1118136179
 mas 'BetterSnapTool', id: 417375580
 mas 'Spark', id: 1176895641
 mas '1Password 7', id: 1333542190
-# mas 'Xcode', id: 497799835
+mas 'Xcode', id: 497799835 unless app_exists?('Xcode')
