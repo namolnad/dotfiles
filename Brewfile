@@ -8,6 +8,7 @@ def app_exists?(app_name)
   exists
 end
 
+brew 'mas'
 brew 'vim', args: ['with-override-system-vi']
 brew 'rbenv'
 brew 'bat'
