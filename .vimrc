@@ -54,6 +54,8 @@ set hlsearch
 
 set backspace=2
 set tabstop=2 " a tab is two spaces
+set autoindent
+set smartindent
 set shiftwidth=2 " an autoindent (with <<) is two spaces
 set expandtab " use spaces, not tabs
 set list " Show invisible characters
