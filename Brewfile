@@ -16,6 +16,7 @@ brew 'hub'
 brew 'the_silver_searcher'
 tap 'homebrew/cask'
 tap 'caskroom/fonts'
+cask 'emacs'
 cask 'font-hack-nerd-font'
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')

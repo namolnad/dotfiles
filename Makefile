@@ -22,6 +22,8 @@ keyboard_speed: ## Adjust keyboard repeat rate
 dependencies: ## Install required dependencies
 	@echo "\nInstalling bundler:"
 	gem install bundler --conservative
+	@echo "\n Pulling/cloning emacs Evil"
+	git -C ~/.emacs.d/evil pull || git clone https://github.com/emacs-evil/evil ~/.emacs.d/evil
 
 utilities: ## Install default utilities
 	@echo "\nInstalling default utilities:"
