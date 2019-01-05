@@ -25,6 +25,7 @@ Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-fugitive'
+Plugin 'gabrielelana/vim-markdown'
 
 call vundle#end()            " required
 
@@ -45,6 +46,8 @@ filetype plugin indent on
 execute pathogen#infect()
 
 syntax on
+
+let g:markdown_enable_conceal=2
 
 " Colors "
 let g:solarized_termcolors=256
