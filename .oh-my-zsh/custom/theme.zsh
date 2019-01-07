@@ -11,9 +11,9 @@ function zle-keymap-select zle-line-init {
     zle -R
 }
 
-function zle-line-init {
-  zle -K vicmd
-}
+# function zle-line-init {
+#   zle -K vicmd
+# }
 
 function zle-line-finish {
     print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
