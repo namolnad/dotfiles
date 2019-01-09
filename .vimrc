@@ -191,6 +191,7 @@ Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wincent/command-t'
 
@@ -262,9 +263,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nmap <S-Enter> O<Esc>j
-nmap <CR> o<Esc>k
 
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
 
