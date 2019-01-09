@@ -194,6 +194,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wincent/command-t'
+Plugin 'altercation/vim-colors-solarized'
 
 " required
 call vundle#end()
@@ -204,19 +205,7 @@ filetype plugin indent on
 "filetype plugin on
 "
 
-execute pathogen#infect()
-
 let g:markdown_enable_conceal=2
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" COLOR
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 256 colors
-set t_Co=256
-colorscheme solarized
-let g:solarized_termcolors=256
-set background=dark
-" :color grb256
 
 set visualbell
 
@@ -328,7 +317,17 @@ inoremap <s-tab> <c-n>
 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
-
 " Calendar "
 " let g:calendar_google_calendar = 1
 " let g:calendar_google_task = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLOR
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 256 colors
+set t_Co=256
+colorscheme solarized
+let g:solarized_termcolors=256
+set background=dark
+" :color grb256
