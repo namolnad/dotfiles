@@ -302,6 +302,12 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" Disable arrow keys
+noremap <Up> :echo "No arrow keys for you!"<CR>
+noremap <Down> :echo "No arrow keys for you!"<CR>
+noremap <Left> :echo "No arrow keys for you!"<CR>
+noremap <Right> :echo "No arrow keys for you!"<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
