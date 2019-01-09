@@ -41,3 +41,11 @@ kill_old_server() {
     do kill -9 "$PID";
   done;
 }
+
+personal_staging_create() {
+  isc ecs staging customers --user namolnad --role web
+}
+
+personal_staging_launch_sha() {
+  isc launch namolnad.web.instacart.customers-stg "customers@$@" --follow
+}
