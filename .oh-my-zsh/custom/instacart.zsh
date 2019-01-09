@@ -43,9 +43,13 @@ kill_old_server() {
 }
 
 personal_staging_create() {
-  isc ecs staging customers --user namolnad --role web
+  isc ecs staging instacart --user namolnad --role web
 }
 
 personal_staging_launch_sha() {
   isc launch namolnad.web.instacart.customers-stg "customers@$@" --follow
+}
+
+personal_staging_delete() {
+  isc ecs delete namolnad.web.instacart.customers-stg
 }
