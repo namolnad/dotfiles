@@ -260,7 +260,7 @@ if executable('ag')
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" KEY MAPS
+" KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <S-Enter> O<Esc>j
@@ -293,6 +293,14 @@ vnoremap <leader>ib :!align<cr>
 
 " bind K to grep word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" Move/drag lines
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
