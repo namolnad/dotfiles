@@ -36,5 +36,5 @@ else
 endif
 
 manual_task_instructions: ## Echo manual tasks remaining
-	@echo "\nTasks remaining:\n1) Download and install Xcode, Dropbox, 1Password, BetterSnapTool\n2) Ensure Dropbox syncing is set up\n3) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n4) Install xVim and resign XCode"
+	@echo "\nTasks remaining:\n1) Download and install Xcode, Dropbox, 1Password, BetterSnapTool\n2) Ensure Dropbox syncing is set up\n3) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n4) Install xVim and resign XCode\n    4a) clone xvim2 - git clone https://github.com/XVimProject/XVim2.git\n    4b) generate signing cert (https://github.com/XVimProject/XVim2/blob/master/SIGNING_Xcode.md)\n    4c) sudo codesign -f -s 'Mac Developer: Daniel Loman (39ERR85875)' /Applications/Xcode.app\n    4d) `cd` into XVim2 dir and run `make`"
 # Need to add better snap tool settings to syncing
