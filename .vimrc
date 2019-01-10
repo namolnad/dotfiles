@@ -178,6 +178,8 @@ filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+" set runtime path to include fzf
+set rtp+=/usr/local/opt/fzf
 
 call vundle#begin()
 

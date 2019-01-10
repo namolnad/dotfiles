@@ -12,3 +12,6 @@ done
 
 # Modify PATH
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
+
+# Source fzf for keybindings and such
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

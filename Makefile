@@ -36,4 +36,4 @@ else
 endif
 
 manual_task_instructions: ## Echo manual tasks remaining
-	@echo "\nTasks remaining:\n1) Ensure Dropbox syncing is set up\n2) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n3) Install xVim and resign XCode\n  3a) clone xvim2 - git clone https://github.com/XVimProject/XVim2.git\n  3b) generate signing cert (https://github.com/XVimProject/XVim2/blob/master/SIGNING_Xcode.md)\n  3c) sudo codesign -f -s 'CERT_IDENTIFIER' /Applications/Xcode.app\n  3d) 'cd' into XVim2 dir and run 'make'"
+	@echo "\nTasks remaining:\n1) Ensure Dropbox syncing is set up\n2) Point development application settings to \"$$HOME/Dropbox/.dev_sync\"\n3) Install xVim and resign XCode\n  3a) clone xvim2 - git clone https://github.com/XVimProject/XVim2.git\n  3b) generate signing cert (https://github.com/XVimProject/XVim2/blob/master/SIGNING_Xcode.md)\n  3c) sudo codesign -f -s 'CERT_IDENTIFIER' /Applications/Xcode.app\n  3d) 'cd' into XVim2 dir and run 'make'\n4) Run \"$$(brew --prefix)/opt/fzf/install\""
