@@ -13,5 +13,10 @@ done
 # Modify PATH
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
 
-# Source fzf for keybindings and such
+# fzf setup
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd --type f -d 15'
+# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+# export FZF_DEFAULT_COMMAND="find . -type f -not -path '*/\.git/*'"
+export FZF_COMMAND_T="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPS='--extended'
