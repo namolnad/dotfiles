@@ -11,7 +11,7 @@ for f in $(find $HOME/.custom_credentials -type f); do
 done
 
 # Modify PATH
-export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
+export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
 
 # fzf setup
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
