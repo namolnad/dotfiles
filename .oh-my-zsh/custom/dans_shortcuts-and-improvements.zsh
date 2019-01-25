@@ -101,6 +101,10 @@ simulator_screen_recording() {
   xcrun simctl io booted recordVideo "$1.mov"
 }
 
+function cheat() {
+      curl cht.sh/$1
+}
+
 #   ---------------------------
 #   KEY BINDINGS
 #   ---------------------------
@@ -109,7 +113,6 @@ if [ "$0" != "bash" ]; then
   bindkey '^ ' forward-word
   bindkey '^[[[CE' end-of-line
 fi
-
 
 #   ---------------------------
 #   ORGANIZATION
