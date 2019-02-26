@@ -3,7 +3,7 @@
 [core]
 	whitespace = trailing-space,space-before-tab
 	trustctime = false
-	excludesfile = /Users/danloman/.gitignore_global
+	excludesfile = .gitignore_global
 [diff]
 	mnemonicprefix = true
 [push]
