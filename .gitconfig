@@ -14,7 +14,7 @@
 [credential]
 	helper = osxkeychain
 [user]
-	name = Dan L
+	name = Dan Loman
 	email = daniel.h.loman@gmail.com
 [alias]
 	amend = commit -a --amend --no-edit
