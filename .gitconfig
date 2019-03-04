@@ -45,3 +45,5 @@
 	insteadOf = https://github.com/
 [branch]
 	autosetuprebase = always
+[commit]
+	gpgsign = true
