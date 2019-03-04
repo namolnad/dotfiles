@@ -1,3 +1,5 @@
+[include]
+	path = $HOME/.gitconfig.private
 [mergetool]
 	keepBackup = false
 [core]
