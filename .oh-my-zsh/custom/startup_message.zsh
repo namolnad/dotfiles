@@ -1,19 +1,5 @@
-#   -----------------------------
-#   VALUES
-#   -----------------------------
-
-echo -e "Is this thing on?
-
-${light_blue}
----------------------------
-          VALUES
----------------------------
-${light_cyan}
-* Solve for the customer *
-${light_purple}
-* This is your baby
-* Every minute counts
-* Of course, but maybe
-* Go far, together
-
+echo -e "
+${cyan}You always have time to do it.
+You don’t have time to delay it.
+                    -Yours truly
 "
