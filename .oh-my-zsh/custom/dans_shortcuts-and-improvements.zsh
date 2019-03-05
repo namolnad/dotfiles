@@ -39,7 +39,7 @@ cherry-pick-latest() {
 }
 
 recent-branches() {
-  git for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)' | head -n 10
+  git recent-branches
 }
 
 #   ---------------------------
