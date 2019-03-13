@@ -8,7 +8,7 @@ export DEFAULT_PBI_SLUG='instacart'
 
 # iOS
 alias iconsumer="cd ~/Code/Instacart-ios"
-alias iconsumer-sec="cd ~/Code/Instacart-ios:secondary"
+alias iconsumer-sec="cd ~/Code/Instacart-ios.secondary"
 alias reload_iconsumer="((killall Xcode || true); iconsumer; xed .)"
 alias carthage_force_install="AWS_PROFILE=default AWS_REGION='us-east-1' bundle exec carthage_cache install -b instacart-ios-consumer-cache --trace --force"
 fabric_release_url() {
