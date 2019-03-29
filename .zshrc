@@ -33,3 +33,5 @@ eval "$(rbenv init -)"
 # Example aliases
 alias zshconfig="e ~/.zshrc"
 alias ohmyzsh="e ~/.oh-my-zsh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

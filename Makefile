@@ -1,5 +1,7 @@
 .PHONY: all setup
 
+BUNDLE_INSTALL=bundle install --path vendor/bundle
+
 all: setup custom_credentials keyboard_speed dependencies utilities manual_task_instructions
 
 setup: ## Setup machine, dependencies and dev environment
@@ -24,14 +26,15 @@ dependencies: ## Install required dependencies
 	gem install bundler --conservative
 	@echo "\n Pulling/cloning emacs Evil"
 	git -C ~/.emacs.d/evil pull || git clone https://github.com/emacs-evil/evil ~/.emacs.d/evil
+	command -v brew > /dev/null 2>&1 || echo "Installing homebrew\n"; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
 
 utilities: ## Install default utilities
 	@echo "\nInstalling default utilities:"
 ifdef VERBOSE
-	bundle install --verbose
+	$(BUNDLE_INSTALL) --verbose
 	bundle exec brew bundle --verbose
 else
-	bundle install
+	$(BUNDLE_INSTALL)
 	bundle exec brew bundle
 endif
 

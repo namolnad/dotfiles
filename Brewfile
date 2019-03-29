@@ -9,7 +9,7 @@ def app_exists?(app_name)
 end
 
 brew 'mas'
-brew 'vim', args: ['with-override-system-vi']
+brew 'vim'
 brew 'rbenv'
 brew 'bat'
 brew 'hub'
@@ -17,8 +17,8 @@ brew 'the_silver_searcher'
 brew 'fzf'
 tap 'homebrew/cask'
 tap 'caskroom/fonts'
-cask 'emacs'
-cask 'font-hack-nerd-font'
+cask 'emacs' unless app_exists?('Emacs')
+cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font Complete.ttf")
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
 cask 'alfred' unless app_exists?('Alfred 3')
