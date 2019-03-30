@@ -197,6 +197,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wincent/command-t'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'zxqfl/tabnine-vim'
 
 " required
 call vundle#end()
