@@ -199,6 +199,8 @@ Plugin 'wincent/command-t'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'zxqfl/tabnine-vim'
 Plugin 'junegunn/fzf.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 " required
 call vundle#end()
@@ -248,8 +250,12 @@ if executable('ag')
 endif
 
 " YouCompleteMe
-let g:ycm_key_list_select_completion = ['<Tab>', '<Down>', '<C-j>']
-let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
+let g:ycm_key_list_select_completion = ['<Down>', '<C-j>']
+let g:ycm_key_list_previous_completion = ['<Up>', '<C-k>']
+
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
