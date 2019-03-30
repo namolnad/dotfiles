@@ -1,0 +1,7 @@
+[language.swift]
+command = "sourcekit-lsp"
+
+[language.ruby]
+command = "solargraph"
+args = ["stdio"]
+install = [["gem", "install", "solargraph"]]

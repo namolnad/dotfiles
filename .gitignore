@@ -1,10 +1,17 @@
-# Ignore all files and subdirectories by default
+# Ignore everything by default
 /*
-/*/
+
+# Make exceptions
+!.gitignore
+!/Library
+/Library/*
+!/Library/Preferences
+/Library/Preferences/*
+!/Library/Preferences/TabNine
+!/Library/Preferences/TabNine/*
 
 # Allow oh-my-zsh customizations
 !/.oh-my-zsh/
 /.oh-my-zsh/*
 /.oh-my-zsh/custom/plugins/
 
-# Allow .zshrc

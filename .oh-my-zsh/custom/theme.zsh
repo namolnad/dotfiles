@@ -23,13 +23,6 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 
-# function zsh_vi_mode() {
-#     case $KEYMAP in
-#         (viins|main) echo -n "INSERT";;
-#         (vicmd|*)      echo -n "-- NORMAL --";;
-#     esac
-# }
-
 #   ---------------------------
 #   ZSH THEME
 #   ---------------------------
