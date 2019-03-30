@@ -2,16 +2,60 @@
 /*
 
 # Make exceptions
+
+# Dotfiles
+!.bash_profile
+!.bashrc
+!.gitconfig
+!.gitmodules
+!.vimrc
+!.xvimrc
+!.zshrc
 !.gitignore
+
+# Vim
+!.vim
+/.vim/*
+!/.vim/bundle
+/.vim/bundle/*
+!/.vim/bundle/vim-colors-solarized
+
+# Emacs
+!/.emacs.d
+/.emacs.d/*
+!/.emacs.d/personal
+/.emacs.d/personal/*
+!/.emacs.d/personal/behavior.el
+!/.emacs.d/personal/packages.el
+
+# Oh-my-zsh
+!/.oh-my-zsh
+# /.oh-my-zsh/*
+!/.oh-my-zsh/custom
+# /.oh-my-zsh/custom/*
+# !/.oh-my-zsh/custom/*.zsh
+#
+# /.oh-my-zsh/custom/plugins
+# /.oh-my-zsh/custom/themes
+
+# Preferences
 !/Library
 /Library/*
 !/Library/Preferences
 /Library/Preferences/*
 !/Library/Preferences/TabNine
 !/Library/Preferences/TabNine/*
+!/Library/Application\ Support
+/Library/Application\ Support/*
+!/Library/Application\ Support/Code
+/Library/Application\ Support/Code/*
+!/Library/Application\ Support/Code/User
+/Library/Application\ Support/Code/User/*
+!/Library/Application Support/Code/User/keybindings.json
+!/Library/Application Support/Code/User/settings.json
 
-# Allow oh-my-zsh customizations
-!/.oh-my-zsh/
-/.oh-my-zsh/*
-/.oh-my-zsh/custom/plugins/
+# Dev setup files
+!Brewfile
+!Makefile
+!Gemfile
 
