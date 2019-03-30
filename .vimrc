@@ -256,6 +256,7 @@ let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <c-p> :Files<cr>
+
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
 
 inoremap kj <ESC>
