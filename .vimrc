@@ -198,6 +198,7 @@ Plugin 'gabrielelana/vim-markdown'
 Plugin 'wincent/command-t'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'zxqfl/tabnine-vim'
+Plugin 'junegunn/fzf.vim'
 
 " required
 call vundle#end()
