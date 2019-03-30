@@ -106,6 +106,20 @@ function cheat() {
 }
 
 #   ---------------------------
+#   FZF SETUP
+#   ---------------------------
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# export FZF_DEFAULT_COMMAND='fd --type f -d 15'
+export FZF_DEFAULT_COMMAND='ag --hidden -l --depth 5 --ignore .git --nocolor -g ""'
+# export FZF_DEFAULT_COMMAND='ag %s -l --depth 5 --nocolor -g ""'
+# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+# export FZF_DEFAULT_COMMAND="find . -maxdepth 5 -type f -not -path '*/\.git/*'"
+# export FZF_DEFAULT_COMMAND="find . -maxdepth 5 -not -path '*/\.git/*'"
+export FZF_COMMAND_T="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPS='--extended'
+
+#   ---------------------------
 #   KEY BINDINGS
 #   ---------------------------
 
