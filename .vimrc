@@ -245,12 +245,6 @@ set encoding=utf-8
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
 " YouCompleteMe
@@ -261,6 +255,7 @@ let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
 " KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nnoremap <c-p> :Files<cr>
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
 
 inoremap kj <ESC>
