@@ -253,6 +253,10 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" YouCompleteMe
+let g:ycm_key_list_select_completion = ['<Tab>', '<Down>', '<C-j>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
