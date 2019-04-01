@@ -254,6 +254,7 @@ let g:ycm_key_list_previous_completion = ['<Up>', '<C-k>']
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+let g:UltiSnipsListSnippets="<C-l>"
 let g:UltiSnipsEditSplit="vertical"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -266,6 +267,7 @@ nnoremap <c-p> :Files<cr>
 
 inoremap kj <ESC>
 
+" Yank to global pasteboard
 map <leader>y "*y
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
