@@ -21,7 +21,6 @@ tap 'homebrew/cask'
 cask 'alfred' unless app_exists?('Alfred 3')
 cask 'bettertouchtool' unless app_exists?('BetterTouchTool')
 cask 'dropbox' unless app_exists?('Dropbox')
-/* cask 'emacs' unless app_exists?('Emacs') */
 cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font Complete.ttf")
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
