@@ -260,7 +260,9 @@ let g:UltiSnipsEditSplit="vertical"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" Run launch-instacart script w/ leader+r
+nnoremap <leader>r :!~/Code/Dans-scripts/launch-instacart.sh<CR>
+" Map ctrl+p to fzf :Files command
 nnoremap <c-p> :Files<cr>
 
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
