@@ -1,0 +1,11 @@
+snippet test "A basic test case" b
+@testable import ${1:TestModule}
+import XCTest
+
+final class ${2:TestClass}: ${3:XC}TestCase {
+    func test${4:Default}() {
+        ${5:test code}
+    }
+}
+endsnippet
+

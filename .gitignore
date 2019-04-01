@@ -19,6 +19,7 @@
 !/.vim/bundle
 /.vim/bundle/*
 !/.vim/bundle/vim-colors-solarized
+!/.vim/UltiSnips
 
 # Emacs
 !/.emacs.d

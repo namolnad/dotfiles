@@ -1,5 +1,4 @@
 " This is Dan Loman's .vimrc file
-" vim:set ts=2 sts=2 sw=2 expandtab:
 
 " remove all existing autocmds
 autocmd!
@@ -67,7 +66,6 @@ set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-" set backspace=2
 " display incomplete commands
 set showcmd
 " Enable highlighting for syntax
@@ -123,7 +121,7 @@ augroup vimrcEx
 
   "for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
-  autocmd FileType python set sw=4 sts=4 et
+  autocmd FileType python,swift set sw=4 sts=4 et
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
@@ -320,6 +318,7 @@ function! InsertTabWrapper()
     endif
 endfunction
 inoremap <expr> <tab> InsertTabWrapper()
+
 inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
