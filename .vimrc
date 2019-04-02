@@ -121,15 +121,13 @@ augroup vimrcEx
 
   "for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
-  autocmd FileType python,swift set sw=4 sts=4 et
+  autocmd FileType python set sw=4 sts=4 et
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
+  autocmd BufNewFile,BufRead *.swift setfiletype swift
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
-
-  " Indent p tags
-  " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   " Don't syntax highlight markdown because it's often wrong
   autocmd! FileType mkd setlocal syn=off
@@ -150,6 +148,9 @@ augroup vimrcEx
 
   " Expand tabs in Go. Was gofmt raised in a barn?!
   autocmd! FileType go set sw=4 sts=4 expandtab | retab
+
+  " Indent swift 4 spaces"
+  autocmd FileType swift set sw=4 sts=4 expandtab autoindent smartindent
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,6 +200,7 @@ Plugin 'zxqfl/tabnine-vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'jiangmiao/auto-pairs'
 
 " required
 call vundle#end()
@@ -308,6 +310,15 @@ noremap <Down> :echo "No arrow keys for you!"<CR>
 noremap <Left> :echo "No arrow keys for you!"<CR>
 noremap <Right> :echo "No arrow keys for you!"<CR>
 
+" Closing bracket pairs
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+" inoremap {<CR> {<CR>}<ESC>O
+" inoremap {;<CR> {<CR>};<ESC>O
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
@@ -330,10 +341,6 @@ inoremap <s-tab> <c-n>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-
-" Calendar "
-" let g:calendar_google_calendar = 1
-" let g:calendar_google_task = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
