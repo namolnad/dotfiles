@@ -201,6 +201,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'k0kubun/vim-open-github'
 
 " required
 call vundle#end()
