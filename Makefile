@@ -24,8 +24,6 @@ keyboard_speed: ## Adjust keyboard repeat rate
 dependencies: ## Install required dependencies
 	@echo "\nInstalling bundler:"
 	gem install bundler --conservative
-	@echo "\n Pulling/cloning emacs Evil"
-	git -C ~/.emacs.d/evil pull || git clone https://github.com/emacs-evil/evil ~/.emacs.d/evil
 	command -v brew > /dev/null 2>&1 || echo "Installing homebrew\n"; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
