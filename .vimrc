@@ -255,11 +255,15 @@ endif
 let g:ycm_key_list_select_completion = ['<Down>', '<C-j>']
 let g:ycm_key_list_previous_completion = ['<Up>', '<C-k>']
 
+" UltiSnips
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 let g:UltiSnipsListSnippets="<C-l>"
 let g:UltiSnipsEditSplit="vertical"
+
+" Swift editing global vars
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
