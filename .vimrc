@@ -264,67 +264,73 @@ let g:UltiSnipsEditSplit="vertical"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Run launch-instacart script w/ leader+r
-nnoremap <leader>r :!~/Code/Dans-scripts/launch-instacart.sh<CR>
+
+""""" See :help key-notation for definitions """""
+
+"""""" EDITING
+
+" Move/drag lines; NOTE: Terminal sends ∆ for Meta-j and ˚ for Meta-k. Use these instead
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+
+" Align selected lines
+vnoremap <leader>ib :!align<cr>
+
+"""""" SEARCHING
+
 " Map ctrl+p to fzf :Files command
 nnoremap <c-p> :Files<cr>
+nnoremap <leader><c-p> :GitFiles<cr>
 
-:nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+" bind K to grep word under cursor
+nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
+"""""" CONVENIENCE
+
+" Convient escape in insert mode
 inoremap kj <ESC>
+
+" Can't be bothered to understand ESC vs ctrl+c in insert mode
+imap <c-c> <esc>
+
+nnoremap <leader><leader> <c-^>
 
 " Yank to global pasteboard
 map <leader>y "*y
+
+" Use shift tab to trigger word completion in insert
+inoremap <s-tab> <c-n>
+
+" Use leader m to preview current md file in Marked app
+:nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+
+" Run launch-app script w/ leader+r
+nnoremap <leader>r :!~/Code/Dans-scripts/launch-app.sh<CR>
+
+"""""" BUFFER MOVEMENT
+
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-" Map ctrl-movement keys to window switching
-" map <C-k> <C-w><Up>
-" map <C-j> <C-w><Down>
-" map <C-l> <C-w><Right>
-" map <C-h> <C-w><Left>
 
-" Switch to alternate file
+" Switch to previous/next buffer
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
-" Can't be bothered to understand ESC vs <c-c> in insert mode
-imap <c-c> <esc>
-nnoremap <leader><leader> <c-^>
-" Align selected lines
-vnoremap <leader>ib :!align<cr>
 
-" bind K to grep word under cursor
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-" Move/drag lines
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-
-" Disable arrow keys
+" Disable arrow keys for vim training
 noremap <Up> :echo "No arrow keys for you!"<CR>
 noremap <Down> :echo "No arrow keys for you!"<CR>
 noremap <Left> :echo "No arrow keys for you!"<CR>
 noremap <Right> :echo "No arrow keys for you!"<CR>
 
-" Closing bracket pairs
-" inoremap " ""<left>
-" inoremap ' ''<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
-" inoremap {<CR> {<CR>}<ESC>O
-" inoremap {;<CR> {<CR>};<ESC>O
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! InsertTabWrapper()
     let col = col('.') - 1
@@ -335,8 +341,6 @@ function! InsertTabWrapper()
     endif
 endfunction
 inoremap <expr> <tab> InsertTabWrapper()
-
-inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC
