@@ -265,7 +265,7 @@ let g:UltiSnipsListSnippets="<C-l>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Swift editing global vars
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+" let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
