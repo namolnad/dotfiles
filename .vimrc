@@ -196,13 +196,15 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-surround'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wincent/command-t'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'zxqfl/tabnine-vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'k0kubun/vim-open-github'
+" Color Themes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
 
 " required
 call vundle#end()
@@ -358,7 +360,9 @@ command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 " 256 colors
 set t_Co=256
-colorscheme solarized
 let g:solarized_termcolors=256
+colorscheme molokai
+
 set background=dark
+
 " :color grb256
