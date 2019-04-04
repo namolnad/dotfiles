@@ -186,7 +186,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'keith/swift.vim'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
@@ -203,7 +203,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'k0kubun/vim-open-github'
 " Color Themes
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized' " Can be removed if I end up liking molokai
 Plugin 'tomasr/molokai'
 
 " required
