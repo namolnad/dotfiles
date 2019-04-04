@@ -186,7 +186,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'keith/swift.vim'
-Plugin 'inkarkat/vim-SyntaxRange'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
