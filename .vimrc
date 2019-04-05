@@ -33,7 +33,7 @@ set cursorline
 set cmdheight=1
 set switchbuf=useopen
 " Always show tab bar at the top
-set showtabline=2
+" set showtabline=2
 set winwidth=79
 
 " make searches case-sensitive only if they contain upper-case characters
@@ -156,7 +156,8 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+
+" let g:airline_statusline_ontop=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BEGIN PLUGINS
@@ -202,6 +203,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'k0kubun/vim-open-github'
+Plugin 'vim-airline/vim-airline'
 " Color Themes
 Plugin 'altercation/vim-colors-solarized' " Can be removed if I end up liking molokai
 Plugin 'tomasr/molokai'
