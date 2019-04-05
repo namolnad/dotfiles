@@ -32,8 +32,6 @@ set ignorecase smartcase
 set cursorline
 set cmdheight=1
 set switchbuf=useopen
-" Always show tab bar at the top
-" set showtabline=2
 set winwidth=79
 
 " make searches case-sensitive only if they contain upper-case characters
@@ -96,6 +94,23 @@ set nofoldenable
 " punctuation like `.`.
 set nojoinspaces
 
+" Ale configuration
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'swift': ['swiftformat'],
+\}
+
+let g:ale_fix_on_save = 1
+let g:ale_swift_swiftformat_options = '--header strip
+            \ --commas inline
+            \ --indent 4
+            \ --self init-only
+            \ --commas inline
+            \ --stripunusedargs closure-only
+            \ --wrapcollections beforefirst
+            \ --wraparguments afterfirst'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -156,10 +171,21 @@ if executable('sourcekit-lsp')
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" STATUS LINE
+" STATUS AND TAB LINES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:airline_statusline_ontop=1
+" Always show tab bar at the top
+" set showtabline=2
+
+" Hide tabline due to better airline
+set showtabline=0
+
+let g:airline_statusline_ontop = 0
+let g:airline#extensions#ale#enabled = 1
+
+ let g:ale_echo_msg_error_str = 'ERROR'
+ let g:ale_echo_msg_warning_str = 'WARN'
+ let g:ale_echo_msg_format = '[%linter%] *%severity%* %s'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BEGIN PLUGINS
@@ -200,7 +226,6 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'k0kubun/vim-open-github'
 Plugin 'vim-airline/vim-airline'
 " Color Themes
-Plugin 'altercation/vim-colors-solarized' " Can be removed if I end up liking molokai
 Plugin 'tomasr/molokai'
 
 " required
