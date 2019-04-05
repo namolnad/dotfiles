@@ -33,6 +33,8 @@ set cursorline
 set cmdheight=1
 set switchbuf=useopen
 set winwidth=79
+" Change directory to the current buffer when opening files.
+set autochdir
 
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
@@ -179,6 +181,36 @@ set showtabline=0
 let g:airline_statusline_ontop = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" EXPLORER
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:netrw_banner = 0
+" Open file in previous buffer window
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_liststyle = 3
+" let g:netrw_winsize = 15
+" Toggle Vexplore with Ctrl-E
+function! ToggleVExplorer()
+  if exists("t:expl_buf_num")
+      let expl_win_num = bufwinnr(t:expl_buf_num)
+      if expl_win_num != -1
+          let cur_win_nr = winnr()
+          exec expl_win_num . 'wincmd w'
+          close
+          exec cur_win_nr . 'wincmd w'
+          unlet t:expl_buf_num
+      else
+          unlet t:expl_buf_num
+      endif
+  else
+      exec '1wincmd w'
+      Vexplore
+      let t:expl_buf_num = bufnr("%")
+  endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BEGIN PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -265,7 +297,7 @@ if executable('ag')
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" KEY MAPPINGS
+" KEY MAPPINGS / KEY BINDINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"" See :help key-notation for definitions """""
@@ -286,7 +318,9 @@ vnoremap <leader>ib :!align<cr>
 " Jump to definition
 nnoremap <leader>j :ALEGoToDefinition<cr>
 
-"""""" SEARCHING
+"""""" SEARCHING / EXPLORING
+
+map <silent> <C-E> :call ToggleVExplorer()<CR>
 
 " Map ctrl+p to fzf :Files command
 nnoremap <c-p> :Files<cr>
