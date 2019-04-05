@@ -162,13 +162,6 @@ augroup END
 " SWIFT LSP
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if executable('sourcekit-lsp')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'sourcekit-lsp',
-        \ 'cmd': {server_info->['sourcekit-lsp']},
-        \ 'whitelist': ['swift'],
-        \ })
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS AND TAB LINES
@@ -207,8 +200,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'keith/swift.vim'
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/vim-lsp'
 Plugin 'w0rp/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-pathogen'
@@ -295,7 +286,6 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 vnoremap <leader>ib :!align<cr>
 
 " Jump to definition
-nnoremap <leader>j :LspDefinition<cr>
 
 """""" SEARCHING
 
