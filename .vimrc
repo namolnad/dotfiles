@@ -162,6 +162,11 @@ augroup END
 " SWIFT LSP
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:airline#extensions#ale#enabled = 1
+
+ let g:ale_echo_msg_error_str = 'ERROR'
+ let g:ale_echo_msg_warning_str = 'WARN'
+ let g:ale_echo_msg_format = '[%linter%] *%severity%* %s'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS AND TAB LINES
@@ -174,11 +179,6 @@ augroup END
 set showtabline=0
 
 let g:airline_statusline_ontop = 0
-let g:airline#extensions#ale#enabled = 1
-
- let g:ale_echo_msg_error_str = 'ERROR'
- let g:ale_echo_msg_warning_str = 'WARN'
- let g:ale_echo_msg_format = '[%linter%] *%severity%* %s'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BEGIN PLUGINS
@@ -286,6 +286,7 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 vnoremap <leader>ib :!align<cr>
 
 " Jump to definition
+nnoremap <leader>j :ALEGoToDefinition<cr>
 
 """""" SEARCHING
 
