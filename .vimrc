@@ -166,7 +166,7 @@ let g:ale_swift_swiftformat_options = '--header strip
             \ --commas inline
             \ --stripunusedargs closure-only
             \ --wrapcollections beforefirst
-            \ --wraparguments afterfirst'
+            \ --wraparguments beforefirst'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS AND TAB LINES
