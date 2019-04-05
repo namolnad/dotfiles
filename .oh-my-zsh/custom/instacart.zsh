@@ -17,6 +17,10 @@ fabric_release_url() {
   echo "https://fabric.io/instacart-inc/ios/apps/com.instacart/dashboard/latest_release/launch_status?build=$version%20($build_num)"
 }
 
+launch_app() {
+  PROJECT='Instacart' ~/Code/Dans-scripts/launch-app.sh
+}
+
 # Rails
 alias instacart="cd ~/Code/Carrot/customers/instacart;pwd"
 alias railss="cd ~/Code/Carrot/customers/instacart;pwd;myip;echo foreman run rails s -b 0.0.0.0;rails s -b 0.0.0.0"
