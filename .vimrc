@@ -96,16 +96,6 @@ set nofoldenable
 " punctuation like `.`.
 set nojoinspaces
 
-" Command-T
-" ignore dotfiles completely;
-" g:CommandTNeverShowDotFiles
-" stop searching recursively in dotdirs;
-" let g:CommandTScanDotDirectories=0
-" specify at what depth should Command-T stop scanning.
-let g:CommandTMaxDepth=4
-" Use find instead of 'ruby' for faster scanning in large hierarchies
-let g:CommandTFileScanner='find'
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -162,14 +152,6 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BEGIN PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
 
 " be iMproved, required
 set nocompatible
