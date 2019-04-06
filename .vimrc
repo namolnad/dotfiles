@@ -158,7 +158,6 @@ let g:ale_fixers = {
 \   'swift': ['swiftformat'],
 \}
 
-let g:ale_fix_on_save = 1
 let g:ale_swift_swiftformat_options = '--header strip
             \ --commas inline
             \ --indent 4
@@ -317,6 +316,7 @@ vnoremap <leader>ib :!align<cr>
 
 " Jump to definition
 nnoremap <leader>j :ALEGoToDefinition<cr>
+nnoremap <leader>f :ALEFix<cr>
 
 """""" SEARCHING / EXPLORING
 
