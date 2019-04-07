@@ -12,6 +12,9 @@
 !.xvimrc
 !.zshrc
 !.gitignore
+!.rbenv
+.rbenv/*
+!.rbenv/version
 
 # Vim
 !.vim
