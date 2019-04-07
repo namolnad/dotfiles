@@ -33,8 +33,6 @@ set cursorline
 set cmdheight=1
 set switchbuf=useopen
 set winwidth=79
-" Change directory to the current buffer when opening files.
-set autochdir
 
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
