@@ -2,24 +2,27 @@
 /*
 
 # Make exceptions
-
-# Dotfiles
-!.bash_profile
-!.bashrc
+# Git
 !.gitconfig
-!.gitmodules
-!.vimrc
-!.xvimrc
-!.zshrc
 !.gitignore
+!.gitmodules
+
+# Dotfile symlinks
+!.bash_profile.symlink
+!.bashrc.symlink
+!.vimrc.symlink
+!.xvimrc.symlink
+!.zshrc.symlink
+
+# Rbenv
 !.rbenv
 .rbenv/*
 !.rbenv/version
 
 # Vim
-!.vim
-/.vim/*
-!/.vim/UltiSnips
+!.vim.symlink
+/.vim.symlink/*
+!/.vim.symlink/UltiSnips
 
 # Emacs
 !/.emacs.d
