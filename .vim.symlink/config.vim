@@ -51,12 +51,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 " Disable temp and backup files
 set wildignore+=*.swp,*~,._*
 
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-" set t_ti= t_te=
 " keep more context when scrolling off the end of a buffer
 set scrolloff=3
 " Don't make backups at all
@@ -94,6 +88,34 @@ set nofoldenable
 " Insert only one space when joining lines that contain sentence-terminating
 " punctuation like `.`.
 set nojoinspaces
+
+set visualbell
+
+set wildmenu
+set wildmode=list:longest,full
+
+set splitright
+set splitbelow
+
+set guifont=Monaco:h12
+set guioptions-=T guioptions-=e guioptions-=L guioptions-=r
+set shell=zsh
+
+" Change cursor shape between insert and normal mode in iTerm2.app
+if $TERM_PROGRAM =~ "iTerm"
+" Vertical bar in insert mode
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+ " Block in normal mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+set encoding=utf-8
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
@@ -209,42 +231,6 @@ function! ToggleVExplorer()
 endfunction
 
 let g:markdown_enable_conceal=2
-
-set visualbell
-
-set wildmenu
-set wildmode=list:longest,full
-
-set splitright
-set splitbelow
-
-set guifont=Monaco:h12
-set guioptions-=T guioptions-=e guioptions-=L guioptions-=r
-set shell=zsh
-
-" if filereadable(expand('~/.vimrc.local'))
-"   source ~/.vimrc.local
-" endif
-
-" Change cursor shape between insert and normal mode in iTerm2.app
-if $TERM_PROGRAM =~ "iTerm"
-" Vertical bar in insert mode
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
- " Block in normal mode
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-" gist-vim settings
-let g:gist_clip_command = 'pbcopy'
-let g:gist_get_multiplefile = 1
-
-set encoding=utf-8
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS / KEY BINDINGS
