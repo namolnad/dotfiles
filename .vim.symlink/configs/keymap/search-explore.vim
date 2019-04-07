@@ -9,5 +9,7 @@ nnoremap <c-p> :Files<cr>
 nnoremap <leader><c-p> :GitFiles<cr>
 
 " bind K to grep word under cursor
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+nnoremap \ :Ag<SPACE>
 
