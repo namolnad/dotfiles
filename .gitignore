@@ -21,8 +21,7 @@
 
 # Vim
 !.vim.symlink
-/.vim.symlink/*
-!/.vim.symlink/UltiSnips
+/.vim.symlink/.netrwhist
 
 # Emacs
 !/.emacs.d

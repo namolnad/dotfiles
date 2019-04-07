@@ -1,0 +1,2 @@
+Plugin 'tpope/vim-fugitive'
+Plugin 'k0kubun/vim-open-github'

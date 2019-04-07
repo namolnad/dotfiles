@@ -208,54 +208,6 @@ function! ToggleVExplorer()
   endif
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BEGIN PLUGINS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" be iMproved, required
-set nocompatible
-" required
-filetype off
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-" set runtime path to include fzf
-set rtp+=/usr/local/opt/fzf
-
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'keith/swift.vim'
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-pathogen'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-surround'
-Plugin 'gabrielelana/vim-markdown'
-Plugin 'zxqfl/tabnine-vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'k0kubun/vim-open-github'
-Plugin 'vim-airline/vim-airline'
-" Color Themes
-Plugin 'tomasr/molokai'
-
-" required
-call vundle#end()
-
-" required
-filetype plugin indent on
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-
 let g:markdown_enable_conceal=2
 
 set visualbell
