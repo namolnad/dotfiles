@@ -18,8 +18,10 @@ brew 'swiftformat'
 brew 'swiftlint'
 brew 'the_silver_searcher'
 brew 'vim'
+
 tap 'caskroom/fonts'
 tap 'homebrew/cask'
+
 cask 'alfred' unless app_exists?('Alfred 3')
 cask 'appcleaner' unless app_exists?('AppCleaner')
 cask 'bettertouchtool' unless app_exists?('BetterTouchTool')
