@@ -1,9 +1,9 @@
-[submodule ".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-	path = .oh-my-zsh/custom/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "/Users/danloman/.oh-my-zsh/custom/themes/powerlevel9k"]
-	path = /Users/danloman/.oh-my-zsh/custom/themes/powerlevel9k
+[submodule "oh-my-zsh_custom/plugins/zsh-autosuggestions"]
+	path = oh-my-zsh_custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "oh-my-zsh_custom/themes/powerlevel9k"]
+	path = oh-my-zsh_custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
