@@ -29,8 +29,8 @@
 !/.emacs.d/personal/behavior.el
 !/.emacs.d/personal/packages.el
 
-# Oh-my-zsh
-!/oh-my-zsh_custom.symlink
+# Dotfile symlinks
+!/.*.symlink
 
 # Preferences
 !/Library
