@@ -7,6 +7,7 @@
 [submodule ".omz_custom.symlink/themes/powerlevel9k"]
 	path = .omz_custom.symlink/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
+	ignroe = all
 [submodule ".vim.symlink/bundle/Vundle.vim"]
 	path = .vim.symlink/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
