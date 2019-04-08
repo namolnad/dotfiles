@@ -64,3 +64,6 @@
 [submodule ".vim.symlink/bundle/molokai"]
 	path = .vim.symlink/bundle/molokai
 	url = https://github.com/tomasr/molokai.git
+[submodule "Code/Scripts"]
+	path = Code/Scripts
+	url = https://github.com/namolnad/scripts.git
