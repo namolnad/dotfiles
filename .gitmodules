@@ -68,3 +68,6 @@
 [submodule "Code/Scripts"]
 	path = Code/Scripts
 	url = https://github.com/namolnad/scripts.git
+[submodule ".vim.symlink/bundle/vim-gitgutter"]
+	path = .vim.symlink/bundle/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git

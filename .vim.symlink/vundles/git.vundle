@@ -1,2 +1,3 @@
-Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'k0kubun/vim-open-github'
+Plugin 'tpope/vim-fugitive'
