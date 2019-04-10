@@ -8,9 +8,12 @@ def app_exists?(app_name)
   exists
 end
 
+tap 'eddieantonio/eddieantonio'
+
 brew 'bat'
 brew 'fzf'
 brew 'hub'
+brew 'imgcat'
 brew 'mas'
 brew 'pianobar'
 brew 'rbenv'
