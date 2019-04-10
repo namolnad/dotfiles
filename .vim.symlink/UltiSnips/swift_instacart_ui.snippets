@@ -1,0 +1,8 @@
+snippet label "UILabel using sn_tap" b
+private let ${1:LabelName}Label: UILabel = .sn_tap { label in
+    label.backgroundColor = .white
+    label.font = .sn_font(size: 16, weight: .semibold)
+    label.textColor = .sn_text
+    label.numberOfLines = 0
+}
+endsnippet
