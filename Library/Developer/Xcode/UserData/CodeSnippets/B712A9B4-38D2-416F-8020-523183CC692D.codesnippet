@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>baseModuleView</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>final class &lt;#ModuleName#&gt;ModuleView: ModuleView&lt;&lt;#ModuleName#&gt;Module&gt; {
+    override func setup() {
+        backgroundColor = .white
+    }
+
+    override func configure(module: &lt;#ModuleName#&gt;Module) {
+        guard let data = module.data else {
+            return
+        }
+
+        setNeedsLayout()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+
+    override func measure(_ size: CGSize, layout: Bool) -&gt; CGSize {
+        return .zero
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>B712A9B4-38D2-416F-8020-523183CC692D</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>BaseModuleView</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
