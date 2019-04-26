@@ -1,4 +1,4 @@
-let mapleader=","
+let mapleader=" "
 
 " remove all existing autocmds
 autocmd!
