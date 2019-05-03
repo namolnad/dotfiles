@@ -17,3 +17,7 @@ vnoremap <leader>ib :!align<cr>
 nnoremap <leader>j :ALEGoToDefinition<cr>
 nnoremap <leader>f :ALEFix<cr>
 
+" Map terminal backspace to backspace (ran into needing this when opeining vim
+" with xargs without -o argument)
+" noremap! <C-?> <C-h>
+
