@@ -13,3 +13,6 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 nnoremap \ :Ag<SPACE>
 
+" Use leader-f to more easily find files
+nnoremap <leader>f :Files<cr>
+nnoremap <leader><c-f> :GitFiles<cr>
