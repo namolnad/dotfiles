@@ -54,6 +54,7 @@
 !Brewfile
 !Makefile
 !Gemfile
+!.macOS
 
 # Scripts
 !Code
