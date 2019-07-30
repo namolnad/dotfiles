@@ -7,8 +7,6 @@ source /dev/stdin < <(
   done
 )
 
-source ~/.oh-my-zsh/plugins/git/git.plugin.zsh
-
 # #   -----------------------------
 # #   PROMPT
 # #   -----------------------------
