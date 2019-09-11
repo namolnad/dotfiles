@@ -13,8 +13,6 @@ HYPHEN_INSENSITIVE="true"
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-source $ZSH/oh-my-zsh.sh
-
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
@@ -24,7 +22,7 @@ source $ZSH/oh-my-zsh.sh
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions vi-mode zsh-syntax-highlighting)
 
-# source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source $ZSH/oh-my-zsh.sh
 
 # rbenv
 eval "$(rbenv init -)"
