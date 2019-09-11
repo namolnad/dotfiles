@@ -74,3 +74,6 @@
 [submodule ".vim.symlink/bundle/vim-rails"]
 	path = .vim.symlink/bundle/vim-rails
 	url = https://github.com/tpope/vim-rails
+[submodule ".omz_custom.symlink/plugins/zsh-syntax-highlighting"]
+	path = .omz_custom.symlink/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

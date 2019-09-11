@@ -4,7 +4,6 @@
 
 setopt nocorrectall; setopt correct
 
-
 #   ---------------------------
 #   XCODE
 #   ---------------------------
@@ -26,10 +25,6 @@ alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/
 alias mergetool="git mergetool -t opendiff"
 alias gcmp='git compare-commits'
 alias gcmpf='git compare-files'
-
-format-version-diff() {
-  DiffFormatter $@ --project-dir="$HOME/Code/Instacart-ios" --release-manager=$(git config --get user.email)
-}
 
 cherry-pick-latest() {
   gco master
@@ -102,7 +97,7 @@ simulator_screen_recording() {
 }
 
 function cheat() {
-      curl cht.sh/$1
+  curl "cht.sh/$1"
 }
 
 #   ---------------------------
