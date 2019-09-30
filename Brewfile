@@ -11,6 +11,7 @@ end
 tap 'eddieantonio/eddieantonio'
 
 brew 'bat'
+brew 'fasd'
 brew 'fzf'
 brew 'hub'
 brew 'imgcat'

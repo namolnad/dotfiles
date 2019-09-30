@@ -15,6 +15,9 @@ mkdir -p "${GOPATH}"
 # JIRA
 eval "$(jira --completion-script-zsh)"
 
+# FASD
+eval "$(fasd --init auto)"
+
 # Modify PATH for imagmagick
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
 
