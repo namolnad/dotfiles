@@ -6,9 +6,14 @@ for f in $(find $HOME/.custom_credentials -type f); do
 done
 
 # GO
-export GOPATH=$HOME/.go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+mkdir -p "${GOPATH}"
+
+# JIRA
+eval "$(jira --completion-script-zsh)"
 
 # Modify PATH for imagmagick
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
