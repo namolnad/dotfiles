@@ -10,6 +10,7 @@ end
 
 tap 'eddieantonio/eddieantonio'
 
+brew 'aria2'
 brew 'bat'
 brew 'fasd'
 brew 'fzf'
