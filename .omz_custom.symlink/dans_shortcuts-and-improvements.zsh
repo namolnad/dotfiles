@@ -22,7 +22,7 @@ alias gplease="git push origin --force-with-lease"
 alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p'
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
 alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
-alias mergetool="git mergetool -t opendiff"
+alias mergetool="git mergetool"
 alias gcmp='git compare-commits'
 alias gcmpf='git compare-files'
 

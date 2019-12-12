@@ -17,6 +17,7 @@ eval "$(jira --completion-script-zsh)"
 
 # FASD
 eval "$(fasd --init auto)"
+alias v='f -e vim' # quick opening files with vim
 
 # Modify PATH for imagmagick
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
