@@ -1,6 +1,9 @@
 #   ---------------------------
 #   INSTACART
 #   ---------------------------
+#
+# One password command-line tool
+# eval "$(op signin instacart)"
 
 export SUDO_USER='dan.loman'
 export DEFAULT_COUNTRY_SLUG='US'
