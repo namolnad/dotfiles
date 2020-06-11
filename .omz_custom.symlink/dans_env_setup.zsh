@@ -28,6 +28,9 @@ alias v='f -e vim' # quick opening files with vim
 # RIPGREP
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
+# Fastlane
+FASTLANE_SKIP_UPDATE_CHECK=1
+
 # Modify PATH for imagmagick
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
 

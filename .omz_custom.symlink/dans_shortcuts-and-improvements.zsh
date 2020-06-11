@@ -9,6 +9,8 @@ setopt nocorrectall; setopt correct
 #   ---------------------------
 
 alias xcode_clean="rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf ~/Library/Caches/com.apple.dt.Xcode/*"
+alias xcode_indexing_pause="defaults write com.apple.dt.Xcode IDEIndexDisable -bool true"
+alias xcode_indexing_start="defaults delete com.apple.dt.Xcode IDEIndexDisable"
 
 #   ---------------------------
 #   GIT

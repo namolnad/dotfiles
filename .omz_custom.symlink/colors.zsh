@@ -1,6 +1,8 @@
 #   ---------------------------
 #   COLORS
 #   ---------------------------
+# Ensure terminal 256 color compatability is set
+TERM="xterm-256color"
 
 # A more colorful prompt
 c_reset='\[\e[0m\]'                                     # \[\e[0m\] resets the color to default color
