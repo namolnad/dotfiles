@@ -16,39 +16,25 @@
 
 # Rbenv
 !.rbenv
-.rbenv/*
+.rbenv/**
 !.rbenv/version
 
 # Vim
-!.vim.symlink
-/.vim.symlink/.netrwhist
+!.vim.symlink/**
+.vim.symlink/.netrwhist
 
 # Emacs
-!/.emacs.d
-/.emacs.d/*
-!/.emacs.d/personal
-/.emacs.d/personal/*
+/.emacs.d/**
 !/.emacs.d/personal/behavior.el
 !/.emacs.d/personal/packages.el
 
 # Dotfile symlinks
-!/.*.symlink
+!/.**.symlink
 
 # Preferences
-!/Library
-/Library/*
-!/Library/Preferences
-/Library/Preferences/*
-!/Library/Preferences/TabNine
-!/Library/Preferences/TabNine/*
-!/Library/Application\ Support
-/Library/Application\ Support/*
-!/Library/Application\ Support/Code
-/Library/Application\ Support/Code/*
-!/Library/Application\ Support/Code/User
-/Library/Application\ Support/Code/User/*
-!/Library/Application Support/Code/User/keybindings.json
-!/Library/Application Support/Code/User/settings.json
+/Library/**
+!/Library/Preferences/TabNine/tabnine_config.json
+!/Library/Application Support/Code/User/*.json
 
 # Dev setup files
 !Brewfile
@@ -62,11 +48,5 @@ Code/*
 !/Code/Scripts
 
 # Xcode
-!/Library/Developer
-/Library/Developer/*
-!/Library/Developer/Xcode
-/Library/Developer/Xcode/*
-!/Library/Developer/Xcode/UserData
-/Library/Developer/Xcode/UserData/*
+/Library/Developer/**
 !/Library/Developer/Xcode/UserData/CodeSnippets
-
