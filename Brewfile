@@ -24,6 +24,7 @@ brew 'rg'
 brew 'swiftformat'
 brew 'swiftlint'
 brew 'the_silver_searcher'
+brew 'tmux'
 brew 'vim'
 
 tap 'caskroom/fonts'
