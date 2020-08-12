@@ -41,7 +41,7 @@ ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(
 
 # Widgets that accept the suggestion as far as the cursor moves
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
-	forward-word # NOTE: to allow ctrl+space, you must add keyboard input source, tick and untick the keyboard shortcut to 'select previous input source'
+    forward-word # NOTE: to allow ctrl+space, you must go to System Preferences > Keyboard > Input Sources > add keyboard input source (another language); then SP > Keyboard > Shortcuts > Input Sources > tick and untick the keyboard shortcut to 'select previous input source'
 	emacs-forward-word
 	vi-forward-word
 	vi-forward-word-end
