@@ -102,6 +102,16 @@ function cheat() {
   curl "cht.sh/$1"
 }
 
+function gifsim() {
+   xcrun simctl io booted recordVideo "$1"
+
+   ffmpeg -i "$1" -vf \ fps=15,scale=320:-1:flags=lanczos,palettegen "$1".palette.png
+
+   ffmpeg -i "$1" -i "$1".palette.png -filter_complex "fps=15,scale=400:-1:flags=lanczos[x];[x][1:v]paletteuse" "$1".gif
+
+   rm "$1".palette.png
+}
+
 #   ---------------------------
 #   FZF SETUP
 #   ---------------------------
