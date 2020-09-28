@@ -12,6 +12,7 @@
 	default = current
 [pull]
 	default = current
+	rebase = true
 [merge]
 	stat = true
 	tool = diffconflicts
@@ -44,11 +45,16 @@
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [branch]
 	autosetuprebase = always
 [commit]
 	gpgsign = true
 [fetch]
 	prune = true
+[url "ssh://git@github.com/instacart"]
+	insteadOf = https://github.com/instacart
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
