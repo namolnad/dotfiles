@@ -51,3 +51,8 @@ Code/*
 /Library/Developer/**
 !/Library/Developer/Xcode/UserData/CodeSnippets
 DerivedData
+
+# lldb
+!.lldbinit
+!.lldb_helpers.swift
+!.load_swift.py
