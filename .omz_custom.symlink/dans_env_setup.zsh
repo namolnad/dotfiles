@@ -12,14 +12,14 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 mkdir -p "${GOPATH}"
 
-# JIRA
+# Jira CLI completion
 eval "$(jira --completion-script-zsh)"
-
-# GH/Github
-eval "$(gh completion -s zsh)"
 
 # 1Password
 # eval "$(op signin loman)"
+
+# Github CLI completion
+eval "$(gh completion -s zsh)"
 
 # FASD
 eval "$(fasd --init auto)"
