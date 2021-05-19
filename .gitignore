@@ -50,3 +50,4 @@ Code/*
 # Xcode
 /Library/Developer/**
 !/Library/Developer/Xcode/UserData/CodeSnippets
+DerivedData
