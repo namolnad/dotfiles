@@ -49,6 +49,7 @@
 	trustExitCode = true
 [branch]
 	autosetuprebase = always
+	sort = -committerdate
 [commit]
 	gpgsign = false
 [fetch]
