@@ -48,7 +48,7 @@
 [branch]
 	autosetuprebase = always
 [commit]
-	gpgsign = true
+	gpgsign = false
 [fetch]
 	prune = true
 [url "ssh://git@github.com/instacart"]
