@@ -65,6 +65,8 @@ routes_for_controller() {
 #   DAN's
 #   ---------------------------
 
+alias restart_audio='sudo killall coreaudiod;sudo launchctl stop com.apple.audio.coreaudiod;sudo launchctl start com.apple.audio.coreaudiod'
+
 alias lg=". ~/code/dans-scripts/daily_work_log.sh"
 
 standup() {
