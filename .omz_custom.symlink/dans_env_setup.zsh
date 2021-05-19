@@ -15,14 +15,21 @@ mkdir -p "${GOPATH}"
 # Jira CLI completion
 eval "$(jira --completion-script-zsh)"
 
+# JIRA
+_evalcache jira --completion-script-zsh
+# eval "$(jira --completion-script-zsh)"
+
 # 1Password
 # eval "$(op signin loman)"
 
 # Github CLI completion
-eval "$(gh completion -s zsh)"
+_evalcache gh completion -s zsh
+# eval "$(gh completion -s zsh)"
 
 # FASD
-eval "$(fasd --init auto)"
+_evalcache fasd --init auto
+# eval "$(fasd --init auto)"
+
 alias v='f -e vim' # quick opening files with vim
 
 # RIPGREP

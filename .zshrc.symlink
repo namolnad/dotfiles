@@ -1,8 +1,10 @@
-
 # If you come from bash you might have to change your $PATH.
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+
+# For profiling slow start up times https://blog.mattclemente.com/2020/06/26/oh-my-zsh-slow-to-load.html#how-to-test-your-shell-load-time
+# zmodload zsh/zprof
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
@@ -20,12 +22,13 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions vi-mode zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions vi-mode zsh-syntax-highlighting evalcache)
 
 source $ZSH/oh-my-zsh.sh
 
 # rbenv
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
+_evalcache rbenv init -
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
