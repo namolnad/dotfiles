@@ -27,14 +27,14 @@ brew 'the_silver_searcher'
 brew 'tmux'
 brew 'vim'
 
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 tap 'homebrew/cask'
 
-cask 'alfred' unless app_exists?('Alfred 3')
+cask 'alfred' unless app_exists?('Alfred 4')
 cask 'appcleaner' unless app_exists?('AppCleaner')
 cask 'bettertouchtool' unless app_exists?('BetterTouchTool')
 cask 'charles' unless app_exists?('Charles')
-cask 'docker' unless app_exists?('Docker')
+## cask 'docker' unless app_exists?('Docker')
 cask 'dropbox' unless app_exists?('Dropbox')
 cask 'flux' unless app_exists?('Flux')
 cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font Complete.ttf")
@@ -48,11 +48,11 @@ puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unl
 
 mas '1Password 7', id: 1333542190
 mas 'AutoMute', id: 1118136179
-mas 'Bear', id: 1091189122
-mas 'Contrast', id: 1254981365
+## mas 'Bear', id: 1091189122
+## mas 'Contrast', id: 1254981365
 mas 'GIPHY CAPTURE', id: 668208984
-mas 'Markoff', id: 1084713122
+## mas 'Markoff', id: 1084713122
 mas 'Pixelmator', id: 407963104
-mas 'Spark', id: 1176895641
+## mas 'Spark', id: 1176895641
 mas 'Things3', id: 904280696
 mas 'Xcode', id: 497799835 unless app_exists?('Xcode')
