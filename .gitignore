@@ -7,12 +7,16 @@
 !.gitignore
 !.gitmodules
 
-# Dotfile symlinks
+# Dotfiles (some symlinks)
 !.bash_profile.symlink
 !.bashrc.symlink
 !.vimrc.symlink
 !.xvimrc.symlink
 !.zshrc.symlink
+!.ripgreprc
+!.lldbinit
+!.lldb_helpers.swift
+!load_swift.py
 
 # Rbenv
 !.rbenv
@@ -51,8 +55,3 @@ Code/*
 /Library/Developer/**
 !/Library/Developer/Xcode/UserData/CodeSnippets
 DerivedData
-
-# lldb
-!.lldbinit
-!.lldb_helpers.swift
-!load_swift.py
