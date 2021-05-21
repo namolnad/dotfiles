@@ -7,7 +7,7 @@ command alias alias command alias
 alias import command script import
 
 # to run lldb "shell" scripts
-alias source command source
+# alias source command source
 
 # to run a shell command, like `open`
 alias shell platform shell
@@ -17,7 +17,7 @@ settings set target.language swift
 alias clear-lang settings clear target.language
 
 # `load_swift` command is used to load helpers written in swift
-import ~/.load_swift.py
+import ~/load_swift.py
 
 load_swift ~/.lldb_helpers.swift
 
