@@ -18,7 +18,6 @@ brew 'gh'
 brew 'git-delta'
 brew 'imgcat'
 brew 'mas'
-## brew 'pianobar'
 brew 'rbenv'
 brew 'rg'
 brew 'the_silver_searcher'
@@ -35,8 +34,6 @@ cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
 cask 'rocket' unless app_exists?('Rocket')
-## cask 'vanilla' unless app_exists?('Vanilla')
-## cask 'visual-studio-code' unless app_exists?('Visual Studio Code')
 
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
 
