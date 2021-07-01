@@ -12,9 +12,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 mkdir -p "${GOPATH}"
 
-# Jira CLI completion
-eval "$(jira --completion-script-zsh)"
-
 # JIRA
 _evalcache jira --completion-script-zsh
 # eval "$(jira --completion-script-zsh)"
