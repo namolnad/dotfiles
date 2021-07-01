@@ -56,6 +56,8 @@
 	prune = true
 [url "ssh://git@github.com/instacart"]
 	insteadOf = https://github.com/instacart
+[url "ssh://git@github.com/namolnad"]
+	insteadOf = https://github.com/namolnad
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
