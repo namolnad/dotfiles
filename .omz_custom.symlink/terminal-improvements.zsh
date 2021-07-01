@@ -6,7 +6,6 @@
 
 # Delgations to more powerful implementatios
 cat() { bat $@; }                           # Delegate cat to bat
-git() { hub $@; }                           # Delegate git to hub
 alias ls='colorls -lA --sd'                 # Delegate ls to colorls
 
 alias cp='cp -iv'                           # Preferred 'cp' implementation
