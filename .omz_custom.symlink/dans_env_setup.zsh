@@ -1,5 +1,5 @@
-# Default User
 export DEFAULT_USER='danloman'
+export CODE_DIR="$HOME/Developer"
 
 for f in $(find $HOME/.custom_credentials -type f); do
   source "$f"

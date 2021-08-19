@@ -21,7 +21,7 @@ alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
 alias gitlog="git log -15 --oneline --reverse"
 alias gitstat="git status -sb"
 alias gplease="git push origin --force-with-lease"
-alias gpr-ios='git pull-request -F ~/Code/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p'
+alias gpr-ios="git pull-request -F $CODE_DIR/Instacart-ios/.github/PULL_REQUEST_TEMPLATE -o -e -c -p"
 alias gpr-list='g pr list -f "%sC%>(8)%i%Creset  %t% l -----% au  %n"'
 alias grbo="git rebase-origin" # Git rebase origin, -fp flag pushes to origin w/ flag --force-with-lease
 alias mergetool="git mergetool"
@@ -69,15 +69,13 @@ alias be='bundle exec'
 
 alias restart_audio='sudo killall coreaudiod;sudo launchctl stop com.apple.audio.coreaudiod;sudo launchctl start com.apple.audio.coreaudiod'
 
-alias lg=". ~/code/dans-scripts/daily_work_log.sh"
+alias lg=". $CODE_DIR/dans-scripts/daily_work_log.sh"
 
 standup() {
-  ( . /usr/bin/cd ~/Code; git standup -d 7 "$@"; )
+  ( . /usr/bin/cd $CODE_DIR; git standup -d 7 "$@"; )
 }
 
 stand-up() {
-  CODE_DIR="$HOME/Code"
-
   PROJECT_DIRS=( $(builtin cd $CODE_DIR; find -L . -maxdepth 2 -mindepth 0 -name .git) )
   for DIR in ${PROJECT_DIRS}; do
     if [[ ! -d ".git" || -f ".git" ]] ; then
