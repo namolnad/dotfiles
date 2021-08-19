@@ -54,12 +54,14 @@ else
 fi
 
 #   ---------------------------
-#   RAILS
+#   RUBY / RAILS
 #   ---------------------------
 
 routes_for_controller() {
   bundle exec rake routes | grep -i $1
 }
+
+alias be='bundle exec'
 
 #   ---------------------------
 #   DAN's
