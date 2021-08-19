@@ -12,7 +12,8 @@ augroup vimrcEx
   autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
 
-  autocmd BufNewFile,BufRead */Fastfile setfiletype ruby
+  autocmd BufNewFile,BufRead Fastfile setfiletype ruby
+  autocmd BufNewFile,BufRead Jenkinsfile setfiletype groovy
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
   autocmd BufNewFile,BufRead *.swift setfiletype swift
