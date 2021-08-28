@@ -7,7 +7,7 @@
 [submodule ".omz_custom.symlink/themes/powerlevel9k"]
 	path = .oh-my-zsh/custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
-	ignroe = all
+	ignore = all
 [submodule ".vim.symlink/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
