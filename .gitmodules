@@ -77,3 +77,6 @@
 [submodule ".omz_custom.symlink/plugins/evalcache"]
 	path = .oh-my-zsh/custom/plugins/evalcache
 	url = git@github.com:mroth/evalcache
+[submodule "Scripts"]
+	path = Scripts
+	url = https://github.com/namolnad/scripts
