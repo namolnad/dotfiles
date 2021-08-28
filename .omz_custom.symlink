@@ -1,1 +1,3 @@
-find $HOME/Developer/Environment/.oh-my-zsh/custom -name '*.zsh' -exec source '{}' \;
+for file in $(find $HOME/Developer/Environment/.oh-my-zsh/custom -name '*.zsh'); do
+  source "$file"
+done
