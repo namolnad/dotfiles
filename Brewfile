@@ -39,8 +39,8 @@ cask 'rocket' unless app_exists?('Rocket')
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
 
 mas '1Password 7', id: 1333542190 unless app_exists?('1Password 7')
-mas 'AutoMute', id: 1118136179
-mas 'GIPHY CAPTURE', id: 668208984
-mas 'Pixelmator', id: 407963104
-mas 'Things3', id: 904280696
+mas 'AutoMute', id: 1118136179 unless app_exists?('AutoMute')
+mas 'GIPHY CAPTURE', id: 668208984 unless app_exists?('GIPHY CAPTURE')
+mas 'Pixelmator', id: 407963104 unless app_exists?('Pixelmator')
+mas 'Things3', id: 904280696 unless app_exists?('Things')
 mas 'Xcode', id: 497799835 unless app_exists?('Xcode')
