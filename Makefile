@@ -3,5 +3,5 @@
 all: bootstrap
 
 bootstrap: ## Setup machine, dependencies and dev environment
-	@Code/Scripts/bootstrap
+	@Scripts/bootstrap
 
