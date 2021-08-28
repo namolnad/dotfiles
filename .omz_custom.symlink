@@ -1,3 +1,0 @@
-for file in $(find $HOME/Developer/Environment/.oh-my-zsh/custom -name '*.zsh' -maxdepth 1); do
-  source "$file"
-done
