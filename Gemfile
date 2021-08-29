@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.5'
+ruby `cat .rbenv/version`.strip
 
 source "https://rubygems.org"
 
