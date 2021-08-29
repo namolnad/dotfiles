@@ -1,7 +1,4 @@
 GEM
-  specs:
-
-GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.8.0)
@@ -24,7 +21,7 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  colorls!
+  colorls
 
 RUBY VERSION
    ruby 2.6.5p114
