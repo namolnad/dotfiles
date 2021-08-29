@@ -1,7 +1,8 @@
 export DEFAULT_USER='danloman'
 export CODE_DIR="$HOME/Developer"
+export DEV_ENV="$HOME/Developer/Environment"
 
-for f in $(find $HOME/.custom_credentials -type f); do
+for f in $(find $DEV_ENV/.custom_credentials -type f); do
   source "$f"
 done
 
@@ -33,8 +34,8 @@ alias v='f -e vim' # quick opening files with vim
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 # Fastlane
-FASTLANE_SKIP_UPDATE_CHECK=1
-FASTLANE_USERNAME=daniel.h.loman@gmail.com
+export FASTLANE_SKIP_UPDATE_CHECK=1
+export FASTLANE_USERNAME=daniel.h.loman@gmail.com
 
 # Modify PATH for imagmagick
 export PATH="$PATH:/usr/local/opt/imagemagick@6/bin:/usr/local/sbin"
