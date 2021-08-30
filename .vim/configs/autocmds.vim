@@ -13,6 +13,7 @@ augroup vimrcEx
   autocmd FileType python set sw=4 sts=4 et
 
   autocmd BufNewFile,BufRead Fastfile setfiletype ruby
+  autocmd BufNewFile,BufRead *Dangerfile setfiletype ruby
   autocmd BufNewFile,BufRead Jenkinsfile setfiletype groovy
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
