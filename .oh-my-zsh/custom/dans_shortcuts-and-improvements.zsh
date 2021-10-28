@@ -62,6 +62,7 @@ routes_for_controller() {
 }
 
 alias be='bundle exec'
+alias bef='bundle exec fastlane'
 
 #   ---------------------------
 #   DAN's
