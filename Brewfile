@@ -22,7 +22,7 @@ brew 'fzf'
 brew 'gh'
 brew 'git-delta'
 brew 'golang'
-brew 'imgcat'
+brew 'chafa' # brew 'imgcat' # not working on M1 Mac
 brew 'mas'
 brew 'rbenv'
 brew 'rg'
