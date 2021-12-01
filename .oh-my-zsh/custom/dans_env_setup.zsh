@@ -31,8 +31,6 @@ _evalcache gh completion -s zsh
 _evalcache fasd --init auto
 # eval "$(fasd --init auto)"
 
-alias v='f -e vim' # quick opening files with vim
-
 # RIPGREP
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
