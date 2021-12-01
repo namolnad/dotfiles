@@ -6,6 +6,9 @@ for f in $(find $DEV_ENV/.custom_credentials -type f); do
   source "$f"
 done
 
+# BREW
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # GO
 export GOPATH="${HOME}/.go"
 export GOROOT="$(brew --prefix golang)/libexec"
