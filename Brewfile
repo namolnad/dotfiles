@@ -8,6 +8,11 @@ def app_exists?(app_name)
   exists
 end
 
+def mas_unless_exists(app_name, id:)
+  return if app_exists?(app_name)
+  mas app_name, id: id
+end
+
 tap 'eddieantonio/eddieantonio'
 
 brew 'aria2'
@@ -29,18 +34,18 @@ tap 'homebrew/cask'
 
 cask 'alfred' unless app_exists?('Alfred 4')
 cask 'appcleaner' unless app_exists?('AppCleaner')
-cask 'bettertouchtool' unless app_exists?('BetterTouchTool')
 cask 'dropbox' unless app_exists?('Dropbox')
 cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font Complete.ttf")
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
 cask 'rocket' unless app_exists?('Rocket')
 
-puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
+mas_unless_exists '1Password 7', id: 1333542190
+mas_unless_exists 'AutoMute', id: 1118136179
+mas_unless_exists 'GIPHY CAPTURE', id: 668208984
+mas_unless_exists 'Magnet', id: 441258766
+mas_unless_exists 'Notability', id: 360593530
+mas_unless_exists 'Pixelmator', id: 407963104
+mas_unless_exists 'Things3', id: 904280696
 
-mas '1Password 7', id: 1333542190 unless app_exists?('1Password 7')
-mas 'AutoMute', id: 1118136179 unless app_exists?('AutoMute')
-mas 'GIPHY CAPTURE', id: 668208984 unless app_exists?('GIPHY CAPTURE')
-mas 'Pixelmator', id: 407963104 unless app_exists?('Pixelmator')
-mas 'Things3', id: 904280696 unless app_exists?('Things')
-mas 'Xcode', id: 497799835 unless app_exists?('Xcode')
+puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
