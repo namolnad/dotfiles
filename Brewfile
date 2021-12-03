@@ -13,7 +13,7 @@ def mas_unless_exists(app_name, id:)
   mas app_name, id: id
 end
 
-tap 'eddieantonio/eddieantonio'
+# tap 'eddieantonio/eddieantonio' # Until imgcat works on M1
 
 brew 'aria2'
 brew 'bat'
