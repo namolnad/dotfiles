@@ -38,14 +38,15 @@ cask 'dropbox' unless app_exists?('Dropbox')
 cask 'font-hack-nerd-font' unless File.exist?("Library/Fonts/Hack Bold Nerd Font Complete.ttf")
 cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
+cask 'notion' unless app_exists?('Notion')
 cask 'rocket' unless app_exists?('Rocket')
 
 mas_unless_exists '1Password 7', id: 1333542190
 mas_unless_exists 'AutoMute', id: 1118136179
 mas_unless_exists 'GIPHY CAPTURE', id: 668208984
 mas_unless_exists 'Magnet', id: 441258766
-mas_unless_exists 'Notability', id: 360593530
+# mas_unless_exists 'Notability', id: 360593530
 mas_unless_exists 'Pixelmator', id: 407963104
-mas_unless_exists 'Things3', id: 904280696
+# mas_unless_exists 'Things3', id: 904280696
 
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
