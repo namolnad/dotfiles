@@ -16,10 +16,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 mkdir -p "${GOPATH}"
 
-# JIRA
-_evalcache jira --completion-script-zsh
-# eval "$(jira --completion-script-zsh)"
-
 # 1Password
 # eval "$(op signin loman)"
 

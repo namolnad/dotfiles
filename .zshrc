@@ -45,10 +45,3 @@ alias ohmyzsh="e ~/.oh-my-zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-### BEGIN--Instacart Shell Settings. (Updated: Fri Jan 31 12:01:37 PST 2020. [Script Version 1.1.4])
-# This Line Added Automatically by Instacart Setup Script
-# The sourced file contains all of the instacart utilities and shell settings
-# To remove this functionality, leave the block, and enter "NO-TOUCH" in the BEGIN line, and comment the line below:
-source /Users/danloman/.instacart_shell_profile
-### END--Instacart Shell Settings.
