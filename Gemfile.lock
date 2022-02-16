@@ -19,13 +19,14 @@ GEM
 
 PLATFORMS
   -darwin-21
+  arm64-darwin-21
   x86_64-darwin-20
 
 DEPENDENCIES
   colorls
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.7.5p203
 
 BUNDLED WITH
-   2.2.30
+   2.3.7
