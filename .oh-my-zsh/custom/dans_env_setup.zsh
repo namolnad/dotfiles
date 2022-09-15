@@ -6,6 +6,8 @@ for f in $(find $DEV_ENV/.custom_credentials -type f); do
   source "$f"
 done
 
+export PATH="$PATH:/usr/local/opt"
+
 # BREW
 eval "$(/opt/homebrew/bin/brew shellenv)"
 

@@ -13,6 +13,7 @@
 [pull]
 	default = current
 	rebase = true
+	ff = only
 [merge]
 	stat = true
 	tool = diffconflicts

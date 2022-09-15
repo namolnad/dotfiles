@@ -41,6 +41,7 @@ cask 'gitup' unless app_exists?('GitUp')
 cask 'iterm2' unless app_exists?('iTerm')
 cask 'notion' unless app_exists?('Notion')
 cask 'rocket' unless app_exists?('Rocket')
+cask 'xcodes' unless app_exists?('Xcodes')
 
 mas_unless_exists '1Password 7', id: 1333542190
 mas_unless_exists 'AutoMute', id: 1118136179

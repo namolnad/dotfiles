@@ -43,6 +43,7 @@ recent-branches() {
 #   EDITORS
 #   ---------------------------
 
+alias code="open -a \"Visual Studio Code\" $@"
 alias e=code                                         # Edit in VSCode
 alias edit='code'                                    # edit: Opens any file in VSCode editor
 
