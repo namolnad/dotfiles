@@ -205,6 +205,22 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 # Stop iTunes from responding to the keyboard media keys
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
+# Disable input ^+space Input Sources "Select the previous input source"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "
+  <dict>
+    <key>enabled</key><false/>
+    <key>value</key><dict>
+      <key>type</key><string>standard</string>
+      <key>parameters</key>
+      <array>
+        <integer>32</integer>
+        <integer>49</integer>
+        <integer>262144</integer>
+      </array>
+    </dict>
+  </dict>
+"
+
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
@@ -336,8 +352,8 @@ defaults write com.apple.dock mouse-over-hilite-stack -bool true
 defaults write com.apple.dock tilesize -int 48
 
 # Change minimize/maximize window effect
-defaults write com.apple.dock mineffect -string "suck"
-# defaults write com.apple.dock mineffect -string "scale"
+# defaults write com.apple.dock mineffect -string "suck"
+defaults write com.apple.dock mineffect -string "scale"
 
 # Minimize windows into their application’s icon
 defaults write com.apple.dock minimize-to-application -bool false
@@ -380,8 +396,11 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
-# Don't make Dock icons of hidden applications translucent
-defaults write com.apple.dock showhidden -bool false
+# Orient the dock on the left of the screen
+defaults write com.apple.dock orientation -string "left"
+
+# Make Dock icons of hidden applications translucent
+defaults write com.apple.dock showhidden -bool true
 
 # Disable the Launchpad gesture (pinch with thumb and three fingers)
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
@@ -393,7 +412,8 @@ find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -dele
 sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/iOS Simulator.app" "/Applications/iOS Simulator.app"
 
 # Add a spacer to the left side of the Dock (where the applications are)
-#defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="small-spacer-tile";}'
+defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="small-spacer-tile";}'
 # Add a spacer to the right side of the Dock (where the Trash is)
 #defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
 
@@ -678,8 +698,10 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 xcrun simctl spawn booted log config --mode "level:off"  --subsystem com.apple.CoreTelephony
 
 ###############################################################################
-# Kill affected applications                                                  #
+# Apply settings / Kill affected applications                                 #
 ###############################################################################
+
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 	"Dock" "Finder" "Google Chrome" "Google Chrome Canary" "Mail" "Messages" \
