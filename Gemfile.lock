@@ -1,21 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
-    clocale (0.0.4)
-    colorls (1.4.4)
-      addressable (~> 2.7)
-      clocale (~> 0)
-      filesize (~> 0)
-      manpages (~> 0)
-      rainbow (>= 2.2, < 4.0)
-      unicode-display_width (>= 1.7, < 3.0)
-    filesize (0.2.0)
-    manpages (0.6.1)
-    public_suffix (4.0.6)
-    rainbow (3.0.0)
-    unicode-display_width (2.0.0)
 
 PLATFORMS
   -darwin-21
@@ -23,7 +8,6 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  colorls
 
 RUBY VERSION
    ruby 2.7.5p203

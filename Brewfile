@@ -17,6 +17,7 @@ end
 
 brew 'aria2'
 brew 'bat'
+brew 'exa'
 brew 'fasd'
 brew 'fd'
 brew 'fzf'
@@ -27,6 +28,7 @@ brew 'chafa' # brew 'imgcat' # not working on M1 Mac
 brew 'mas'
 brew 'rbenv'
 brew 'rg'
+brew 'sd'
 brew 'the_silver_searcher'
 brew 'vim'
 
