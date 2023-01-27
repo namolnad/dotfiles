@@ -50,7 +50,7 @@ mas_unless_exists 'AutoMute', id: 1118136179
 mas_unless_exists 'GIPHY CAPTURE', id: 668208984
 mas_unless_exists 'Magnet', id: 441258766
 # mas_unless_exists 'Notability', id: 360593530
-mas_unless_exists 'Pixelmator', id: 407963104
+mas_unless_exists 'Pixelmator Pro', id: 1289583905
 # mas_unless_exists 'Things3', id: 904280696
 
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
