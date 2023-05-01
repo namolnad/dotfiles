@@ -120,6 +120,9 @@ function gifsim() {
    rm "$1".palette.png
 }
 
+# Random bytes of count (hex string)
+alias rand='openssl rand -hex'
+
 #   ---------------------------
 #   FZF SETUP
 #   ---------------------------
