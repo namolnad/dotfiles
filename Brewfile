@@ -30,6 +30,8 @@ brew 'rg'
 brew 'sd'
 brew 'the_silver_searcher'
 brew 'vim'
+brew 'v'
+brew 'z'
 
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask'

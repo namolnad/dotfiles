@@ -69,8 +69,6 @@ alias bef='bundle exec fastlane'
 #   DAN's
 #   ---------------------------
 
-alias v='f -e vim' # quick opening files with vim
-
 alias imgcat='chafa'
 
 alias restart_audio='sudo killall coreaudiod;sudo launchctl stop com.apple.audio.coreaudiod;sudo launchctl start com.apple.audio.coreaudiod'
