@@ -28,13 +28,6 @@ alias mergetool="git mergetool"
 alias gcmp='git compare-commits'
 alias gcmpf='git compare-files'
 
-cherry-pick-latest() {
-  gco master
-  ggpull
-  g rev-parse head | pbcopy
-  gco "releases/$1" && ggpull && gcp $(pbpaste)
-}
-
 recent-branches() {
   git recent-branches
 }
