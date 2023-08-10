@@ -18,7 +18,6 @@ end
 brew 'aria2'
 brew 'bat'
 brew 'exa'
-brew 'fasd'
 brew 'fd'
 brew 'fzf'
 brew 'gh'

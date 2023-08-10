@@ -25,10 +25,6 @@ mkdir -p "${GOPATH}"
 _evalcache gh completion -s zsh
 # eval "$(gh completion -s zsh)"
 
-# FASD
-_evalcache fasd --init auto
-# eval "$(fasd --init auto)"
-
 # RIPGREP
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
