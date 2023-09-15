@@ -6,7 +6,7 @@
 
 # Delgations to more powerful implementatios
 cat() { bat $@; }                           # Delegate cat to bat
-alias ls='exa --long --all --group-directories-first --color-scale --icons --octal-permissions --git --header'                 # Delegate ls to exa
+alias ls='eza --long --all --group-directories-first --color-scale --icons --octal-permissions --git --header'                 # Delegate ls to eza
 
 alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
