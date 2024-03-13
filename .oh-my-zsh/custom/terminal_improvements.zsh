@@ -1,5 +1,4 @@
 
-
 #   -----------------------------
 #   MAKE TERMINAL BETTER
 #   -----------------------------
@@ -32,6 +31,31 @@ trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the 
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
+alias rand='openssl rand -hex'              # rand:         Random bytes of count (hex string)
+cheat() { curl "cht.sh/$1"; }               # cheat:        Get help on a command
+alias add-dock-spacer="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
+alias be='bundle exec'                      # be:           Run bundle exec
+
+#   ---------------------------
+#   EDITORS
+#   ---------------------------
+
+alias code="open -a \"Visual Studio Code\" $@"
+alias e=nvim                                         # Edit in neovim
+alias edit='nvim'                                    # edit: Opens any file in neovim editor
+alias v=nvim                                         # v: Opens neovim in the terminal
+alias t="tmux"                                       # t: Opens tmux in the terminal
+
+#   ---------------------------
+#   GIT
+#   ---------------------------
+
+alias gap="git add -p"
+alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
+alias gitlog="git log -15 --oneline --reverse"
+alias gitstat="git status -sb"
+alias gplease="git push origin --force-with-lease"
+
 #   ---------------------------
 #   NETWORKING
 #   ---------------------------
@@ -46,8 +70,13 @@ alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on 
 alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
+port() { lsof -i ":$1"; }                           # port:         Checks what's running on port
 
-
+kill_port() {
+  for PID in $(port $1 | awk '/a/ {print $2 }');
+    do kill -9 "$PID";
+  done;
+}                                                  # kill_port:    Kill all processes running on port
 
 #   ---------------------------
 #   HOST RELATED INFO
