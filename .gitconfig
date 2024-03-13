@@ -54,8 +54,6 @@
 	gpgsign = false
 [fetch]
 	prune = true
-[url "ssh://git@github.com/instacart"]
-	insteadOf = https://github.com/instacart
 [url "ssh://git@github.com/namolnad"]
 	insteadOf = https://github.com/namolnad
 [filter "lfs"]
@@ -78,14 +76,14 @@
 [color]
 	ui = true
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [delta]
-    features = side-by-side line-numbers decorations
-    whitespace-error-style = 22 reverse
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
 [init]
 	defaultBranch = main
 [includeIf "gitdir/i:~/developer/work/"] ; ordering matters, if this is included early it will be overwritten

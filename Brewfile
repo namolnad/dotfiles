@@ -13,8 +13,6 @@ def mas_unless_exists(app_name, id:)
   mas app_name, id: id
 end
 
-# tap 'eddieantonio/eddieantonio' # Until imgcat works on M1
-
 brew 'aria2'
 brew 'bat'
 brew 'eza'
@@ -23,13 +21,13 @@ brew 'fzf'
 brew 'gh'
 brew 'git-delta'
 brew 'golang'
-brew 'chafa' # brew 'imgcat' # not working on M1 Mac
+brew 'eddieantonio/eddieantonio/imgcat'
 brew 'mas'
 brew 'rbenv'
 brew 'rg'
 brew 'sd'
 brew 'the_silver_searcher'
-brew 'vim'
+brew 'nvim'
 brew 'v'
 brew 'z'
 
@@ -46,12 +44,11 @@ cask 'notion' unless app_exists?('Notion')
 cask 'rocket' unless app_exists?('Rocket')
 cask 'xcodes' unless app_exists?('Xcodes')
 
-mas_unless_exists '1Password 7', id: 1333542190
+mas_unless_exists '1Password', id: 443987910 # Unsure if this is the right ID for v8
 mas_unless_exists 'AutoMute', id: 1118136179
 mas_unless_exists 'GIPHY CAPTURE', id: 668208984
 mas_unless_exists 'Magnet', id: 441258766
-# mas_unless_exists 'Notability', id: 360593530
 mas_unless_exists 'Pixelmator Pro', id: 1289583905
-# mas_unless_exists 'Things3', id: 904280696
+mas_unless_exists 'BetterTouchTool', id: 428937561 # Unsure if this is the right ID
 
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?

@@ -42,9 +42,9 @@ alias be='bundle exec'                      # be:           Run bundle exec
 
 alias code="open -a \"Visual Studio Code\" $@"
 alias e=nvim                                         # Edit in neovim
-alias edit='nvim'                                    # edit: Opens any file in neovim editor
-alias v=nvim                                         # v: Opens neovim in the terminal
-alias t="tmux"                                       # t: Opens tmux in the terminal
+alias edit=nvim                                      # edit: Opens any file in neovim editor
+alias t=tmux                                         # t: Opens tmux in the terminal
+alias vim=nvim                                       # vim: Opens vim in the terminal
 
 #   ---------------------------
 #   GIT
