@@ -22,3 +22,8 @@ nnoremap <leader>c :ALEFix<cr>
 " with xargs without -o argument)
 " noremap! <C-?> <C-h>
 
+nnoremap <leader>p "_dP
+
+" nnoremap("<leader>y", "\"+y")
+" nnoremap("<leader>y", "\"+y")
+" nmap("<leader>Y", "\"+Y")
