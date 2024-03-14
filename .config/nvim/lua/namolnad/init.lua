@@ -3,21 +3,10 @@ require("namolnad.remap")
 
 require("namolnad.lazy_init")
 
--- DO.not
--- DO NOT INCLUDE THIS
-
--- If i want to keep doing lsp debugging
--- function restart_htmx_lsp()
---     require("lsp-debug-tools").restart({ expected = {}, name = "htmx-lsp", cmd = { "htmx-lsp", "--level", "DEBUG" }, root_dir = vim.loop.cwd(), });
--- end
-
--- DO NOT INCLUDE THIS
--- DO.not
-
 local augroup = vim.api.nvim_create_augroup
 local NamolnadGroup = augroup('Namolnad', {})
-
 local autocmd = vim.api.nvim_create_autocmd
+
 local yank_group = augroup('HighlightYank', {})
 
 function R(name)
@@ -61,6 +50,17 @@ autocmd('LspAttach', {
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+    end
+})
+
+-- Jump to last cursor position unless it's invalid or in an event handler
+autocmd('BufReadPost', {
+    group = NamolnadGroup,
+    pattern = "*",
+    callback = function()
+        if vim.fn.line("''") > 0 and vim.fn.line("''") <= vim.fn.line("$") then
+            vim.cmd("normal g`\"")
+        end
     end
 })
 
