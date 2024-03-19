@@ -21,12 +21,17 @@ end)
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- Copy to global pasteboard
+vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
+vim.keymap.set("n", "<leader>Y", [["*Y]])
+
+-- Paste from global pasteboard
+-- vim.keymap.set({ "n", "v" }, "<leader>p", [["*p]])
+-- vim.keymap.set("n", "<leader>P", [["*P]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
--- This is going to get me cancelled
+-- Esc vs Ctrl-c... Who gives a damn?
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
@@ -47,6 +52,18 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 --     "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 -- )
 
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
+-- vim.keymap.set("n", "<leader><leader>", function()
+--     vim.cmd("so")
+-- end)
+
+vim.keymap.set("n", "<leader><leader>", '<C-^>')
+
+-- Move around splits with <c-hjkl>
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- Switch to previous/next buffer
+vim.keymap.set("n", "<C-Tab>", "<cmd>bnext<CR>")
+vim.keymap.set("n", "<C-S-Tab>", "<cmd>bprevious<CR>")
