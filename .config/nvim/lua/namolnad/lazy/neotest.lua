@@ -19,12 +19,12 @@ return {
             min_init = "./scripts/tests/minimal.vim",
           }),
           -- ruby
-          require("neotest-vim-test").setup({
-            file_pattern = "spec/*_spec.rb",
-            test_pattern = "it '",
-            test_file_pattern = "spec/%s_spec.rb",
-            test_command = "bundle exec rspec %s",
-          }),
+          -- require("neotest-vim-test").setup({
+          --   file_pattern = "spec/*_spec.rb",
+          --   test_pattern = "it '",
+          --   test_file_pattern = "spec/%s_spec.rb",
+          --   test_command = "bundle exec rspec %s",
+          -- }),
         }
       })
 
