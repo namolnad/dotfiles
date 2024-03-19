@@ -72,6 +72,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
+# This seems to be required to make `v` delegate to nvim
+export vim='nvim'
 
 #   ---------------------------
 #   FZF SETUP
