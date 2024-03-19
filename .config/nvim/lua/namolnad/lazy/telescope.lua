@@ -10,13 +10,30 @@ return {
     require('telescope').setup({
       pickers = {
         find_files = {
-          find_command = { 'rg', '--hidden', '--no-ignore', '--files', '--glob=!.git/', '--smart-case' },
+          find_command = {
+            'rg',
+            '--hidden',
+            '--no-ignore',
+            '--files',
+            '--smart-case',
+            '--glob=!.git/',
+            '--glob=!node_modules',
+            '--glob=!.DS_Store',
+            '--glob=!.vim/undodir/',
+          },
           -- vimgrep_argments = { '--hidden', '--glob=!.git/' } -- can't seem to make this work
         },
         live_grep = {
           -- find_command = { 'rg', '--ignore', '--hidden', '--glob=!.git/', '--smart-case' }, -- can't seem to make this work
-          file_ignore_patterns = { 'node_modules' },
-          additional_args = { '--hidden', '--no-ignore', '--glob=!.git/', '--smart-case' }
+          file_ignore_patterns = { 'node_modules', 'app/assets/builds', '.git/', 'log/test.log', 'package.lock' },
+          additional_args = {
+            '--hidden',
+            '--no-ignore',
+            '--smart-case',
+            '--glob=!.git/',
+            '--glob=!log/test.log',
+            '--glob=!.DS_Store',
+          }
         }
       }
     })
