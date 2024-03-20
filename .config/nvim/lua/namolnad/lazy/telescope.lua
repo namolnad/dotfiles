@@ -3,11 +3,14 @@ return {
 
   tag = "0.1.5",
   dependencies = {
-    "nvim-lua/plenary.nvim"
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-frecency.nvim",
   },
 
   config = function()
-    require('telescope').setup({
+    local telescope = require('telescope')
+    telescope.load_extension('frecency')
+    telescope.setup({
       pickers = {
         find_files = {
           find_command = {
@@ -42,6 +45,8 @@ return {
     vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
     vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
     vim.keymap.set('n', '<leader>fs', builtin.live_grep, {})
+    vim.keymap.set('n', '<leader>fr', "<cmd>Telescope frecency workspace=CWD<cr>", {})
+    vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
     vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
     vim.keymap.set('n', '<leader>fm', builtin.man_pages, {})
