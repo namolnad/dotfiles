@@ -21,6 +21,7 @@ return {
       {},
       vim.lsp.protocol.make_client_capabilities(),
       cmp_lsp.default_capabilities())
+    local lspconfig = require("lspconfig")
 
     require("fidget").setup({})
     require("mason").setup()
@@ -28,18 +29,26 @@ return {
       ensure_installed = {
         "lua_ls",
         "ruby_ls",
+        "solargraph",
         "rust_analyzer",
         "tsserver",
       },
       handlers = {
-        function(server_name)         -- default handler (optional)
-          require("lspconfig")[server_name].setup {
-            capabilities = capabilities
+        function(server_name)
+          lspconfig[server_name].setup {
+            capabilities = capabilities,
+            on_attach = function()
+            end
+          }
+        end,
+
+        ["ruby_ls"] = function()
+          lspconfig.ruby_ls.setup {
+            cmd = { "bundle", "exec", "ruby-lsp" },
           }
         end,
 
         ["lua_ls"] = function()
-          local lspconfig = require("lspconfig")
           lspconfig.lua_ls.setup {
             capabilities = capabilities,
             settings = {

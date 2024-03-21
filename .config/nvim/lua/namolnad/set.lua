@@ -48,7 +48,8 @@ local autocmd = vim.api.nvim_create_autocmd
 
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = IndentationGroup,
-  pattern = { "*.rake",
+  pattern = {
+    "*.rake",
     "*.eruby",
     "Rakefile",
     "Gemfile",
