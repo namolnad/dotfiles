@@ -1,8 +1,8 @@
+local Namolnad_Commentary = vim.api.nvim_create_augroup('Namolnad_Commentary', { clear = true })
+
 return {
   'tpope/vim-commentary',
-
   config = function()
-    local Namolnad_Commentary = vim.api.nvim_create_augroup('Namolnad_Commentary', { clear = true })
     local autocmd = vim.api.nvim_create_autocmd
 
     autocmd('FileType', {
