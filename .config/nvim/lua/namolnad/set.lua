@@ -17,7 +17,7 @@ vim.g.netrw_winsize = 25
 --  For more options, you can see `:help option-list`
 
 -- Use line curose for insert, block for normal mode
-vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25-blinkwait700-blinkon400-blinkoff250" --blinkon0 turns off the cursor blink
+vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25-blinkwait700-blinkon400-blinkoff250' --blinkon0 turns off the cursor blink
 
 -- Make line numbers default
 vim.opt.number = true
@@ -47,7 +47,7 @@ vim.opt.smartindent = true
 
 -- Save undo history
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -89,9 +89,9 @@ vim.opt.backup = false
 
 vim.opt.termguicolors = true
 
-vim.opt.isfname:append("@-@")
+vim.opt.isfname:append '@-@'
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = '80'
 
 vim.opt.visualbell = true
 
@@ -99,5 +99,5 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 function R(name)
-  require("plenary.reload").reload_module(name)
+  require('plenary.reload').reload_module(name)
 end

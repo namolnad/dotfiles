@@ -24,7 +24,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
-    local telescope = require('telescope')
+    local telescope = require 'telescope'
     -- Two important keymaps to use while in Telescope are:
     --  - Insert mode: <c-/>
     --  - Normal mode: ?
@@ -61,7 +61,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
         },
         live_grep = {
           -- find_command = { 'rg', '--ignore', '--hidden', '--glob=!.git/', '--smart-case' }, -- can't seem to make this work
-          file_ignore_patterns = { 'node_modules', 'app/assets/builds', '.git/', 'log/test.log', 'package.lock' },
+          file_ignore_patterns = {
+            'node_modules',
+            'app/assets/builds',
+            '.git/',
+            'log/test.log',
+            'package.lock',
+          },
           additional_args = {
             '--hidden',
             '--no-ignore',
@@ -69,8 +75,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
             '--glob=!.git/',
             '--glob=!log/test.log',
             '--glob=!.DS_Store',
-          }
-        }
+          },
+        },
       },
       extensions = {
         ['ui-select'] = {
@@ -95,17 +101,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sm', builtin.man_pages, {})
     vim.keymap.set('n', '<leader>sg', builtin.git_files, {})
     vim.keymap.set('n', '<leader>sR', builtin.resume, { desc = '[S]earch [R]esume' })
-    vim.keymap.set('n', '<leader>sr', "<cmd>Telescope frecency workspace=CWD<cr>", {})
+    vim.keymap.set('n', '<leader>sr', '<cmd>Telescope frecency workspace=CWD<cr>', {})
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
     vim.keymap.set('n', '<leader>sw', function()
-      local word = vim.fn.expand("<cword>")
-      builtin.grep_string({ search = word })
+      local word = vim.fn.expand '<cword>'
+      builtin.grep_string { search = word }
     end, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sW', function()
-      local word = vim.fn.expand("<cWORD>")
-      builtin.grep_string({ search = word })
+      local word = vim.fn.expand '<cWORD>'
+      builtin.grep_string { search = word }
     end, { desc = '[S]earch current [W]ord' })
 
     -- Slightly advanced example of overriding default behavior and theme
@@ -132,4 +138,3 @@ return { -- Fuzzy Finder (files, lsp, etc)
     end, { desc = '[S]earch [N]eovim files' })
   end,
 }
-

@@ -13,88 +13,88 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = NamolnadGroup,
   callback = function()
-    vim.highlight.on_yank({
+    vim.highlight.on_yank {
       higroup = 'IncSearch',
       pattern = '*',
       timeout = 40,
-    })
+    }
   end,
 })
 
 -- Remove trailing whitespace on save
-autocmd({ "BufWritePre" }, {
+autocmd({ 'BufWritePre' }, {
   group = NamolnadGroup,
-  pattern = "*",
+  pattern = '*',
   command = [[%s/\s\+$//e]],
 })
 
 -- Jump to last cursor position unless it's invalid or in an event handler
 autocmd('BufReadPost', {
   group = NamolnadGroup,
-  pattern = "*",
+  pattern = '*',
   callback = function()
-    if vim.fn.line("''") > 0 and vim.fn.line("''") <= vim.fn.line("$") then
-      vim.cmd("normal g`\"")
+    if vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
+      vim.cmd 'normal g`"'
     end
-  end
+  end,
 })
 
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = NamolnadGroup,
   pattern = {
-    "*.rake",
-    "*.eruby",
-    "Rakefile",
-    "Gemfile",
-    "*.ircrc",
-    "*.ru",
-    "*.gemspec",
-    "*.erb",
+    '*.rake',
+    '*.eruby',
+    'Rakefile',
+    'Gemfile',
+    '*.ircrc',
+    '*.ru',
+    '*.gemspec',
+    '*.erb',
   },
   callback = function()
-    vim.bo.filetype = "ruby"
-  end
+    vim.bo.filetype = 'ruby'
+  end,
 })
 
 autocmd('FileType', {
   group = NamolnadGroup,
   pattern = {
-    "ruby",
-    "typescript",
-    "javascript",
-    "typescriptreact",
-    "javascriptreact",
-    "lua",
-    "slim",
-    "sh",
-    "zsh",
-    "bash",
-    "fish",
-    "vim",
+    'ruby',
+    'typescript',
+    'javascript',
+    'typescriptreact',
+    'javascriptreact',
+    'lua',
+    'slim',
+    'sh',
+    'zsh',
+    'bash',
+    'fish',
+    'vim',
   },
   callback = function()
     vim.bo.shiftwidth = 2
     vim.bo.softtabstop = 2
     vim.bo.tabstop = 2
-  end
+  end,
 })
 
 autocmd('FileType', {
   group = NamolnadGroup,
-  pattern = { "python", "go", "swift" },
+  pattern = { 'python', 'go', 'swift' },
   callback = function()
     vim.bo.shiftwidth = 4
     vim.bo.softtabstop = 4
     vim.bo.tabstop = 4
-  end
+  end,
 })
 
 autocmd('FileType', {
   group = NamolnadGroup,
-  pattern = "markdown",
+  pattern = 'markdown',
   callback = function()
-    vim.bo.formatoptions = "tcroqn2"
-    vim.bo.comments = "n:&gt;"
-    vim.bo.syn = "off"
-  end
+    vim.bo.formatoptions = 'tcroqn2'
+    vim.bo.comments = 'n:&gt;'
+    vim.bo.syn = 'off'
+  end,
 })

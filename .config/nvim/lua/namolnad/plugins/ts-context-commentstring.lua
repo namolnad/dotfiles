@@ -1,5 +1,4 @@
 return {
-  "JoosepAlviste/nvim-ts-context-commentstring",
-  config = function()
-  end,
+  'JoosepAlviste/nvim-ts-context-commentstring',
+  config = function() end,
 }

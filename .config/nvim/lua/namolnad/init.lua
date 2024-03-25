@@ -1,6 +1,6 @@
-require("namolnad.set")
-require("namolnad.remap")
-require("namolnad.autocmds")
+require 'namolnad.set'
+require 'namolnad.remap'
+require 'namolnad.autocmds'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -9,9 +9,9 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  spec = "namolnad.plugins",
-  change_detection = { notify = false }
+require('lazy').setup({
+  spec = 'namolnad.plugins',
+  change_detection = { notify = false },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

@@ -1,4 +1,4 @@
-return {  -- LSP Configuration & Plugins
+return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -125,11 +125,7 @@ return {  -- LSP Configuration & Plugins
     --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
     --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend(
-      'force',
-      capabilities,
-      require('cmp_nvim_lsp').default_capabilities()
-    )
+    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -182,7 +178,7 @@ return {  -- LSP Configuration & Plugins
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      'stylua',   -- Used to format Lua code
+      'stylua', -- Used to format Lua code
       'lua_ls',
       'ruby_ls',
       'rubocop',
@@ -191,7 +187,7 @@ return {  -- LSP Configuration & Plugins
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    local lspconfig = require('lspconfig')
+    local lspconfig = require 'lspconfig'
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)
@@ -203,37 +199,37 @@ return {  -- LSP Configuration & Plugins
           lspconfig[server_name].setup(server)
         end,
 
-        ["ruby_ls"] = function()
+        ['ruby_ls'] = function()
           lspconfig.ruby_ls.setup {
-            cmd = { "bundle", "exec", "ruby-lsp" },
+            cmd = { 'bundle', 'exec', 'ruby-lsp' },
           }
         end,
 
-        ["lua_ls"] = function()
+        ['lua_ls'] = function()
           lspconfig.lua_ls.setup {
             capabilities = capabilities,
             settings = {
               Lua = {
                 diagnostics = {
-                  globals = { "vim", "it", "describe", "before_each", "after_each" },
-                }
-              }
-            }
+                  globals = { 'vim', 'it', 'describe', 'before_each', 'after_each' },
+                },
+              },
+            },
           }
         end,
       },
     }
 
-    vim.diagnostic.config({
+    vim.diagnostic.config {
       -- update_in_insert = true,
       float = {
         focusable = false,
-        style = "minimal",
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
+        style = 'minimal',
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
       },
-    })
+    }
   end,
 }

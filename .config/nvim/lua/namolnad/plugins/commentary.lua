@@ -1,16 +1,16 @@
 return {
-  "tpope/vim-commentary",
+  'tpope/vim-commentary',
 
   config = function()
-    local Namolnad_Commentary = vim.api.nvim_create_augroup("Namolnad_Commentary", { clear = true })
+    local Namolnad_Commentary = vim.api.nvim_create_augroup('Namolnad_Commentary', { clear = true })
     local autocmd = vim.api.nvim_create_autocmd
 
-    autocmd("FileType", {
+    autocmd('FileType', {
       group = Namolnad_Commentary,
-      pattern = { "typescriptreact", "javascriptreact" },
+      pattern = { 'typescriptreact', 'javascriptreact' },
       callback = function()
-        vim.commentstring = "{/* %s */}"
+        vim.commentstring = '{/* %s */}'
       end,
     })
-  end
+  end,
 }
