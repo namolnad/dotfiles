@@ -1,4 +1,0 @@
-" set runtime path to include fzf
-set rtp+=/usr/local/opt/fzf
-
-Plugin 'junegunn/fzf.vim'

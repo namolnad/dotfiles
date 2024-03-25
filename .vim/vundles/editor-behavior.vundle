@@ -1,8 +1,0 @@
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-pathogen'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'thaerkh/vim-indentguides'
