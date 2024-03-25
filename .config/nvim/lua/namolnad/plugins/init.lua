@@ -5,6 +5,7 @@ return {
   },
   "github/copilot.vim",
   "gpanders/editorconfig.nvim",
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   {
     "rails_schema",
     dir = "~/Developer/rails_schema.nvim",
