@@ -35,8 +35,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# z
-source "$(brew --prefix)/etc/profile.d/z.sh"
+# zoxide
+export _ZO_DATA_DIR="$HOME/.zoxide"
+export _ZO_ECHO=1
+eval "$(zoxide init zsh)"
+# _evalcache zoxide init zsh
+
+# # z
+# source "$(brew --prefix)/etc/profile.d/z.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
