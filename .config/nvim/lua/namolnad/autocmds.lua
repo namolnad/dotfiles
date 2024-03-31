@@ -33,7 +33,7 @@ autocmd('BufReadPost', {
   group = NamolnadGroup,
   pattern = '*',
   callback = function()
-    if vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
+    if vim.bo.ft ~= 'fugitive' and vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
       vim.cmd 'normal g`"'
     end
   end,

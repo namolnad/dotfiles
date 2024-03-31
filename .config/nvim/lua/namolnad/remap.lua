@@ -23,13 +23,6 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
-vim.keymap.set('n', '<leader>vwm', function()
-  require('vim-with-me').StartVimWithMe()
-end)
-vim.keymap.set('n', '<leader>svwm', function()
-  require('vim-with-me').StopVimWithMe()
-end)
-
 -- greatest remap ever
 vim.keymap.set('x', '<leader>p', [["_dP]])
 
@@ -39,8 +32,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader>y', [["*y]])
 vim.keymap.set('n', '<leader>Y', [["*Y]])
 
 -- Paste from global pasteboard
--- vim.keymap.set({ "n", "v" }, "<leader>p", [["*p]])
--- vim.keymap.set("n", "<leader>P", [["*P]])
+vim.keymap.set('n', '<leader>p', [["*p]])
+vim.keymap.set('n', '<leader>P', [["*P]])
 
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
