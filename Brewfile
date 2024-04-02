@@ -15,6 +15,7 @@ end
 
 brew 'aria2'
 brew 'bat'
+brew 'blueutil'
 brew 'eza'
 brew 'fd'
 brew 'fzf'
