@@ -2,7 +2,7 @@
 --  See `:help vim.keymap.set()`
 
 -- Highlight on search, but clear on pressing <Esc> in normal mode
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlights on Esc' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -12,56 +12,50 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Open Ex command line' })
 
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move visual selection down one line' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move visual selection up one line' })
 
-vim.keymap.set('n', 'J', 'mzJ`z')
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'join lines and keep cursor position' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move down half page and center cursor' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move up half page and center cursor' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Move to next search result and center cursor' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Move to previous search result and center cursor' })
 
 -- greatest remap ever
-vim.keymap.set('x', '<leader>p', [["_dP]])
+vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over visual selection without replacing default register contents' })
 
 -- next greatest remap ever : asbjornHaland
 -- Copy to global pasteboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', [["*y]])
-vim.keymap.set('n', '<leader>Y', [["*Y]])
+vim.keymap.set({ 'n', 'v' }, '<leader>y', [["*y]], { desc = 'Yank to global pasteboard' })
+vim.keymap.set('n', '<leader>Y', [["*Y]], { desc = 'Yank (back) to global pasteboard' })
 
 -- Paste from global pasteboard
-vim.keymap.set('n', '<leader>p', [["*p]])
-vim.keymap.set('n', '<leader>P', [["*P]])
+vim.keymap.set('n', '<leader>p', [["*p]], { desc = 'Paste from global pasteboard' })
+vim.keymap.set('n', '<leader>P', [["*P]], { desc = 'Paste (back) from global pasteboard' })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 -- Esc vs Ctrl-c... Who gives a damn?
-vim.keymap.set('i', '<C-c>', '<Esc>')
+vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Use <C-c> to escape' })
 
-vim.keymap.set('n', 'Q', '<nop>')
-vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
+vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode' })
+vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Open tmux sessionizer' })
 
-vim.keymap.set('n', '<C-K>', '<cmd>cnext<CR>zz')
-vim.keymap.set('n', '<C-J>', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
-
-vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Globally replace word under cursor' })
 
 -- vim.keymap.set("n", "<leader><leader>", function()
 --     vim.cmd("so")
 -- end)
 
-vim.keymap.set('n', '<leader><leader>', '<C-^>')
+vim.keymap.set('n', '<leader><leader>', '<C-^>', { desc = 'Switch between last two buffers' })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>', { silent = true, desc = 'Disable <left>' })
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>', { silent = true, desc = 'Disable <right>' })
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', { silent = true, desc = 'Disable <up>' })
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', { silent = true, desc = 'Disable <down>' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -72,11 +66,5 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Switch to previous/next buffer
-vim.keymap.set('n', '<C-Tab>', '<cmd>bnext<CR>')
-vim.keymap.set('n', '<C-S-Tab>', '<cmd>bprevious<CR>')
-
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
