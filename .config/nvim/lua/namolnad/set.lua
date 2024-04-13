@@ -97,6 +97,9 @@ vim.opt.visualbell = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
+vim.opt.foldenable = true
+vim.opt.foldmethod = 'expr'
+
 function R(name)
   require('plenary.reload').reload_module(name)
 end
