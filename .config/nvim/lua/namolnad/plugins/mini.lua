@@ -31,6 +31,22 @@ return { -- Collection of various small independent plugins/modules
       return '%2l:%-2v'
     end
 
+    -- Import sessions to display them in the start screen. Use auto-session to manage sessions
+    require('mini.sessions').setup {
+      directory = vim.fn.stdpath 'data' .. '/sessions/',
+      autowrite = false,
+      autoread = false,
+    }
+
+    -- Start screen with recently opened files, sessions, and more
+    require('mini.starter').setup()
+
+    -- Pair brackets, quotes, etc.
+    require('mini.pairs').setup()
+
+    -- Use unimpaired instead of bracketed
+    -- require('mini.bracketed').setup()
+
     -- ... and there is more!
     --  Check out: https://github.com/echasnovski/mini.nvim
   end,
