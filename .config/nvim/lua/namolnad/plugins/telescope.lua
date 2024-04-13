@@ -43,6 +43,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
         mappings = {
           i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         },
+        dynamic_preview_title = true,
       },
       pickers = {
         find_files = {
@@ -81,6 +82,16 @@ return { -- Fuzzy Finder (files, lsp, etc)
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
+        },
+        frecency = {
+          auto_validate = true,
+          show_scores = true,
+          show_unindexed = true,
+          ignore_patterns = { '*.git/*', '*/tmp/*' },
+          workspaces = {
+            ['CWD'] = vim.fn.getcwd(),
+            ['nvim'] = vim.fn.stdpath 'config',
+          },
         },
       },
     }

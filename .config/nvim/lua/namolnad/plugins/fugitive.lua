@@ -3,7 +3,7 @@ local Namolnad_Fugitive = vim.api.nvim_create_augroup('Namolnad_Fugitive', { cle
 return {
   'tpope/vim-fugitive',
   config = function()
-    vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
+    vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = 'Git status' })
 
     local autocmd = vim.api.nvim_create_autocmd
     autocmd('BufWinEnter', {
@@ -15,23 +15,16 @@ return {
         end
 
         local bufnr = vim.api.nvim_get_current_buf()
-        local opts = { buffer = bufnr, remap = false }
-        vim.keymap.set('n', '<leader>p', function()
-          vim.cmd.Git 'push'
-        end, opts)
+        vim.keymap.set('n', '<leader>p', '<cmd>Git push<CR>', { buffer = bufnr, desc = 'Push' })
 
         -- rebase always
-        vim.keymap.set('n', '<leader>P', function()
-          vim.cmd.Git { 'pull', '--rebase' }
-        end, opts)
+        vim.keymap.set('n', '<leader>P', '<cmd>Git pull --rebase<CR>', { buffer = bufnr, desc = 'Pull with rebase' })
 
-        -- NOTE: It allows me to easily set the branch i am pushing and any tracking
-        -- needed if i did not set the branch up correctly
-        vim.keymap.set('n', '<leader>t', ':Git push -u origin ', opts)
+        vim.keymap.set('n', '<leader>t', '<cmd>Git push -u origin ', { buffer = bufnr, remap = false, desc = 'Set up tracking & push to origin' })
       end,
     })
 
-    vim.keymap.set('n', '<leader>gu', '<cmd>diffget //2<CR>')
-    vim.keymap.set('n', '<leader>gh', '<cmd>diffget //3<CR>')
+    vim.keymap.set('n', '<leader>gu', '<cmd>diffget //2<CR>', { desc = '[G]it diff: Get from left' })
+    vim.keymap.set('n', '<leader>gh', '<cmd>diffget //3<CR>', { desc = '[G]it diff: Get from right' })
   end,
 }

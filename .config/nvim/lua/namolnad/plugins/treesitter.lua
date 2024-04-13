@@ -22,6 +22,8 @@ return { -- Highlight, edit, and navigate code
       'yaml',
       'dockerfile',
       'html',
+      'regex',
+      'markdown_inline',
     },
     sync_install = false,
     -- Autoinstall languages that are not installed
