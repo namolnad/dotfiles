@@ -29,7 +29,7 @@ autocmd({ 'BufWritePre' }, {
 })
 
 -- Jump to last cursor position unless it's invalid or in an event handler
-autocmd('BufReadPost', {
+autocmd('BufWinEnter', {
   group = NamolnadGroup,
   pattern = '*',
   callback = function()
