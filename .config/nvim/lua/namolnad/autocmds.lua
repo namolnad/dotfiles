@@ -33,7 +33,7 @@ autocmd('BufWinEnter', {
   group = NamolnadGroup,
   pattern = '*',
   callback = function()
-    if not vim.bo.ft or vim.bo.buftype == 'nofile' or vim.bo.buftype == 'nowrite' then
+    if vim.bo.buftype == 'nofile' or vim.bo.buftype == 'nowrite' then
       return
     end
     local ignored_ft = {
@@ -55,8 +55,8 @@ autocmd('BufWinEnter', {
     if vim.tbl_contains(ignored_ft, vim.bo.ft) then
       return
     end
-    if vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
-      vim.cmd 'normal g`"'
+    if vim.fn.line '\'"' > 0 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.cmd 'normal! g`"'
     end
   end,
 })
