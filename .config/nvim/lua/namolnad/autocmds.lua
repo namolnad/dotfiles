@@ -33,7 +33,29 @@ autocmd('BufWinEnter', {
   group = NamolnadGroup,
   pattern = '*',
   callback = function()
-    if vim.bo.ft ~= 'fugitive' and vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
+    if not vim.bo.ft or vim.bo.buftype == 'nofile' or vim.bo.buftype == 'nowrite' then
+      return
+    end
+    local ignored_ft = {
+      'noice',
+      'gitcommit',
+      'fugitive',
+      'qf',
+      'help',
+      'rails-schema',
+      'telescope',
+      'harpoon',
+      'oil',
+      'mason',
+      'TelescopePrompt',
+      'undotree',
+      'diff',
+      'which-key',
+    }
+    if vim.tbl_contains(ignored_ft, vim.bo.ft) then
+      return
+    end
+    if vim.fn.line "''" > 0 and vim.fn.line "''" <= vim.fn.line '$' then
       vim.cmd 'normal g`"'
     end
   end,
