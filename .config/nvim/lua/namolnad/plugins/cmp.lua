@@ -103,6 +103,7 @@ return { -- Autocompletion
         { name = 'path' },
         { name = 'buffer' },
         { name = 'cmdline' },
+        { name = 'vim-dadbod-completion' },
       },
     }
   end,
