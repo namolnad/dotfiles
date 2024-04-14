@@ -29,32 +29,32 @@ autocmd({ 'BufWritePre' }, {
 })
 
 -- Jump to last cursor position unless it's invalid or in an event handler
-autocmd('BufWinEnter', {
+autocmd('BufReadPost', {
   group = NamolnadGroup,
   pattern = '*',
   callback = function()
-    if vim.bo.buftype == 'nofile' or vim.bo.buftype == 'nowrite' then
-      return
-    end
-    local ignored_ft = {
-      'noice',
-      'gitcommit',
-      'fugitive',
-      'qf',
-      'help',
-      'rails-schema',
-      'telescope',
-      'harpoon',
-      'oil',
-      'mason',
-      'TelescopePrompt',
-      'undotree',
-      'diff',
-      'which-key',
-    }
-    if vim.tbl_contains(ignored_ft, vim.bo.ft) then
-      return
-    end
+    -- if vim.bo.buftype == 'nofile' or vim.bo.buftype == 'nowrite' then
+    --   return
+    -- end
+    -- local ignored_ft = {
+    --   'noice',
+    --   'gitcommit',
+    --   'fugitive',
+    --   'qf',
+    --   'help',
+    --   'rails-schema',
+    --   'telescope',
+    --   'harpoon',
+    --   'oil',
+    --   'mason',
+    --   'TelescopePrompt',
+    --   'undotree',
+    --   'diff',
+    --   'which-key',
+    -- }
+    -- if vim.tbl_contains(ignored_ft, vim.bo.ft) then
+    --   return
+    -- end
     if vim.fn.line '\'"' > 0 and vim.fn.line '\'"' <= vim.fn.line '$' then
       vim.cmd 'normal! g`"'
     end
