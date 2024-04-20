@@ -21,6 +21,7 @@ return { -- Autoformat
       -- is found.
       javascript = { { 'prettierd', 'prettier' } },
       ruby = { 'rubocop' },
+      yaml = { 'prettier' },
     },
   },
 }
