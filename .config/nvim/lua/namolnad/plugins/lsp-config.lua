@@ -164,6 +164,11 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
+      ruby_lsp = {
+        -- cmd = {...},
+        -- filetypes = { ...},
+        -- capabilities = {},
+      },
     }
 
     -- Ensure the servers and tools above are installed
@@ -180,7 +185,7 @@ return { -- LSP Configuration & Plugins
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
       'lua_ls',
-      'ruby_ls',
+      'ruby_lsp',
       'rubocop',
       'solargraph',
       'tsserver',
@@ -200,8 +205,8 @@ return { -- LSP Configuration & Plugins
           lspconfig[server_name].setup(server)
         end,
 
-        ['ruby_ls'] = function()
-          lspconfig.ruby_ls.setup {
+        ['ruby_lsp'] = function()
+          lspconfig.ruby_lsp.setup {
             cmd = { 'bundle', 'exec', 'ruby-lsp' },
           }
         end,
