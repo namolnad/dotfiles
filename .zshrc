@@ -24,6 +24,10 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions vi-mode zsh-syntax-highlighting evalcache)
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
 source $ZSH/oh-my-zsh.sh
 
 # rbenv
@@ -41,10 +45,12 @@ export _ZO_ECHO=1
 eval "$(zoxide init zsh)"
 # _evalcache zoxide init zsh
 
-# # z
-# source "$(brew --prefix)/etc/profile.d/z.sh"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
+
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
