@@ -8,16 +8,20 @@
 	; pager = diff-so-fancy | less --tabs=4 -RFX
 [diff]
 	mnemonicprefix = true
+	algorithm = histogram
 [push]
 	default = current
 	autoSetupRemote = true
 [pull]
 	default = current
-	rebase = true
 	ff = only
+[rebase]
+	autoStash = true
+	autoSquash = true
 [merge]
 	stat = true
 	tool = diffconflicts
+	conflictstyle = zdiff3
 [credential]
 	helper = osxkeychain
 [user]
@@ -86,7 +90,7 @@
   file-decoration-style = none
 [init]
 	defaultBranch = main
-[includeIf "gitdir/i:~/developer/work/"] ; ordering matters, if this is included early it will be overwritten
+[includeIf "gitdir/i:~/Developer/Work/"] ; ordering matters, if this is included early it will be overwritten
 	path = ~/Developer/Environment/.gitconfig-work
 [include]
 	path = ~/.config/git/.gitconfig.private
