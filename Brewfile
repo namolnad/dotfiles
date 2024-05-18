@@ -16,13 +16,13 @@ end
 brew 'aria2'
 brew 'bat'
 brew 'blueutil'
+brew 'eddieantonio/eddieantonio/imgcat'
 brew 'eza'
 brew 'fd'
 brew 'fzf'
 brew 'gh'
 brew 'git-delta'
 brew 'golang'
-brew 'eddieantonio/eddieantonio/imgcat'
 brew 'mas'
 brew 'rbenv'
 brew 'rg'
@@ -33,7 +33,6 @@ brew 'tree'
 brew 'nvim'
 brew 'zoxide'
 
-tap 'homebrew/cask-fonts'
 tap 'homebrew/cask'
 
 cask 'alfred' unless app_exists?('Alfred 4')

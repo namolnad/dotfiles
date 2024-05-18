@@ -97,9 +97,6 @@ return { -- LSP Configuration & Plugins
         --  For example, in C this would take you to the header.
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-        map('[d', vim.diagnostic.goto_prev, 'Previous [D]iagnostic')
-        map(']d', vim.diagnostic.goto_next, 'Next [D]iagnostic')
-
         -- Format the current buffer.
         map('<leader>f', vim.lsp.buf.format, '[F]ormat')
 
