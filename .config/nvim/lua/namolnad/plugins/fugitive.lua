@@ -16,6 +16,7 @@ return {
 
         local bufnr = vim.api.nvim_get_current_buf()
         vim.keymap.set('n', '<leader>p', '<cmd>Git push<CR>', { buffer = bufnr, desc = 'Push' })
+        vim.keymap.set('n', 'gp', '<cmd>Git push<CR>', { buffer = bufnr, desc = 'Push' })
 
         -- rebase always
         vim.keymap.set('n', '<leader>P', '<cmd>Git pull --rebase<CR>', { buffer = bufnr, desc = 'Pull with rebase' })
