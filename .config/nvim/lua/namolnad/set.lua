@@ -44,6 +44,9 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+-- Don't have `o` add a comment
+vim.opt.formatoptions:remove 'o'
+
 -- Save undo history
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
