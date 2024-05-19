@@ -1,6 +1,7 @@
 require 'namolnad.set'
 require 'namolnad.remap'
 require 'namolnad.autocmds'
+require 'namolnad.terminal'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
