@@ -1,7 +1,8 @@
 return {
   'laytan/cloak.nvim',
   config = function()
-    require('cloak').setup {
+    local cloak = require 'cloak'
+    cloak.setup {
       enabled = true,
       cloak_character = '*',
       -- The applied highlight group (colors) on the cloaking, see `:h highlight`.
@@ -29,5 +30,8 @@ return {
         },
       },
     }
+
+    -- Add a command to toggle the cloak plugin. via <leader>ct
+    vim.keymap.set('n', '<leader>ct', cloak.toggle, { desc = '[C]loak toggle' })
   end,
 }
