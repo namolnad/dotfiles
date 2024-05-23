@@ -45,6 +45,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
     '*.rake',
     '*.eruby',
     'Rakefile',
+    'Brewfile',
     'Gemfile',
     '*.ircrc',
     '*.ru',
