@@ -1,32 +1,65 @@
-[mergetool]
-	keepBackup = false
 [core]
 	whitespace = trailing-space,space-before-tab
 	trustctime = false
 	excludesfile = ~/.config/git/ignore
 	pager = delta
-	; pager = diff-so-fancy | less --tabs=4 -RFX
-[diff]
-	mnemonicprefix = true
-	algorithm = histogram
-[push]
-	default = current
-	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[user]
+	name = Dan Loman
+	email = daniel.h.loman@gmail.com
+[credential]
+	helper = osxkeychain
+[url "ssh://git@github.com/namolnad"]
+	insteadOf = https://github.com/namolnad
+[fetch]
+	prune = true
 [pull]
 	default = current
 	ff = only
+[push]
+	default = current
+	autoSetupRemote = true
 [rebase]
 	autoStash = true
 	autoSquash = true
+[branch]
+	autosetuprebase = always
+	sort = -committerdate
+[commit]
+	gpgsign = false
+[mergetool]
+	keepBackup = false
 [merge]
 	stat = true
 	tool = diffconflicts
 	conflictstyle = zdiff3
-[credential]
-	helper = osxkeychain
-[user]
-	name = Dan Loman
-	email = daniel.h.loman@gmail.com
+[diff]
+	mnemonicprefix = true
+	algorithm = histogram
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = side-by-side line-numbers decorations
+	whitespace-error-style = 22 reverse
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [alias]
 	amend = commit -a --amend --no-edit
 	ap = add -p
@@ -45,50 +78,11 @@
 	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 	img-diffs = !"git diff @ --cached --name-only | grep .png | xargs imgcat"
 	rename = branch -m
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-[mergetool "diffconflicts"]
-	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
-	trustExitCode = true
-[branch]
-	autosetuprebase = always
-	sort = -committerdate
-[commit]
-	gpgsign = false
-[fetch]
-	prune = true
-[url "ssh://git@github.com/namolnad"]
-	insteadOf = https://github.com/namolnad
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[color]
-	ui = true
-[interactive]
-  diffFilter = delta --color-only
-[delta]
-  features = side-by-side line-numbers decorations
-  whitespace-error-style = 22 reverse
-[delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  file-style = bold yellow ul
-  file-decoration-style = none
-[init]
-	defaultBranch = main
 [includeIf "gitdir/i:~/Developer/Work/"] ; ordering matters, if this is included early it will be overwritten
 	path = ~/Developer/Environment/.gitconfig-work
 [include]
