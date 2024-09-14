@@ -66,7 +66,7 @@ alias zshconfig="e ~/.zshrc"
 alias ohmyzsh="e ~/.oh-my-zsh"
 
 # history setup
-HISTFILE=$HOME/.zhistory
+HISTFILE=$HOME/.zsh_history
 SAVEHIST=1000
 HISTSIZE=999
 setopt share_history
