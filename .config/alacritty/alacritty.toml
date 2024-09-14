@@ -18,5 +18,7 @@ option_as_alt = "Both"
 
 [font]
 normal.family = "MesloLGS Nerd Font Mono"
+# normal.family = "Hack Nerd Font"
 
-size = 18
+# size = 18
+size = 14

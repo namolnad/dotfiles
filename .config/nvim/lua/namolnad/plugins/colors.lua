@@ -8,6 +8,17 @@ end
 
 return {
   {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        flavour = 'mocha',
+      }
+      -- vim.cmd.colorscheme 'catppuccin'
+    end,
+  },
+  {
     'folke/tokyonight.nvim',
     config = function()
       require('tokyonight').setup {
@@ -26,10 +37,9 @@ return {
           floats = 'dark', -- style for floating windows
         },
       }
-      -- vim.cmd 'colorscheme tokyonight'
+      -- vim.cmd.colorscheme 'tokyonight'
     end,
   },
-
   {
     'rose-pine/neovim',
     name = 'rose-pine',
@@ -44,7 +54,7 @@ return {
         },
       }
 
-      vim.cmd 'colorscheme rose-pine'
+      vim.cmd.colorscheme 'rose-pine'
 
       ColorMyPencils()
     end,
