@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-ruby `cat .rbenv/version`.strip
+ruby `cat config/.rbenv/version`.strip
 
-source "https://rubygems.org"
-
+source 'https://rubygems.org'
