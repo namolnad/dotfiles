@@ -47,9 +47,6 @@ brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 
-# PJs - https://github.com/acrookston/pjs/releases/tag/v1.0.0
-# postgres app - https://postgresapp.com/ # can just use brew and postgres service
-
 tap 'homebrew/cask'
 
 cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
