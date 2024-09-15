@@ -11,6 +11,12 @@ def app_exists?(app_name)
   exists
 end
 
+def cask_unless_exists(brew_name, name:)
+  return if app_exists?(name)
+
+  cask brew_name
+end
+
 def mas_unless_exists(app_name, id:)
   return if app_exists?(app_name)
 
@@ -28,6 +34,7 @@ brew 'gh'
 brew 'git-delta'
 brew 'golang'
 brew 'mas'
+brew 'postgresql@16'
 brew 'powerlevel10k'
 brew 'rbenv'
 brew 'rg'
@@ -40,26 +47,39 @@ brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 
+# PJs - https://github.com/acrookston/pjs/releases/tag/v1.0.0
+# postgres app - https://postgresapp.com/ # can just use brew and postgres service
+
 tap 'homebrew/cask'
 
-cask 'alacritty' unless app_exists?('Alacritty')
-cask 'alfred' unless app_exists?('Alfred 4')
-cask 'appcleaner' unless app_exists?('AppCleaner')
-cask 'dropbox' unless app_exists?('Dropbox')
 cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
 cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
-cask 'gitup' unless app_exists?('GitUp')
-cask 'iterm2' unless app_exists?('iTerm')
-cask 'notion' unless app_exists?('Notion')
-cask 'rocket' unless app_exists?('Rocket')
-cask 'xcodes' unless app_exists?('Xcodes')
 
-mas_unless_exists '1Password', id: 443_987_910 # Unsure if this is the right ID for v8
+cask_unless_exists '1password', name: '1Password'
+cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
+cask_unless_exists 'alacritty', name: 'Alacritty'
+cask_unless_exists 'alfred', name: 'Alfred 5'
+cask_unless_exists 'appcleaner', name: 'AppCleaner'
+cask_unless_exists 'boop', name: 'Boop'
+cask_unless_exists 'chatgpt', name: 'ChatGPT'
+cask_unless_exists 'cleanupbuddy', name: 'CleanupBuddy'
+cask_unless_exists 'dropbox', name: 'Dropbox'
+cask_unless_exists 'gitup', name: 'GitUp'
+cask_unless_exists 'notion', name: 'Notion'
+cask_unless_exists 'postico', name: 'Postico 2'
+cask_unless_exists 'postman', name: 'Postman'
+cask_unless_exists 'rocket', name: 'Rocket'
+cask_unless_exists 'slack', name: 'Slack'
+cask_unless_exists 'vlc', name: 'VLC'
+cask_unless_exists 'xcodes', name: 'Xcodes'
+cask_unless_exists 'zoom', name: 'Zoom'
+
 mas_unless_exists 'AutoMute', id: 1_118_136_179
 mas_unless_exists 'GIPHY CAPTURE', id: 668_208_984
 mas_unless_exists 'Magnet', id: 441_258_766
 mas_unless_exists 'Pixelmator Pro', id: 1_289_583_905
-mas_unless_exists 'BetterTouchTool', id: 428_937_561 # Unsure if this is the right ID
+mas_unless_exists 'Simplefax', id: 1_165_017_252
+mas_unless_exists 'Vimari', id: 1_480_933_944
 
 puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
 # rubocop:enable Style/GlobalVars
