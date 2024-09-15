@@ -6,6 +6,9 @@ export ZSH=$HOME/.oh-my-zsh
 # For profiling slow start up times https://blog.mattclemente.com/2020/06/26/oh-my-zsh-slow-to-load.html#how-to-test-your-shell-load-time
 # zmodload zsh/zprof
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
@@ -22,15 +25,19 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions vi-mode zsh-syntax-highlighting evalcache)
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
+plugins=(
+  1password
+  git
+  vi-mode
+  evalcache
+  # zsh-syntax-highlighting # managed via brew
+  # zsh-autosuggestions # managed via brew
+)
 
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
-source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

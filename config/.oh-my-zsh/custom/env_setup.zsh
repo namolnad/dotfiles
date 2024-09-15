@@ -2,10 +2,6 @@ export DEFAULT_USER='danloman'
 export CODE_DIR="$HOME/Developer"
 export DOTFILES="$HOME/Developer/Environment"
 
-for f in $(find $DOTFILES/.custom_credentials -type f); do
-  source "$f"
-done
-
 #   ---------------------------
 #   KEY BINDINGS
 #   ---------------------------
