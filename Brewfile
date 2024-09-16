@@ -46,6 +46,7 @@ brew 'tree'
 brew 'nvim'
 brew 'yazi'
 brew 'zsh-autosuggestions'
+brew 'zsh-completions', args: ['head']
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 

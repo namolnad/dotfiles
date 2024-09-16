@@ -41,7 +41,7 @@ plugins=(
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+FPATH="$(brew --prefix)/share/zsh/site-functions:${ZSH_CUSTOM}/plugins/zsh-completions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
