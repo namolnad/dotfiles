@@ -34,7 +34,10 @@ plugins=(
   evalcache
   # zsh-syntax-highlighting # managed via brew
   # zsh-autosuggestions # managed via brew
+  # powerlevel10k # managed via brew
 )
+
+# ZSH_THEME="powerlevel10k/powerlevel10k" # managed via brew
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -45,8 +48,6 @@ source $ZSH/oh-my-zsh.sh
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
-
-ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # rbenv
 # eval "$(rbenv init -)"
