@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local mux = wezterm.mux
 
 local custom_color_scheme = wezterm.color.get_builtin_schemes()["Aura (Gogh)"]
 
@@ -31,21 +32,26 @@ custom_color_scheme.brights = {
 local config = wezterm.config_builder()
 
 config.keys = {
-	-- {
-	-- 	key = "v",
-	-- 	mods = "CTRL",
-	-- 	action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
-	-- },
-	-- {
-	-- 	key = "h",
-	-- 	mods = "CTRL",
-	-- 	action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }),
-	-- },
-	-- {
-	-- 	key = "t",
-	-- 	mods = "CTRL",
-	-- 	action = act({ SpawnTab = "CurrentPaneDomain" }),
-	-- },
+	{
+		key = "h",
+		mods = "CTRL",
+		action = act.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "j",
+		mods = "CTRL",
+		action = act.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "k",
+		mods = "CTRL",
+		action = act.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "l",
+		mods = "CTRL",
+		action = act.ActivatePaneDirection("Right"),
+	},
 	{
 		key = "w",
 		mods = "CTRL",
@@ -53,10 +59,31 @@ config.keys = {
 	},
 	{
 		key = "k",
-		mods = "CTRL",
+		mods = "SUPER",
 		action = act.Multiple({
 			act.ClearScrollback("ScrollbackAndViewport"),
 			act.SendKey({ key = "L", mods = "CTRL" }),
+		}),
+	},
+	{
+		key = "1",
+		mods = "SUPER",
+		action = act.SwitchToWorkspace({
+			name = "editor",
+		}),
+	},
+	{
+		key = "2",
+		mods = "SUPER",
+		action = act.SwitchToWorkspace({
+			name = "server",
+		}),
+	},
+	{
+		key = "3",
+		mods = "SUPER",
+		action = act.SwitchToWorkspace({
+			name = "consoles",
 		}),
 	},
 }
@@ -109,5 +136,49 @@ config.window_background_gradient = {
 	-- segment_size = 11,
 	-- segment_smoothness = 0.0,
 }
+
+wezterm.on("gui-startup", function(cmd)
+	-- allow `wezterm start -- something` to affect what we spawn
+	-- in our initial window
+	local args = {}
+	if cmd then
+		args = cmd.args
+	end
+
+	-- Set a workspace for coding on a current project
+	-- Top pane is for the editor, bottom pane is for the build tool
+	local project_dir = wezterm.home_dir .. "/Developer/mr-otter"
+	local _, server_pane, _ = mux.spawn_window({
+		workspace = "server",
+		cwd = project_dir,
+		args = args,
+	})
+	local ngrok_pane = server_pane:split({
+		direction = "Bottom",
+		size = 0.5,
+		cwd = project_dir,
+	})
+	server_pane:send_text("HOST=https://lomangroup.ngrok.app bin/dev\n")
+	ngrok_pane:send_text("ngrok http --domain=lomangroup.ngrok.app 3000\n")
+
+	local _, editor_pane, _ = mux.spawn_window({
+		workspace = "editor",
+		cwd = project_dir,
+	})
+	editor_pane:send_text("nvim\n")
+
+	local _, prod_console_pane, _ = mux.spawn_window({
+		workspace = "consoles",
+		cwd = project_dir,
+	})
+	local dev_console_pane = prod_console_pane:split({
+		direction = "Bottom",
+		size = 0.5,
+		cwd = project_dir,
+	})
+	dev_console_pane:send_text("rails c\n")
+
+	mux.set_active_workspace("editor")
+end)
 
 return config
