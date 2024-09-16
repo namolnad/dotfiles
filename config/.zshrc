@@ -46,7 +46,7 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
-# autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 
 # rbenv
 # eval "$(rbenv init -)"
