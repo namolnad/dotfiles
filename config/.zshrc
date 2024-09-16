@@ -23,6 +23,9 @@ ENABLE_CORRECTION="true"
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+FPATH="${ZSH_CUSTOM}/plugins/zsh-completions:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -32,21 +35,19 @@ plugins=(
   git
   vi-mode
   evalcache
+  fzf-tab
   # zsh-syntax-highlighting # managed via brew
   # zsh-autosuggestions # managed via brew
   # powerlevel10k # managed via brew
 )
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-FPATH="${ZSH_CUSTOM}/plugins/zsh-completions:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+autoload -Uz compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
-
-autoload -Uz compinit && compinit
 
 # rbenv
 # eval "$(rbenv init -)"
@@ -74,12 +75,31 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # history setup
 HISTFILE=$HOME/.zsh_history
-SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt append_history
 setopt share_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
 setopt hist_verify
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
