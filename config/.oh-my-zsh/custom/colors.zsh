@@ -23,3 +23,17 @@ cyan='\e[0;36m'
 light_cyan='\e[1;36m'
 light_gray='\e[0;37m'
 white='\e[1;37m'
+
+function clicolors() {
+    i=1
+    for color in {000..255}; do;
+        c=$c"$FG[$color]$color✔$reset_color  ";
+        if [ `expr $i % 8` -eq 0 ]; then
+            c=$c"\n"
+        fi
+        i=`expr $i + 1`
+    done;
+    echo $c | sed 's/%//g' | sed 's/{//g' | sed 's/}//g' | sed '$s/..$//';
+    c=''
+}
+
