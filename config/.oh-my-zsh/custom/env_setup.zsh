@@ -98,3 +98,17 @@ export vim='nvim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag --hidden --depth 5 --ignore .git --nocolor -g ""'
 export FZF_DEFAULT_OPS='--extended'
+
+#   ---------------------------
+#   YAZI
+#   ---------------------------
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
