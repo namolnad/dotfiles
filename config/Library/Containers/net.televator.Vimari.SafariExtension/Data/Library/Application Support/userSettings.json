@@ -1,5 +1,5 @@
 {
-  "excludedUrls": "mail.google.com,github.com",
+  "excludedUrls": "mail.google.com,github.com,nytimes.com/crosswords,nytimes.com/games",
   "linkHintCharacters": "asdfjklqwerzxc",
   "detectByCursorStyle": false,
   "scrollSize": 150,
