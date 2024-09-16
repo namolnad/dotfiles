@@ -37,17 +37,16 @@ plugins=(
   # powerlevel10k # managed via brew
 )
 
-# ZSH_THEME="powerlevel10k/powerlevel10k" # managed via brew
-
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-FPATH="$(brew --prefix)/share/zsh/site-functions:${ZSH_CUSTOM}/plugins/zsh-completions:${FPATH}"
+FPATH="${ZSH_CUSTOM}/plugins/zsh-completions:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# autoload -U compinit && compinit
 
 # rbenv
 # eval "$(rbenv init -)"
@@ -72,13 +71,6 @@ if command -v ngrok &>/dev/null; then
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Aliases can be found in ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="e ~/.zshrc"
-alias ohmyzsh="e ~/.oh-my-zsh"
 
 # history setup
 HISTFILE=$HOME/.zsh_history
