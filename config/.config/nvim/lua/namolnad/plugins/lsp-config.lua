@@ -188,7 +188,7 @@ return { -- LSP Configuration & Plugins
       'ruby_lsp',
       'rubocop',
       'solargraph',
-      'tsserver',
+      'ts_ls',
       'prettier',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
