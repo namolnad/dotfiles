@@ -1,5 +1,6 @@
 setopt globdots
 
+zstyle ':completion:*' special-dirs false
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
