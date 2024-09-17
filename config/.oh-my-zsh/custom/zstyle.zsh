@@ -1,3 +1,5 @@
+setopt globdots
+
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
@@ -8,16 +10,6 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
-# preview directory's content with eza when completing cd
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --all --color=always $realpath'
-# # preview directory's content with eza when completing z
-# zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --all --color=always $realpath'
-# zstyle ':fzf-tab:complete:cat:*' fzf-preview 'bat --color=always $realpath'
-# zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always $realpath'
-# # TODO: add previews for v, vim, nvim, don't use eza
-# zstyle ':fzf-tab:complete:v:*' fzf-preview 'bat --color=always $realpath'
-# zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always $realpath'
-# zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat --color=always $realpath'
 
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
 export LESSOPEN='|~/.lessfilter %s'
