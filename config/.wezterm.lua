@@ -184,6 +184,11 @@ config.keys = {
 	split_nav("resize", "k"),
 	split_nav("resize", "l"),
 	{
+		key = "Return",
+		mods = "CTRL",
+		action = act.SendKey({ key = "e", mods = "CTRL" }), -- zsh end-of-line is ctrl-e
+	},
+	{
 		key = "w",
 		mods = "CTRL",
 		action = act({ CloseCurrentPane = { confirm = true } }),
