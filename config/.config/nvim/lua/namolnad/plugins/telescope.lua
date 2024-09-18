@@ -66,10 +66,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
             'node_modules',
             'app/assets/builds',
             '.git/',
-            'log/test.log',
+            'log/',
             'package.lock',
           },
           additional_args = {
+            -- '--fixed-strings',
             '--hidden',
             '--no-ignore',
             '--smart-case',
