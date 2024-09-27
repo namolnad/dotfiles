@@ -172,6 +172,11 @@ wezterm.on("gui-startup", function(cmd)
 		cwd = project_dir,
 	})
 	dev_console_pane:send_text("rails c\n")
+	local _, dotfiles_pane, _ = mux.spawn_window({
+		workspace = "dotfiles",
+		cwd = wezterm.home_dir .. "/Developer/dotfiles",
+	})
+	dotfiles_pane:send_text("nvim\n")
 
 	mux.set_active_workspace("editor")
 end)
