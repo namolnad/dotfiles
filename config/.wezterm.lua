@@ -280,6 +280,13 @@ config.keys = {
 			name = "consoles",
 		}),
 	},
+	{
+		key = "4",
+		mods = "SUPER",
+		action = act.SwitchToWorkspace({
+			name = "dotfiles",
+		}),
+	},
 }
 
 return config
