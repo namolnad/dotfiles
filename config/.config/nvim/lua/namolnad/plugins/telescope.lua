@@ -136,5 +136,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>fn', function()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end, { desc = '[F]ind [N]eovim files' })
+    vim.keymap.set('n', '<leader>fp', builtin.spell_suggest, { desc = '[F]ind S[p]ell Suggestions' })
   end,
 }
