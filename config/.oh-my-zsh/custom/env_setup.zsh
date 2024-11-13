@@ -1,6 +1,17 @@
+#   ---------------------------
+#   ENVIRONMENT VARIABLES
+#   ---------------------------
+
 export DEFAULT_USER='danloman'
 export CODE_DIR="$HOME/Developer"
 export DOTFILES="$HOME/Developer/Environment"
+
+# Source the .env file if it exists for secrets, api keys, etc.
+if [ -f $HOME/.env ]; then
+  setopt allexport
+  . $HOME/.env
+  unsetopt allexport
+fi
 
 #   ---------------------------
 #   KEY BINDINGS
