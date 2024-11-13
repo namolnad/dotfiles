@@ -14,7 +14,8 @@ vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Move to next search result and cente
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Move to previous search result and center cursor' })
 
 -- greatest remap ever
-vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over visual selection without replacing default register contents' })
+vim.keymap.set('x', '<leader>p', [["_dP]],
+  { desc = 'Paste over visual selection without replacing default register contents' })
 
 -- next greatest remap ever : asbjornHaland
 -- Copy to global pasteboard
@@ -33,7 +34,8 @@ vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Use <C-c> to escape' })
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode' })
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Open tmux sessionizer' })
 
-vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Globally replace word under cursor' })
+vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = 'Globally replace word under cursor' })
 
 -- vim.keymap.set("n", "<leader><leader>", function()
 --     vim.cmd("so")
