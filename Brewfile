@@ -23,6 +23,8 @@ def mas_unless_exists(app_name, id:)
   mas app_name, id:
 end
 
+tap 'eddieantonio/eddieantonio'
+
 brew 'aria2'
 brew 'bat'
 brew 'blueutil'
@@ -55,8 +57,6 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions', args: ['head']
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
-
-tap 'homebrew/cask'
 
 cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
 cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
