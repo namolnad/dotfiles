@@ -248,7 +248,7 @@ config.keys = {
 	},
 	{
 		key = "w",
-		mods = "CTRL",
+		mods = "CTRL|SHIFT",
 		action = act({ CloseCurrentPane = { confirm = true } }),
 	},
 	{
@@ -286,6 +286,21 @@ config.keys = {
 		action = act.SwitchToWorkspace({
 			name = "dotfiles",
 		}),
+	},
+	{
+		key = "-",
+		mods = "SUPER|SHIFT",
+		action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
+	},
+	{
+		key = "=",
+		mods = "CMD|SHIFT",
+		action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+	},
+	{
+		key = 'r',
+		mods = 'SUPER|SHIFT',
+		action = act.ReloadConfiguration,
 	},
 }
 

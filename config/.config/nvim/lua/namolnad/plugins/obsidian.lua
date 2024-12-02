@@ -27,16 +27,16 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/vaults/personal",
+        path = "~/Documents/Vaults/Personal",
       },
-      {
-        name = "work",
-        path = "~/vaults/work",
-        -- Optional, override certain settings.
-        overrides = {
-          notes_subdir = "notes",
-        },
-      },
+      -- {
+      --   name = "work",
+      --   path = "~/vaults/work",
+      --   -- Optional, override certain settings.
+      --   overrides = {
+      --     notes_subdir = "notes",
+      --   },
+      -- },
     },
 
     -- Alternatively - and for backwards compatibility - you can set 'dir' to a single path instead of
@@ -342,4 +342,7 @@ return {
       end,
     },
   },
+  config = function()
+    require("obsidian").setup {}
+  end,
 }
