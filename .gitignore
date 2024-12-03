@@ -1,4 +1,4 @@
 .DS_Store
-config/.vim/undodir/**
-config/.vim*/.netrwhist
+config/.config/vim/undodir/**
+config/.config/vim*/.netrwhist
 config/.config/karabiner/automatic_backups/**

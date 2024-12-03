@@ -5,6 +5,7 @@
 export DEFAULT_USER='danloman'
 export CODE_DIR="$HOME/Developer"
 export DOTFILES="$HOME/Developer/Environment"
+export XDG_CONFIG_HOME="${HOME}/.config"
 
 # Source the .env file if it exists for secrets, api keys, etc.
 if [ -f $HOME/.env ]; then
@@ -73,11 +74,15 @@ mkdir -p "${GOPATH}"
 #   ---------------------------
 _evalcache gh completion -s zsh
 
+#   ---------------------------
+#   RBENV
+#   ---------------------------
+export RBENV_ROOT="${XDG_CONFIG_HOME}/rbenv"
 
 #   ---------------------------
 #   RIPGREP
 #   ---------------------------
-export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgrep/config"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 
 iterm2_print_user_vars() {
   iterm2_set_user_var pwd $(pwd)
