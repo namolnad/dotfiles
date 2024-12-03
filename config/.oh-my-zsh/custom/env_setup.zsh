@@ -77,7 +77,7 @@ _evalcache gh completion -s zsh
 #   ---------------------------
 #   RIPGREP
 #   ---------------------------
-export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgrep/config"
 
 iterm2_print_user_vars() {
   iterm2_set_user_var pwd $(pwd)
