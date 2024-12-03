@@ -118,7 +118,7 @@ install_applications() {
     info 'Symlinking dotfiles'
     stow -d stow -R --ignore "\.DS_Store" config -t $HOME
     info 'Symlinking scripts'
-    stow -d stow -R --ignore "\.DS_Store" scripts -t /usr/local/opt
+    sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt
     info 'Starting services'
     brew services start --all
     info 'Installing FZF'
