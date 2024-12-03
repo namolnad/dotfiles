@@ -342,7 +342,7 @@
                                 ],
                                 "description": "Window: left-half",
                                 "from": {
-                                    "key_code": "h",
+                                    "key_code": "y",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=left-half" }],
@@ -358,7 +358,7 @@
                                 ],
                                 "description": "Window: right-half",
                                 "from": {
-                                    "key_code": "l",
+                                    "key_code": "i",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=right-half" }],
@@ -374,7 +374,7 @@
                                 ],
                                 "description": "Window: center-half",
                                 "from": {
-                                    "key_code": "j",
+                                    "key_code": "u",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=center-half" }],
@@ -420,73 +420,9 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Window: first three fourths",
-                                "from": {
-                                    "key_code": "n",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=first-three-fourths" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "hyper_sublayer_w",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "description": "Window: last three fourths",
-                                "from": {
-                                    "key_code": "period",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=last-three-fourths" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "hyper_sublayer_w",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "description": "Window: first three thirds",
-                                "from": {
-                                    "key_code": "m",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=first-two-thirds" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "hyper_sublayer_w",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "description": "Window: last three thirds",
-                                "from": {
-                                    "key_code": "comma",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=last-two-thirds" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "hyper_sublayer_w",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
                                 "description": "Window: first third",
                                 "from": {
-                                    "key_code": "y",
+                                    "key_code": "h",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=first-third" }],
@@ -500,9 +436,25 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "Window: center third",
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=center-third" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "hyper_sublayer_w",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "description": "Window: last third",
                                 "from": {
-                                    "key_code": "o",
+                                    "key_code": "k",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=last-third" }],
@@ -518,7 +470,7 @@
                                 ],
                                 "description": "Window: first fourth",
                                 "from": {
-                                    "key_code": "u",
+                                    "key_code": "n",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=first-fourth" }],
@@ -532,9 +484,41 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "Window: second fourth",
+                                "from": {
+                                    "key_code": "m",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=second-fourth" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "hyper_sublayer_w",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "description": "Window: third fourth",
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=third-fourth" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "hyper_sublayer_w",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "description": "Window: last fourth",
                                 "from": {
-                                    "key_code": "i",
+                                    "key_code": "period",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=last-fourth" }],
