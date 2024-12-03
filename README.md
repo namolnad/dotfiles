@@ -4,7 +4,7 @@ Dotfiles/dev environment setup/backup
 
 ## Machine setup
 
-Bootstrap machine by running: `curl -fsSL https://raw.githubusercontent.com/namolnad/dotfiles/refs/heads/main/scripts/bootstrap | zsh`
+Bootstrap machine by running: `curl -fsSL https://raw.githubusercontent.com/namolnad/dotfiles/main/scripts/bootstrap | zsh`
 
 ## iTerm customizations
 
