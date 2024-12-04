@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>A602C9F6-5858-4A4C-9438-4074BC52D9FD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BF6F879E-EE81-4E6F-8887-CE21A1C5161A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BF6F879E-EE81-4E6F-8887-CE21A1C5161A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F4401FDD-E855-41EE-9512-ACA9DA130D90</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>DE349421-40EC-444E-8360-61F4A4FC401E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A602C9F6-5858-4A4C-9438-4074BC52D9FD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string></string>
+	<key>description</key>
+	<string>Create folders/file structure for technical interview candidate</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>New Interview Candidate</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Interview Candidate</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>F4401FDD-E855-41EE-9512-ACA9DA130D90</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>require 'cgi'
+
+class InterviewType
+  INTERVIEW_TYPES = %w[culture systems technical video values].freeze
+
+  def initialize(name)
+    @name = name.gsub(/\w+/, &amp;:capitalize)
+  end
+
+  def alfred_types
+    formatted_types = INTERVIEW_TYPES.map { |t| format_item(t) }
+
+    alfred_container(formatted_types)
+  end
+
+  private
+
+  def alfred_container(items)
+    "&lt;?xml version='1.0'?&gt;&lt;items&gt;
+    #{items}
+    &lt;/items&gt;"
+  end
+
+  def format_item(title, subtitle = '')
+    title = escape(title)
+    subtitle = escape(subtitle)
+
+    "
+    &lt;item uid='#{title}' arg='--type=#{title} --name=#{@name}' valid='yes' autocomplete='#{title}'&gt;
+      &lt;title&gt;#{title.capitalize}&lt;/title&gt;
+      &lt;subtitle&gt;#{subtitle}&lt;/subtitle&gt;
+	  &lt;icon&gt;~/Code/Non-core/Alfred-scripts/icons/#{title}.png&lt;/icon&gt;
+    &lt;/item&gt;
+    "
+  end
+
+  def escape(string)
+    CGI.escapeHTML(string)
+  end
+end
+
+puts InterviewType.new('{query}').alfred_types
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>/Users/danloman/Code/Non-core/Alfred-scripts/Interview-candidate/Interview_types.rb</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Interview type</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>A602C9F6-5858-4A4C-9438-4074BC52D9FD</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>cnd</string>
+				<key>subtext</key>
+				<string>Generate interview notes file/folder templates</string>
+				<key>text</key>
+				<string>New interview candidate</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>DE349421-40EC-444E-8360-61F4A4FC401E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>require 'fileutils'
+
+class ArgumentParser
+  attr_reader :candidate_name
+  attr_reader :interview_type
+
+  def initialize(args)
+    parse_args(args)
+  end
+
+  private
+
+  def parse_args(args)
+    args.each do |a|
+      command_value = a.split('=')
+      next unless command_value.length == 2
+
+      value = command_value[1].to_s.strip
+
+      case command_value[0]
+      when 'type'
+        @interview_type = value.downcase
+      when 'name'
+        @candidate_name = value
+      end
+    end
+  end
+end
+
+class CandidateFileManager
+  HOME_DIR = 'Users/danloman'.freeze
+  CANDIDATES_BASE_PATH = 'Documents-local/Notes/Interviews/Technical-roles/Candidates'.freeze
+
+  INTERVIEW_TYPE_TO_TITLE_MAP = {
+    culture: '',
+    systems: 'DateTextField Challenge',
+    technical: 'Shopper Quiz—Part 2',
+    video: 'Shopper Quiz-Part 1',
+    values: ''
+  }.freeze
+
+  def initialize(interview_type, candidate_name)
+    @type = interview_type
+    @name = candidate_name
+  end
+
+  def prepare_interview_materials
+    create_folder_structure(@name)
+
+    create_template_files(@type, @name)
+  end
+
+  private
+
+  def create_folder_structure(name)
+    folder_path = candidate_folder_path(name)
+
+    Dir.mkdir(folder_path) unless File.exist?(folder_path)
+  end
+
+  def create_template_files(type, name)
+    folder_path = candidate_folder_path(name)
+
+    File.open("#{folder_path}/#{type.capitalize}-interview-notes.md", 'w+') do |f|
+      f.write("# #{name}\n") # Name
+      f.write("#{formatted_date}\n") # Date
+      f.write("Senior iOS Role\n") # Role
+      f.write("#{formatted_interview_type(type)}\n") # Type
+      f.write("\n") # Line breaks
+      f.write("## Notes\n") # Notes
+    end
+  end
+
+  def formatted_date
+    time = Time.new
+    time.strftime('%B %d, %Y')
+  end
+
+  def formatted_interview_type(type)
+    formatted_type = type.capitalize
+    symbolized_type = type.to_sym
+
+    type_title = INTERVIEW_TYPE_TO_TITLE_MAP[symbolized_type]
+
+    interview = 'Interview'
+    interview += ':' unless type_title.empty?
+
+    [formatted_type, interview, type_title].join(' ')
+  end
+
+  def candidate_folder_path(name)
+    normalized_name = name.gsub(/\s+/, '-')
+    "/#{HOME_DIR}/#{CANDIDATES_BASE_PATH}/#{normalized_name}"
+  end
+end
+
+args = ARGV[0].split('--')
+
+parser = ArgumentParser.new(args)
+
+manager = CandidateFileManager.new(parser.interview_type, parser.candidate_name)
+
+manager.prepare_interview_materials
+
+puts "#{parser.interview_type.capitalize} interview template created for #{parser.candidate_name}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>/Users/danloman/Code/Non-core/Alfred-scripts/Interview-candidate/Folder_setup.rb</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>BF6F879E-EE81-4E6F-8887-CE21A1C5161A</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>A602C9F6-5858-4A4C-9438-4074BC52D9FD</key>
+		<dict>
+			<key>xpos</key>
+			<integer>315</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>BF6F879E-EE81-4E6F-8887-CE21A1C5161A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>530</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>DE349421-40EC-444E-8360-61F4A4FC401E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>90</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>F4401FDD-E855-41EE-9512-ACA9DA130D90</key>
+		<dict>
+			<key>xpos</key>
+			<integer>710</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

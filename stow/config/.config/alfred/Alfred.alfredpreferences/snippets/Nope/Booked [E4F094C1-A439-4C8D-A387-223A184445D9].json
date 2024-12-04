@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "I'd be happy to help with this, but I'm completely booked up until <DAY>. I could carve out time for this on <DAY> if it's still helpful, but I don't want to slow you down. If you need help right away, I'd check with <PERSON_TEAM_RESOURCE>.",
+    "uid" : "E4F094C1-A439-4C8D-A387-223A184445D9",
+    "name" : "Booked",
+    "keyword" : "booked"
+  }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>48B9B9BF-1B1B-48C9-9FDD-F7BF6701AD05</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>q</string>
+			<key>text</key>
+			<string>Search Quip for '{query}'</string>
+			<key>url</key>
+			<string>https://instacart.quip.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>8ED5ED0B-8D5B-485C-A4A5-E7A5ECA65741</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>g</string>
+			<key>text</key>
+			<string>Search Google for '{query}'</string>
+			<key>url</key>
+			<string>https://google.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

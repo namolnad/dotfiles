@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Case Switch</name>
+  <version>1.0</version>
+  <bundle>com.tianhaox.alfred.case_switch</bundle>
+  <updated>1496645429</updated>
+  <file>case-switch.alfredworkflow</file>
+</workflow>
