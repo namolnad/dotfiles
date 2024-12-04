@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Swift Files</string>
+		<key>predicate</key>
+		<dict>
+			<key>operand</key>
+			<string>swift</string>
+			<key>operator</key>
+			<string>is-equal-to</string>
+			<key>rule</key>
+			<string>file-extension</string>
+		</dict>
+		<key>source</key>
+		<dict>
+			<key>file-source</key>
+			<string>workspace</string>
+		</dict>
+	</dict>
+</array>
+</plist>
