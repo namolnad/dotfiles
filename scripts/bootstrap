@@ -151,9 +151,10 @@ apply_macos_system_defaults() {
     # FWIW, this `defaults find` is good at finding some set preferences.
     # e.g.    defaults find com.apple.ActivityMonitor
 
-    # Close any open System Preferences panes, to prevent them from overriding
+    # Close any open System Settings panes, to prevent them from overriding
     # settings we’re about to change
-    osascript -e 'tell application "System Preferences" to quit'
+    osascript -e 'tell application "System Settings" to quit' 2>/dev/null || osascript -e 'tell application "System Preferences" to quit'
+    sleep 1
 
     ###############################################################################
     # General UI/UX                                                               #
