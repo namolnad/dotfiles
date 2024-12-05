@@ -56,3 +56,20 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.opt_local.filetype = 'ruby'
   end,
 })
+
+-- Autocmd to track macro recording, And redraw statusline, which trigger
+-- macro function of mini.statusline
+vim.api.nvim_create_autocmd("RecordingEnter", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("redrawstatus")
+  end,
+})
+
+-- Autocmd to track the end of macro recording
+vim.api.nvim_create_autocmd("RecordingLeave", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("redrawstatus")
+  end,
+})
