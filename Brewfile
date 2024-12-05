@@ -55,6 +55,7 @@ brew 'tree'
 brew 'nvim'
 brew 'wget'
 brew 'xsv'
+brew 'yarn'
 brew 'yazi'
 brew 'zsh-autosuggestions'
 brew 'zsh-completions', args: ['head']
