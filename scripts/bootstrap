@@ -153,7 +153,7 @@ apply_macos_system_defaults() {
 
     # Close any open System Settings panes, to prevent them from overriding
     # settings we’re about to change
-    osascript -e 'tell application "System Settings" to quit' 2>/dev/null || osascript -e 'tell application "System Preferences" to quit'
+    osascript -e 'tell application "System Settings" to quit' 2>/dev/null
     sleep 1
 
     ###############################################################################
@@ -726,7 +726,8 @@ add_login_items() {
 }
 
 display_manual_tasks_remaining() {
-    warning """
+    success """
+
     Tasks remaining:
     1) Grant full disk access to Alfred
     2) Install GPG Suite; set up GPG signing
