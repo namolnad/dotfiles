@@ -691,10 +691,11 @@ install_homebrew_applications() {
 display_manual_tasks_remaining() {
     warning """
     Tasks remaining:
-    1) Ensure Dropbox syncing is set up
-    2) Point development application settings to \"$HOME/Dropbox/.dev_sync\"
-    3) Grant full disk access to Alfred
-    4) Install GPG Suite; set up GPG signing
+    1) Grant full disk access to Alfred
+    2) Install GPG Suite; set up GPG signing
+    3) Set up Rocket for emoji (use : double trigger)
+    4) Set up Applications as login items: Rectangle, Rocket, Zoom, ChatGPT, 1Password, AutoMute
+
     """
 }
 
