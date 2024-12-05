@@ -42,7 +42,7 @@ prompt_sudo() {
 install_xcode() {
     info "Installing Apple's CLI tools (prerequisites for Git and Homebrew)..."
     if xcode-select -p >/dev/null; then
-        warning "XCode is already installed"
+        warning "Xcode is already installed"
     else
         xcode-select --install
         sudo xcodebuild -license accept
@@ -667,16 +667,6 @@ apply_macos_system_defaults() {
 
     # Disable continuous spell checking
     defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
-
-    # Rectangle
-    defaults write com.knollsoft.Rectangle curtainChangeSize -int 2
-    defaults write com.knollsoft.Rectangle almostMaximizeHeight -float 1
-    defaults write com.knollsoft.Rectangle almostMaximizeWidth -float 0.85
-
-    # Rectangle custom window size with Shift + Alt + Ctrl + Cmd + N
-    defaults write com.knollsoft.Rectangle specified -dict-add keyCode -float 45 modifierFlags -float 1966379
-    defaults write com.knollsoft.Rectangle specifiedHeight -float 1055
-    defaults write com.knollsoft.Rectangle specifiedWidth -float 1876
 }
 
 install_homebrew_applications() {
@@ -689,13 +679,59 @@ install_homebrew_applications() {
     yes | $(brew --prefix)/opt/fzf/install
 }
 
+apply_application_defaults() {
+    # Rectangle
+    defaults write com.knollsoft.Rectangle curtainChangeSize -int 2
+    defaults write com.knollsoft.Rectangle almostMaximizeHeight -float 1
+    defaults write com.knollsoft.Rectangle almostMaximizeWidth -float 0.85
+
+    # Rectangle custom window size with Shift + Alt + Ctrl + Cmd + N
+    defaults write com.knollsoft.Rectangle specified -dict-add keyCode -float 45 modifierFlags -float 1966379
+    defaults write com.knollsoft.Rectangle specifiedHeight -float 1055
+    defaults write com.knollsoft.Rectangle specifiedWidth -float 1876
+
+    # Rocket settings
+    defaults write new.matthewpalmer.Rocket deactivated-apps -array Slack Xcode Terminal iTerm2 wezterm-gui
+    defaults write net.matthewpalmer.Rocket launch-at-login -bool true
+    defaults write net.matthewpalmer.Rocket use-fuzzy-search -bool true
+    defaults write net.matthewpalmer.Rocket use-double-trigger -bool true
+}
+
+add_login_items() {
+    info "Adding login items..."
+
+    # Array of applications to add as login items
+    login_apps=(
+        "/Applications/Rectangle.app"
+        "/Applications/Rocket.app"
+        "/Applications/zoom.us.app"
+        "/Applications/ChatGPT.app"
+        "/Applications/1Password.app"
+        "/Applications/AutoMute.app"
+    )
+
+    for app in "${login_apps[@]}"; do
+        if [ -d "$app" ]; then
+            # Check if app is already a login item
+            if ! osascript -e "tell application \"System Events\" to get the name of every login item" | grep -q "$(basename "$app" .app)"; then
+                osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app\", hidden:false}"
+                success "Added $(basename "$app") to login items"
+            else
+                warning "$(basename "$app") is already a login item"
+            fi
+        else
+            error "Could not find $app"
+        fi
+    done
+}
+
 display_manual_tasks_remaining() {
     warning """
     Tasks remaining:
     1) Grant full disk access to Alfred
     2) Install GPG Suite; set up GPG signing
     3) Set up Rocket for emoji (use : double trigger)
-    4) Set up Applications as login items: Rectangle, Rocket, Zoom, ChatGPT, 1Password, AutoMute
+    4) Grant various applications accessibility permissions (Rocket, Rectangle, ChatGPT, 1Password, Alfred, AutoMute, etc.)
 
     """
 }
@@ -712,6 +748,8 @@ setup_ruby_environment
 install_applications
 apply_macos_system_defaults
 install_homebrew_applications
+apply_application_defaults
+add_login_items
 display_manual_tasks_remaining
 
 success 'Bootstrapping complete'
