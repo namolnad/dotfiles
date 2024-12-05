@@ -730,8 +730,7 @@ display_manual_tasks_remaining() {
     Tasks remaining:
     1) Grant full disk access to Alfred
     2) Install GPG Suite; set up GPG signing
-    3) Set up Rocket for emoji (use : double trigger)
-    4) Grant various applications accessibility permissions (Rocket, Rectangle, ChatGPT, 1Password, Alfred, AutoMute, etc.)
+    3) Grant various applications accessibility permissions (Rocket, Rectangle, ChatGPT, 1Password, Alfred, AutoMute, etc.)
 
     """
 }
