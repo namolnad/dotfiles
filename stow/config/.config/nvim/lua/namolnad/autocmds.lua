@@ -47,55 +47,12 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
     'Rakefile',
     'Brewfile',
     'Gemfile',
-    '*.ircrc',
+    '*.irbrc',
     '*.ru',
     '*.gemspec',
     '*.erb',
   },
   callback = function()
-    vim.bo.filetype = 'ruby'
-  end,
-})
-
-autocmd('FileType', {
-  group = NamolnadGroup,
-  pattern = {
-    'ruby',
-    'typescript',
-    'javascript',
-    'typescriptreact',
-    'javascriptreact',
-    'lua',
-    'slim',
-    'sh',
-    'zsh',
-    'bash',
-    'fish',
-    'vim',
-  },
-  callback = function()
-    vim.bo.shiftwidth = 2
-    vim.bo.softtabstop = 2
-    vim.bo.tabstop = 2
-  end,
-})
-
-autocmd('FileType', {
-  group = NamolnadGroup,
-  pattern = { 'python', 'go', 'swift' },
-  callback = function()
-    vim.bo.shiftwidth = 4
-    vim.bo.softtabstop = 4
-    vim.bo.tabstop = 4
-  end,
-})
-
-autocmd('FileType', {
-  group = NamolnadGroup,
-  pattern = 'markdown',
-  callback = function()
-    vim.bo.formatoptions = 'tcroqn2'
-    vim.bo.comments = 'n:&gt;'
-    vim.bo.syn = 'off'
+    vim.opt_local.filetype = 'ruby'
   end,
 })
