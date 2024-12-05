@@ -142,7 +142,7 @@ wezterm.on("gui-startup", function(cmd)
 
 	-- Set a workspace for coding on a current project
 	-- Top pane is for the editor, bottom pane is for the build tool
-	local project_dir = wezterm.home_dir .. "/Developer/mr-otter"
+	local project_dir = wezterm.home_dir .. "/Developer/camino-app"
 	local _, server_pane, _ = mux.spawn_window({
 		workspace = "server",
 		cwd = project_dir,
