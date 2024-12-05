@@ -304,4 +304,7 @@ config.keys = {
 	},
 }
 
+config.initial_cols = 210
+config.initial_rows = 80
+
 return config
