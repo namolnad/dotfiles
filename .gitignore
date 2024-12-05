@@ -4,3 +4,4 @@ stow/config/.config/vim*/.netrwhist
 stow/config/.config/karabiner/automatic_backups/**
 stow/config/.config/rbenv/shims/**
 stow/config/.config/rbenv/versions/**
+stow/config/.config/irb/irb_history
