@@ -212,8 +212,16 @@ return { -- LSP Configuration & Plugins
         -- ['ruby_lsp'] = function()
         --   lspconfig.ruby_lsp.setup {
         --     cmd = { 'bundle', 'exec', 'ruby-lsp' },
+        --     capabilities = capabilities,
         --   }
         -- end,
+
+        ['rubocop'] = function()
+          lspconfig.rubocop.setup {
+            cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+            capabilities = capabilities,
+          }
+        end,
 
         ['lua_ls'] = function()
           lspconfig.lua_ls.setup {

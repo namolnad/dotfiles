@@ -39,6 +39,7 @@ brew 'gh'
 brew 'git-delta'
 brew 'golang'
 brew 'lesspipe'
+brew 'libpq', link: true
 brew 'mas'
 brew 'npm'
 brew 'postgresql@16'
