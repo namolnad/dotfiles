@@ -6,3 +6,4 @@ stow/config/.config/rbenv/shims/**
 stow/config/.config/rbenv/versions/**
 stow/config/.config/irb/irb_history
 stow/config/.config/github-copilot/apps.json
+stow/config/.config/ngrok/ngrok.yml

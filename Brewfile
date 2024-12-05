@@ -49,8 +49,8 @@ brew 'rg'
 brew 'sd'
 brew 'stow'
 brew 'the_silver_searcher'
-brew 'tmux'
-brew 'tpm'
+# brew 'tmux'
+# brew 'tpm'
 brew 'tree'
 brew 'nvim'
 brew 'wget'
@@ -65,17 +65,18 @@ cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Reg
 cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
 
 cask_unless_exists '1password', name: '1Password'
-cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
-cask_unless_exists 'alacritty', name: 'Alacritty'
+# cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
+# cask_unless_exists 'alacritty', name: 'Alacritty'
 cask_unless_exists 'alfred', name: 'Alfred 5'
 cask_unless_exists 'appcleaner', name: 'AppCleaner'
-cask_unless_exists 'boop', name: 'Boop'
-cask_unless_exists 'karabiner-elements', name: 'Karabiner-Elements'
+# cask_unless_exists 'boop', name: 'Boop'
 cask_unless_exists 'chatgpt', name: 'ChatGPT'
 cask_unless_exists 'cleanupbuddy', name: 'CleanupBuddy'
 cask_unless_exists 'dropbox', name: 'Dropbox'
 cask_unless_exists 'gitup', name: 'GitUp'
+cask_unless_exists 'karabiner-elements', name: 'Karabiner-Elements'
 cask_unless_exists 'notion', name: 'Notion'
+cask_unless_exists 'ngrok', name: 'Ngrok'
 cask_unless_exists 'obsidian', name: 'Obsidian'
 cask_unless_exists 'postico', name: 'Postico 2'
 cask_unless_exists 'postman', name: 'Postman'
@@ -89,7 +90,7 @@ cask_unless_exists 'zoom', name: 'Zoom'
 
 mas_unless_exists 'AutoMute', id: 1_118_136_179
 mas_unless_exists 'GIPHY CAPTURE', id: 668_208_984
-mas_unless_exists 'Magnet', id: 441_258_766
+# mas_unless_exists 'Magnet', id: 441_258_766
 mas_unless_exists 'Pixelmator Pro', id: 1_289_583_905
 mas_unless_exists 'Simplefax', id: 1_165_017_252
 mas_unless_exists 'Vimari', id: 1_480_933_944
