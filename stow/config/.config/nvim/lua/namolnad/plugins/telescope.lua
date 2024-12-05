@@ -57,8 +57,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
             '--glob=!node_modules',
             '--glob=!.DS_Store',
             '--glob=!.vim/undodir/',
-            '--glob=!stow/config/.config/rbenv/versions/',
-            '--glob=!stow/config/.config/rbenv/shims/',
+            '--glob=!.rbenv/versions/',
+            '--glob=!.rbenv/shims/',
             '--glob=!stow/config/.config/alfred',
           },
           -- vimgrep_argments = { '--hidden', '--glob=!.git/' } -- can't seem to make this work

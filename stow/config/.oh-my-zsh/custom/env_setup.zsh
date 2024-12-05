@@ -77,7 +77,7 @@ _evalcache gh completion -s zsh
 #   ---------------------------
 #   RBENV
 #   ---------------------------
-export RBENV_ROOT="${XDG_CONFIG_HOME}/rbenv"
+# export RBENV_ROOT="${XDG_CONFIG_HOME}/rbenv"
 
 #   ---------------------------
 #   RIPGREP

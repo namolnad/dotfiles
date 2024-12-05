@@ -87,7 +87,7 @@ setup_ruby_environment() {
     info 'Installing rbenv'
     brew install rbenv
     info 'Installing global ruby'
-    rbenv install -s $(cat $DOTFILES/stow/config/.config/rbenv/version)
+    rbenv install -s $(cat $DOTFILES/stow/config/.rbenv/version)
     eval "$(rbenv init -)"
     info 'Installing bundler'
     gem install bundler
