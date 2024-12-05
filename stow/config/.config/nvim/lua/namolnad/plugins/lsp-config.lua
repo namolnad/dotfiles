@@ -187,7 +187,6 @@ return { -- LSP Configuration & Plugins
       'lua_ls',
       'ruby_lsp',
       'rubocop',
-      'solargraph',
       'ts_ls',
       'prettier',
     })
