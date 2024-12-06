@@ -55,6 +55,7 @@ alias gdp="git diff HEAD^ HEAD" # Git diff previous commit
 alias gitlog="git log -15 --oneline --reverse"
 alias gitstat="git status -sb"
 alias gplease="git push origin --force-with-lease"
+alias lg="lazygit"
 
 #   ---------------------------
 #   NETWORKING

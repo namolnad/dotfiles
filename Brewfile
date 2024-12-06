@@ -38,6 +38,7 @@ brew 'fzf'
 brew 'gh'
 brew 'git-delta'
 brew 'golang'
+brew 'lazygit'
 brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'

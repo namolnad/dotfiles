@@ -9,6 +9,15 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
+    local indentscope = require('mini.indentscope')
+    indentscope.setup {
+      draw = {
+        delay = 50,
+        animation = indentscope.gen_animation.none(),
+      },
+      symbol = '╎',
+    }
+
     -- Add/delete/replace surroundings (brackets, quotes, etc.)
     --
     -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -68,15 +77,15 @@ return { -- Collection of various small independent plugins/modules
       },
     }
 
-    -- Import sessions to display them in the start screen. Use auto-session to manage sessions
-    require('mini.sessions').setup {
-      directory = vim.fn.stdpath 'data' .. '/sessions/',
-      autowrite = false,
-      autoread = false,
-    }
-
-    -- Start screen with recently opened files, sessions, and more
-    require('mini.starter').setup()
+    -- -- Import sessions to display them in the start screen. Use auto-session to manage sessions
+    -- require('mini.sessions').setup {
+    --   directory = vim.fn.stdpath 'data' .. '/sessions/',
+    --   autowrite = false,
+    --   autoread = false,
+    -- }
+    --
+    -- -- Start screen with recently opened files, sessions, and more
+    -- require('mini.starter').setup()
 
     -- Pair brackets, quotes, etc.
     require('mini.pairs').setup()
