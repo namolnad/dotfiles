@@ -78,11 +78,11 @@ return { -- Collection of various small independent plugins/modules
     }
 
     -- -- Import sessions to display them in the start screen. Use auto-session to manage sessions
-    -- require('mini.sessions').setup {
-    --   directory = vim.fn.stdpath 'data' .. '/sessions/',
-    --   autowrite = false,
-    --   autoread = false,
-    -- }
+    require('mini.sessions').setup {
+      directory = vim.fn.stdpath 'data' .. '/sessions/',
+      autowrite = false,
+      autoread = false,
+    }
     --
     -- -- Start screen with recently opened files, sessions, and more
     -- require('mini.starter').setup()
