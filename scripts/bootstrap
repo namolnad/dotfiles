@@ -127,6 +127,7 @@ install_applications() {
     bundle install
     info 'Symlinking dotfiles'
     mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
+    # We _could_ ensure $HOME/.config exists vs symlinking the entire directory, but this ensures all configs are in one place
     stow -d stow -R --ignore "\.DS_Store" config -t $HOME
     info 'Symlinking scripts'
     sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt
