@@ -126,6 +126,7 @@ install_applications() {
     info 'Installing gems'
     bundle install
     info 'Symlinking dotfiles'
+    mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
     stow -d stow -R --ignore "\.DS_Store" config -t $HOME
     info 'Symlinking scripts'
     sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt
@@ -732,6 +733,7 @@ display_manual_tasks_remaining() {
     1) Grant full disk access to Alfred
     2) Install GPG Suite; set up GPG signing
     3) Grant various applications accessibility permissions (Rocket, Rectangle, ChatGPT, 1Password, Alfred, AutoMute, etc.)
+    4) Enable Folder actions for Desktop w/ Screenshot Relocators
 
     """
 }
