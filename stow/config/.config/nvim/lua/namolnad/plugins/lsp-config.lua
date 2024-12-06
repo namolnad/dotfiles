@@ -205,8 +205,10 @@ return { -- LSP Configuration & Plugins
         end,
 
         ['ruby_lsp'] = function()
+          local rbenv_root = vim.fn.trim(vim.fn.system('rbenv root'))
           lspconfig.ruby_lsp.setup {
             capabilities = capabilities,
+            cmd = { rbenv_root .. '/shims/ruby-lsp' }
           }
         end,
         -- ['ruby_lsp'] = function()
