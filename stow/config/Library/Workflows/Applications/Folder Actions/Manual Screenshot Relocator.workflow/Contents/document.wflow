@@ -72,48 +72,56 @@
 					YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25Z
 					JGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGG
 					oF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290
-					gAGvEBYLDBMYICorLTQ4PT5BRUlOT1JZX2Nl
-					VSRudWxs0w0ODxAREl8QF05TQ29tcG91bmRQ
-					cmVkaWNhdGVUeXBlXxAPTlNTdWJwcmVkaWNh
-					dGVzViRjbGFzcxABgAKAFdIUDxUXWk5TLm9i
-					amVjdHOhFoADgBTUDxkaGxwdHh9fEBFOU1Jp
-					Z2h0RXhwcmVzc2lvbl8QEE5TTGVmdEV4cHJl
-					c3Npb25fEBNOU1ByZWRpY2F0ZU9wZXJhdG9y
-					gBOADoAEgBHVISIjJA8lJicoKVlOU09wZXJh
-					bmReTlNTZWxlY3Rvck5hbWVfEBBOU0V4cHJl
-					c3Npb25UeXBlW05TQXJndW1lbnRzgAaABRAD
-					gAiADVx2YWx1ZUZvcktleTrSIw8QLIAH0i4v
-					MDFaJGNsYXNzbmFtZVgkY2xhc3Nlc18QEE5T
-					U2VsZkV4cHJlc3Npb26jMDIzXE5TRXhwcmVz
-					c2lvblhOU09iamVjdNIUDzU3oTaACYAM0w8j
-					OTo7PFlOU0tleVBhdGiACxAKgApUbmFtZdIu
-					Lz9AXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhw
-					cmVzc2lvbqM/MjPSLi9CQ15OU011dGFibGVB
-					cnJheaNCRDNXTlNBcnJhedIuL0ZHXxATTlNL
-					ZXlQYXRoRXhwcmVzc2lvbqRGSDIzXxAUTlNG
-					dW5jdGlvbkV4cHJlc3Npb27TSiMPS0xNXxAP
-					TlNDb25zdGFudFZhbHVlgA8QAIAQW1NjcmVl
-					biBTaG900i4vUFFfEBlOU0NvbnN0YW50VmFs
-					dWVFeHByZXNzaW9uo1AyM9UPU1RVVldMJ0xY
-					Wk5TTW9kaWZpZXJXTlNGbGFnc1pOU1Bvc2l0
-					aW9uXk5TT3BlcmF0b3JUeXBlgBIQCNIuL1pb
-					XxAcTlNTdWJzdHJpbmdQcmVkaWNhdGVPcGVy
-					YXRvcqRcXV4zXxAcTlNTdWJzdHJpbmdQcmVk
-					aWNhdGVPcGVyYXRvcl8QGU5TU3RyaW5nUHJl
-					ZGljYXRlT3BlcmF0b3JfEBNOU1ByZWRpY2F0
-					ZU9wZXJhdG9y0i4vYGFfEBVOU0NvbXBhcmlz
-					b25QcmVkaWNhdGWjYGIzW05TUHJlZGljYXRl
-					0i4vRGSiRDPSLi9mZ18QE05TQ29tcG91bmRQ
-					cmVkaWNhdGWjZmIzAAgAEQAaACQAKQAyADcA
-					SQBMAFEAUwBsAHIAeQCTAKUArACuALAAsgC3
-					AMIAxADGAMgA0QDlAPgBDgEQARIBFAEWASEB
-					KwE6AU0BWQFbAV0BXwFhAWMBcAF1AXcBfAGH
-					AZABowGnAbQBvQHCAcQBxgHIAc8B2QHbAd0B
-					3wHkAekCCAIMAhECIAIkAiwCMQJHAkwCYwJq
-					AnwCfgKAAoICjgKTAq8CswK+AskC0QLcAusC
-					7QLvAvQDEwMYAzcDUwNpA24DhgOKA5YDmwOe
-					A6MDuQAAAAAAAAIBAAAAAAAAAGgAAAAAAAAA
-					AAAAAAAAAAO9
+					gAGvEB8LDBMZISssLjU5Pj9CRkpPUFNaXmJn
+					bHBzdHd4fYKEVSRudWxs0w0ODxAREl8QF05T
+					Q29tcG91bmRQcmVkaWNhdGVUeXBlXxAPTlNT
+					dWJwcmVkaWNhdGVzViRjbGFzcxABgAKAHtIU
+					DxUYWk5TLm9iamVjdHOiFheAA4AUgB3UDxob
+					HB0eHyBfEBFOU1JpZ2h0RXhwcmVzc2lvbl8Q
+					EE5TTGVmdEV4cHJlc3Npb25fEBNOU1ByZWRp
+					Y2F0ZU9wZXJhdG9ygBOADoAEgBHVIiMkJQ8m
+					JygpKllOU09wZXJhbmReTlNTZWxlY3Rvck5h
+					bWVfEBBOU0V4cHJlc3Npb25UeXBlW05TQXJn
+					dW1lbnRzgAaABRADgAiADVx2YWx1ZUZvcktl
+					eTrSJA8QLYAH0i8wMTJaJGNsYXNzbmFtZVgk
+					Y2xhc3Nlc18QEE5TU2VsZkV4cHJlc3Npb26j
+					MTM0XE5TRXhwcmVzc2lvblhOU09iamVjdNIU
+					DzY4oTeACYAM0w8kOjs8PVlOU0tleVBhdGiA
+					CxAKgApUa2luZNIvMEBBXxAcTlNLZXlQYXRo
+					U3BlY2lmaWVyRXhwcmVzc2lvbqNAMzTSLzBD
+					RF5OU011dGFibGVBcnJheaNDRTRXTlNBcnJh
+					edIvMEdIXxATTlNLZXlQYXRoRXhwcmVzc2lv
+					bqRHSTM0XxAUTlNGdW5jdGlvbkV4cHJlc3Np
+					b27TSyQPTE1OXxAPTlNDb25zdGFudFZhbHVl
+					gA8QAIAQEATSLzBRUl8QGU5TQ29uc3RhbnRW
+					YWx1ZUV4cHJlc3Npb26jUTM01Q9UVVZXWE1Z
+					TU9aTlNNb2RpZmllclhOU05lZ2F0ZVlOU09w
+					dGlvbnNeTlNPcGVyYXRvclR5cGWAEgjSLzBb
+					XF8QG05TRXF1YWxpdHlQcmVkaWNhdGVPcGVy
+					YXRvcqNbXTRfEBNOU1ByZWRpY2F0ZU9wZXJh
+					dG9y0i8wX2BfEBVOU0NvbXBhcmlzb25QcmVk
+					aWNhdGWjX2E0W05TUHJlZGljYXRl1A8aGxwd
+					ZGVmgBOAGYAVgBvVIiMkJQ8mJyhqKoAGgAWA
+					FoAN0hQPbTihboAXgAzTDyQ6OzxygAuAGFRu
+					YW1l00skD3VNToAagBBaU2NyZWVuc2hvdNUP
+					VHl6V3tNKE18V05TRmxhZ3NaTlNQb3NpdGlv
+					boAcEAjSLzB+f18QHE5TU3Vic3RyaW5nUHJl
+					ZGljYXRlT3BlcmF0b3KkgIFdNF8QHE5TU3Vi
+					c3RyaW5nUHJlZGljYXRlT3BlcmF0b3JfEBlO
+					U1N0cmluZ1ByZWRpY2F0ZU9wZXJhdG9y0i8w
+					RYOiRTTSLzCFhl8QE05TQ29tcG91bmRQcmVk
+					aWNhdGWjhWE0AAgAEQAaACQAKQAyADcASQBM
+					AFEAUwB1AHsAggCcAK4AtQC3ALkAuwDAAMsA
+					zgDQANIA1ADdAPEBBAEaARwBHgEgASIBLQE3
+					AUYBWQFlAWcBaQFrAW0BbwF8AYEBgwGIAZMB
+					nAGvAbMBwAHJAc4B0AHSAdQB2wHlAecB6QHr
+					AfAB9QIUAhgCHQIsAjACOAI9AlMCWAJvAnYC
+					iAKKAowCjgKQApUCsQK1AsACywLUAt4C7QLv
+					AvAC9QMTAxcDLQMyA0oDTgNaA2MDZQNnA2kD
+					awN2A3gDegN8A34DgwOFA4cDiQOQA5IDlAOZ
+					A6ADogOkA68DugPCA80DzwPRA9YD9QP6BBkE
+					NQQ6BD0EQgRYAAAAAAAAAgEAAAAAAAAAhwAA
+					AAAAAAAAAAAAAAAABFw=
 					</data>
 					<key>searchPath</key>
 					<string>~/Desktop</string>
@@ -192,7 +200,7 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:245.000000</string>
+				<string>309.000000:277.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Find Finder Items 2.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -302,7 +310,7 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:348.000000</string>
+				<string>309.000000:380.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -404,7 +412,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:593.000000</string>
+				<string>309.000000:625.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -575,7 +583,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:775.000000</string>
+				<string>309.000000:807.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -685,7 +693,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:878.000000</string>
+				<string>309.000000:910.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -728,9 +736,11 @@ end run</string>
 				<dict>
 					<key>Container</key>
 					<string>List</string>
+					<key>Optional</key>
+					<false/>
 					<key>Types</key>
 					<array>
-						<string>*</string>
+						<string>com.apple.cocoa.path</string>
 					</array>
 				</dict>
 				<key>AMRequiredResources</key>
@@ -797,7 +807,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:980.000000</string>
+				<string>309.000000:1012.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -923,7 +933,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:1080.000000</string>
+				<string>309.000000:1112.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Move Finder Items.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -933,47 +943,47 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>5C1C081B-C5C2-4DA6-8E1B-8D372518F37F</key>
+		<key>0F3A4130-3DAD-4D9D-9427-DA3BE9016802</key>
 		<dict>
 			<key>from</key>
 			<string>A17F7A07-9C70-47E3-926A-963C515DC1C4 - A17F7A07-9C70-47E3-926A-963C515DC1C4</string>
 			<key>to</key>
 			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
 		</dict>
-		<key>63030A9B-CE6E-470C-BC3D-05560AB324B7</key>
-		<dict>
-			<key>from</key>
-			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
-			<key>to</key>
-			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
-		</dict>
-		<key>64102DF4-A37E-46C0-9386-223C7B727B56</key>
-		<dict>
-			<key>from</key>
-			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
-			<key>to</key>
-			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
-		</dict>
-		<key>9FCAA59F-5F0F-44DA-B706-48EE7C5ABD7E</key>
-		<dict>
-			<key>from</key>
-			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
-			<key>to</key>
-			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
-		</dict>
-		<key>A688AFC8-1807-4946-8269-085C78367070</key>
-		<dict>
-			<key>from</key>
-			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
-			<key>to</key>
-			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
-		</dict>
-		<key>FB7CAAD5-F3C7-41BE-AC2C-DC1A22402F12</key>
+		<key>55CC1D39-16DF-4007-8C7F-48D9FA41058F</key>
 		<dict>
 			<key>from</key>
 			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
 			<key>to</key>
 			<string>7282537E-731F-49C4-9D81-2DA88EFA8E32 - 7282537E-731F-49C4-9D81-2DA88EFA8E32</string>
+		</dict>
+		<key>6F359776-2E18-4F7E-9726-6F604AFD1F76</key>
+		<dict>
+			<key>from</key>
+			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
+			<key>to</key>
+			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
+		</dict>
+		<key>7099C296-EAB8-418E-9736-7F4702619EF9</key>
+		<dict>
+			<key>from</key>
+			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
+			<key>to</key>
+			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
+		</dict>
+		<key>98A1B170-DC56-4603-86A3-8A3F5F63C0EA</key>
+		<dict>
+			<key>from</key>
+			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
+			<key>to</key>
+			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
+		</dict>
+		<key>AB92DF24-8583-4980-B978-D8C80088D88C</key>
+		<dict>
+			<key>from</key>
+			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
+			<key>to</key>
+			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -1001,7 +1011,7 @@ end run</string>
 			<key>name</key>
 			<string>screenshotsPath</string>
 			<key>value</key>
-			<string>/Users/danloman/screenshots/2016/12/19/simulator-shots</string>
+			<string>/Users/danloman/Documents/Screenshots/2024/12/05/manual-shots</string>
 		</dict>
 		<dict>
 			<key>UUID</key>
