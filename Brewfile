@@ -24,6 +24,7 @@ def mas_unless_exists(app_name, id:)
 end
 
 tap 'eddieantonio/eddieantonio'
+tap 'heroku/brew'
 
 brew 'aria2'
 brew 'bat'
@@ -38,6 +39,7 @@ brew 'fzf'
 brew 'gh'
 brew 'git-delta'
 brew 'golang'
+brew 'heroku'
 brew 'lazygit'
 brew 'lesspipe'
 brew 'libpq', link: true
