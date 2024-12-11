@@ -103,14 +103,19 @@ return { -- Fuzzy Finder (files, lsp, etc)
             ['nvim'] = vim.fn.stdpath 'config',
           },
         },
+        fzf = {
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
+        },
       },
     }
 
     -- Enable Telescope extensions if they are installed
-    pcall(telescope.load_extension, 'fzf')
-    pcall(telescope.load_extension, 'ui-select')
-    pcall(telescope.load_extension, 'frecency')
-    pcall(telescope.load_extension, 'rails_schema')
+    telescope.load_extension 'fzf'
+    telescope.load_extension 'ui-select'
+    telescope.load_extension 'frecency'
+    telescope.load_extension 'rails_schema'
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
