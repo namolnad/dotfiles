@@ -938,47 +938,47 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>2CE2A7AE-2BF5-4E39-A97A-3265404F539C</key>
-		<dict>
-			<key>from</key>
-			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
-			<key>to</key>
-			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
-		</dict>
-		<key>317C5F98-B0D0-4AF0-BF3C-9BC5F42CDF5B</key>
-		<dict>
-			<key>from</key>
-			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
-			<key>to</key>
-			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
-		</dict>
-		<key>9BD91A04-1F9E-4E90-80FD-97391F214CC8</key>
-		<dict>
-			<key>from</key>
-			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
-			<key>to</key>
-			<string>7282537E-731F-49C4-9D81-2DA88EFA8E32 - 7282537E-731F-49C4-9D81-2DA88EFA8E32</string>
-		</dict>
-		<key>A16EC9DA-8B73-4C4F-9B92-50E30D904B50</key>
+		<key>0779F0A2-7830-44FF-BC93-04AA70C05583</key>
 		<dict>
 			<key>from</key>
 			<string>A17F7A07-9C70-47E3-926A-963C515DC1C4 - A17F7A07-9C70-47E3-926A-963C515DC1C4</string>
 			<key>to</key>
 			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
 		</dict>
-		<key>AA2457D1-19D8-4932-B84C-DF97EEB89CB9</key>
+		<key>5154ADEF-921E-4775-ABF5-8E256BD15905</key>
 		<dict>
 			<key>from</key>
-			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
+			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
 			<key>to</key>
-			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
+			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
 		</dict>
-		<key>F0F7B60B-E984-4EDF-A967-DDFE78C62BEB</key>
+		<key>6CD9E01E-3064-4688-9D4B-D8EF20F172C0</key>
 		<dict>
 			<key>from</key>
 			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
 			<key>to</key>
 			<string>8589137F-AB95-455C-BB43-77A63B3DA6AD - 8589137F-AB95-455C-BB43-77A63B3DA6AD</string>
+		</dict>
+		<key>B7BDA315-D3EC-430B-9B31-B30987668C7B</key>
+		<dict>
+			<key>from</key>
+			<string>9D5508EF-E123-4C77-8D8A-CF82370DE55A - 9D5508EF-E123-4C77-8D8A-CF82370DE55A</string>
+			<key>to</key>
+			<string>7282537E-731F-49C4-9D81-2DA88EFA8E32 - 7282537E-731F-49C4-9D81-2DA88EFA8E32</string>
+		</dict>
+		<key>EF03FB22-A754-4B67-82E4-0B38A54254D2</key>
+		<dict>
+			<key>from</key>
+			<string>FF6BA3E9-B14A-4306-A46D-16E06EFD1D16 - FF6BA3E9-B14A-4306-A46D-16E06EFD1D16</string>
+			<key>to</key>
+			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
+		</dict>
+		<key>F1AB8DA9-26C5-45B2-AD38-29232534F7E1</key>
+		<dict>
+			<key>from</key>
+			<string>E106B4E5-2AEA-4A94-A13E-941B626B8323 - E106B4E5-2AEA-4A94-A13E-941B626B8323</string>
+			<key>to</key>
+			<string>6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5 - 6A798AF0-5CA5-410B-A8CE-1ACC3B3B68C5</string>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -1006,7 +1006,7 @@ end run</string>
 			<key>name</key>
 			<string>screenshotsPath</string>
 			<key>value</key>
-			<string>/Users/danloman/Documents/Screenshots/2024/12/05/manual-shots</string>
+			<string>/Users/danloman/Documents/Screenshots/2024/12/09/manual-shots</string>
 		</dict>
 		<dict>
 			<key>UUID</key>
