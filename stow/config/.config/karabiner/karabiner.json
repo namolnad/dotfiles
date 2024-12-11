@@ -452,9 +452,25 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Window: last third",
+                                "description": "Window: center third",
                                 "from": {
                                     "key_code": "k",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "shell_command": "open -g rectangle://execute-action?name=center-third" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "hyper_sublayer_w",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "description": "Window: last third",
+                                "from": {
+                                    "key_code": "l",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "shell_command": "open -g rectangle://execute-action?name=last-third" }],
