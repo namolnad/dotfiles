@@ -9,14 +9,14 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
-    local indentscope = require('mini.indentscope')
-    indentscope.setup {
-      draw = {
-        delay = 50,
-        animation = indentscope.gen_animation.none(),
-      },
-      symbol = '╎',
-    }
+    -- local indentscope = require('mini.indentscope')
+    -- indentscope.setup {
+    --   draw = {
+    --     delay = 50,
+    --     animation = indentscope.gen_animation.none(),
+    --   },
+    --   symbol = '╎',
+    -- }
 
     -- Add/delete/replace surroundings (brackets, quotes, etc.)
     --
