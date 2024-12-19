@@ -15,12 +15,12 @@ return {
         -- ruby
         require 'neotest-minitest' {
           test_cmd = function()
-            return vim.tbl_flatten {
+            return vim.iter({
               'bundle',
               'exec',
               'rails',
               'test',
-            }
+            }):flatten()
           end,
         },
       }
@@ -29,17 +29,17 @@ return {
       -- Test closest
       vim.keymap.set('n', '<leader>tc', function()
         neotest.run.run()
-      end, { desc = 'Run closest test' })
+      end, { desc = '[T]est [c]losest/current test' })
 
       -- Test file
       vim.keymap.set('n', '<leader>tf', function()
         neotest.run.run(vim.fn.expand '%')
-      end, { desc = 'Test current file' })
+      end, { desc = '[T]est current [f]ile' })
 
       -- Debug the nearest test
       vim.keymap.set('n', '<leader>tD', function()
         neotest.run.run { strategy = 'dap', suite = false }
-      end, { desc = 'Debug the nearest test' })
+      end, { desc = '[T]est and [d]ebug closest/current' })
     end,
   },
 }
