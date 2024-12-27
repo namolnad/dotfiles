@@ -103,4 +103,4 @@ end
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Hit escape in terminal mode' })
 
 vim.keymap.set('n', '<leader>tb', toggle_bottom_terminal, { desc = 'Toggle [T]erminal. Position [B]ottom' })
-vim.keymap.set({ 'n', 't' }, '<leader>tf', toggle_float_terminal, { desc = 'Toggle [T]erminal. Position [F]loating' })
+vim.keymap.set({ 'n', 't' }, '<leader>tF', toggle_float_terminal, { desc = 'Toggle [T]erminal. Position [F]loating' })
