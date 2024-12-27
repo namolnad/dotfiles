@@ -60,6 +60,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             '--glob=!.rbenv/versions/',
             '--glob=!.rbenv/shims/',
             '--glob=!stow/config/.config/alfred',
+            '--glob=!tmp/**/*'
           },
           -- vimgrep_argments = { '--hidden', '--glob=!.git/' } -- can't seem to make this work
         },
@@ -74,6 +75,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             'rbenv/versions',
             'rbenv/shims',
             'alfredpreferences',
+            'tmp/',
           },
           additional_args = {
             -- '--fixed-strings',
@@ -84,6 +86,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             '--glob=!log/test.log',
             '--glob=!.DS_Store',
             '--glob=!.vim/undodir/',
+            '--glob=!tmp/**/*'
             -- '--glob=!stow/config/.config/rbenv/versions/',
             -- '--glob=!stow/config/.config/rbenv/shims/',
           },
