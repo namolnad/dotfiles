@@ -1,15 +1,5 @@
-local set = vim.opt_local
-
--- Set local settings for terminal buffers
-vim.api.nvim_create_autocmd('TermOpen', {
-  group = vim.api.nvim_create_augroup('custom-term-open', {}),
-  callback = function()
-    set.number = false
-    set.relativenumber = false
-    set.scrolloff = 0
-    set.signcolumn = 'no'
-  end,
-})
+local opt_set = vim.opt_local
+local key_set = vim.keymap.set
 
 local state = {
   term_window = {
@@ -17,6 +7,24 @@ local state = {
     win = -1,
   }
 }
+
+-- Set local settings for terminal buffers
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = vim.api.nvim_create_augroup('custom-term-open', {}),
+  callback = function()
+    opt_set.number = false
+    opt_set.relativenumber = false
+    opt_set.scrolloff = 0
+    opt_set.signcolumn = 'no'
+
+    -- Add the hide terminal keymap to the terminal buffer
+    for _, key in ipairs({ 'gq', '<esc>' }) do
+      key_set('n', key, function()
+        vim.api.nvim_win_hide(state.term_window.win)
+      end, { buffer = true, desc = 'Hide terminal' })
+    end
+  end,
+})
 
 local function create_buffer(opts)
   opts = opts or {}
@@ -100,7 +108,7 @@ local toggle_bottom_terminal = function()
 end
 
 -- Easily hit escape in terminal mode.
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Hit escape in terminal mode' })
+key_set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Hit escape in terminal mode' })
 
-vim.keymap.set('n', '<leader>tb', toggle_bottom_terminal, { desc = 'Toggle [T]erminal. Position [B]ottom' })
-vim.keymap.set({ 'n', 't' }, '<leader>tF', toggle_float_terminal, { desc = 'Toggle [T]erminal. Position [F]loating' })
+key_set('n', '<leader>tb', toggle_bottom_terminal, { desc = 'Toggle [T]erminal. Position [B]ottom' })
+key_set({ 'n', 't' }, '<leader>tF', toggle_float_terminal, { desc = 'Toggle [T]erminal. Position [F]loating' })

@@ -63,7 +63,7 @@ return {
           prev = "[x",
         },
         suggestion = {
-          accept = "<C-y>", -- <M-l> is former
+          accept = "<M-l>",
           next = "<M-]>",
           prev = "<M-[>",
           dismiss = "<C-]>",
@@ -77,10 +77,10 @@ return {
           insert = "<C-s>",
         },
         sidebar = {
-          apply_all = "<leader>A",    -- A is former
-          apply_cursor = "<leader>a", -- a is former
-          switch_windows = "<Tab>",
-          reverse_switch_windows = "<S-Tab>",
+          apply_all = "A",
+          apply_cursor = "a",
+          switch_windows = "",         -- disabled (formerly "Tab")
+          reverse_switch_windows = "", -- disabled (formerly "S-Tab")
         },
       },
     })
