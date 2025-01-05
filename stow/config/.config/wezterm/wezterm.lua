@@ -7,6 +7,11 @@ local config = wezterm.config_builder()
 
 config.term = "xterm-256color"
 
+-- local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
+-- config.colors = theme.colors()
+-- config.colors.cursor_bg = "#47FF9C"
+-- config.colors.ansi[8] = "#24EAF7"
+
 config.colors = {
 	foreground = "#CBE0F0",
 	background = "#011423",
