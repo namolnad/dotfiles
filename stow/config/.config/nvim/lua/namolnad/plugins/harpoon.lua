@@ -28,23 +28,6 @@ return {
       harpoon:list():clear()
     end, 'Clear all')
 
-    -- Quick navigation
-    map('<C-h>', function()
-      harpoon:list():select(1)
-    end, 'File 1')
-
-    map('<C-j>', function()
-      harpoon:list():select(2)
-    end, 'File 2')
-
-    map('<C-k>', function()
-      harpoon:list():select(3)
-    end, 'File 3')
-
-    map('<C-l>', function()
-      harpoon:list():select(4)
-    end, 'File 4')
-
     -- Navigate through list
     map('[h', function()
       harpoon:list():prev()
