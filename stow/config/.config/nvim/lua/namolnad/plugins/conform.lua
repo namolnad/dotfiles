@@ -53,5 +53,9 @@ return { -- Autoformat
     end, {
       desc = 'Re-enable autoformat-on-save',
     })
+    vim.keymap.set('n', '<leader>F', function()
+      vim.b.disable_autoformat = not vim.b.disable_autoformat
+      print("Format-on-save: " .. (vim.b.disable_autoformat and "disabled" or "enabled"))
+    end, { desc = 'Conform: Toggle format-on-save' })
   end,
 }

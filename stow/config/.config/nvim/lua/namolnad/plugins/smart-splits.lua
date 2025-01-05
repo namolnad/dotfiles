@@ -8,21 +8,22 @@ return {
     -- resizing splits
     -- these keymaps will also accept a range,
     -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
-    vim.keymap.set('n', '<A-h>', smart_splits.resize_left, { desc = 'Resize split left' })
-    vim.keymap.set('n', '<A-j>', smart_splits.resize_down, { desc = 'Resize split down' })
-    vim.keymap.set('n', '<A-k>', smart_splits.resize_up, { desc = 'Resize split up' })
-    vim.keymap.set('n', '<A-l>', smart_splits.resize_right, { desc = 'Resize split right' })
+    vim.keymap.set('n', '<M-h>', smart_splits.resize_left, { desc = 'SmartSplits: Resize split left' })
+    vim.keymap.set('n', '<M-j>', smart_splits.resize_down, { desc = 'SmartSplits: Resize split down' })
+    vim.keymap.set('n', '<M-k>', smart_splits.resize_up, { desc = 'SmartSplits: Resize split up' })
+    vim.keymap.set('n', '<M-l>', smart_splits.resize_right, { desc = 'SmartSplits: Resize split right' })
     -- moving between splits
-    vim.keymap.set('n', '<C-h>', smart_splits.move_cursor_left, { desc = 'Move cursor left' })
-    vim.keymap.set('n', '<C-j>', smart_splits.move_cursor_down, { desc = 'Move cursor down' })
-    vim.keymap.set('n', '<C-k>', smart_splits.move_cursor_up, { desc = 'Move cursor up' })
-    vim.keymap.set('n', '<C-l>', smart_splits.move_cursor_right, { desc = 'Move cursor right' })
-    vim.keymap.set('n', '<C-\\>', smart_splits.move_cursor_previous, { desc = 'Move cursor to previous split' })
+    vim.keymap.set('n', '<C-h>', smart_splits.move_cursor_left, { desc = 'SmartSplits: Move cursor left' })
+    vim.keymap.set('n', '<C-j>', smart_splits.move_cursor_down, { desc = 'SmartSplits: Move cursor down' })
+    vim.keymap.set('n', '<C-k>', smart_splits.move_cursor_up, { desc = 'SmartSplits: Move cursor up' })
+    vim.keymap.set('n', '<C-l>', smart_splits.move_cursor_right, { desc = 'SmartSplits: Move cursor right' })
+    vim.keymap.set('n', '<C-\\>', smart_splits.move_cursor_previous,
+      { desc = 'SmartSplits: Move cursor to previous split' })
     -- swapping buffers between windows
-    vim.keymap.set('n', '<leader><leader>h', smart_splits.swap_buf_left, { desc = 'Swap buffer left' })
-    vim.keymap.set('n', '<leader><leader>j', smart_splits.swap_buf_down, { desc = 'Swap buffer down' })
-    vim.keymap.set('n', '<leader><leader>k', smart_splits.swap_buf_up, { desc = 'Swap buffer up' })
-    vim.keymap.set('n', '<leader><leader>l', smart_splits.swap_buf_right, { desc = 'Swap buffer right' })
+    vim.keymap.set('n', '<M-S-h>', smart_splits.swap_buf_left, { desc = 'SmartSplits: Swap buffer left' })
+    vim.keymap.set('n', '<M-S-j>', smart_splits.swap_buf_down, { desc = 'SmartSplits: Swap buffer down' })
+    vim.keymap.set('n', '<M-S-k>', smart_splits.swap_buf_up, { desc = 'SmartSplits: Swap buffer up' })
+    vim.keymap.set('n', '<M-S-l>', smart_splits.swap_buf_right, { desc = 'SmartSplits: Swap buffer right' })
 
     smart_splits.setup {
       -- Ignored buffer types (only while resizing)

@@ -7,46 +7,60 @@ return {
 
     harpoon:setup {}
 
-    vim.keymap.set('n', '<M-h><M-e>', function()
-      harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = 'Toggle/explore Harpoon quick menu' })
+    local map = function(keys, func, desc)
+      vim.keymap.set('n', keys, func, { desc = "Harpoon: " .. desc })
+    end
 
-    vim.keymap.set('n', '<M-h><M-a>', function()
+    -- Main Harpoon commands
+    map('<leader>ha', function()
       harpoon:list():add()
-    end, { desc = 'Add current file to Harpoon' })
-    vim.keymap.set('n', '<M-h><M-r>', function()
+    end, 'Add file')
+
+    map('<leader>he', function()
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end, 'Quick menu')
+
+    map('<leader>hr', function()
       harpoon:list():remove()
-    end, { desc = 'Remove current file from Harpoon' })
-    vim.keymap.set('n', '<M-h><M-c>', function()
+    end, 'Remove file')
+
+    map('<leader>hc', function()
       harpoon:list():clear()
-    end, { desc = 'Clear Harpoon list' })
+    end, 'Clear all')
 
-    vim.keymap.set('n', '<M-h><M-h>', function()
+    -- Quick navigation
+    map('<C-h>', function()
       harpoon:list():select(1)
-    end, { desc = 'Select Harpoon item 1' })
-    vim.keymap.set('n', '<M-h><M-j>', function()
-      harpoon:list():select(2)
-    end, { desc = 'Select Harpoon item 2' })
-    vim.keymap.set('n', '<M-h><M-k>', function()
-      harpoon:list():select(3)
-    end, { desc = 'Select Harpoon item 3' })
-    vim.keymap.set('n', '<M-h><M-l>', function()
-      harpoon:list():select(4)
-    end, { desc = 'Select Harpoon item 4' })
+    end, 'File 1')
 
-    -- Toggle previous & next buffers stored within Harpoon list
-    vim.keymap.set('n', '<M-C-p>', function()
+    map('<C-j>', function()
+      harpoon:list():select(2)
+    end, 'File 2')
+
+    map('<C-k>', function()
+      harpoon:list():select(3)
+    end, 'File 3')
+
+    map('<C-l>', function()
+      harpoon:list():select(4)
+    end, 'File 4')
+
+    -- Navigate through list
+    map('[h', function()
       harpoon:list():prev()
-    end, { desc = 'Select previous Harpoon item' })
-    vim.keymap.set('n', '<M-C-n>', function()
+    end, 'Prev file')
+
+    map(']h', function()
       harpoon:list():next()
-    end, { desc = 'Select next Harpoon item' })
+    end, 'Next file')
 
     -- Set <leader>1..<leader>5 be my shortcuts to moving to the files
-    for _, idx in ipairs { 1, 2, 3, 4, 5 } do
-      vim.keymap.set('n', string.format('<leader>%d', idx), function()
-        harpoon:list():select(idx)
-      end)
+    for _, file in ipairs { 1, 2, 3, 4, 5 } do
+      for _, binding in ipairs { string.format('<leader>%d', file), string.format('<M-%d>', file) } do
+        map(binding, function()
+          harpoon:list():select(file)
+        end, string.format('File %d', file))
+      end
     end
   end,
 }

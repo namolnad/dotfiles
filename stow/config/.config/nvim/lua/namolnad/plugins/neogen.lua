@@ -13,11 +13,11 @@ return {
 
     vim.keymap.set('n', '<leader>nf', function()
       neogen.generate { type = 'func' }
-    end)
+    end, { desc = '[N]eoGen: Generate annotations for current [f]unction' })
 
     vim.keymap.set('n', '<leader>nt', function()
       neogen.generate { type = 'type' }
-    end)
+    end, { desc = '[N]eoGen: Generate annotations for current [t]ype' })
   end,
   -- Uncomment next line if you want to follow only stable versions
   -- version = "*"

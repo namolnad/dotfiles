@@ -6,7 +6,7 @@ return {
   config = function()
     local oil = require 'oil'
 
-    vim.keymap.set('n', '-', oil.open_float, { desc = 'Open parent directory' })
+    vim.keymap.set('n', '-', oil.open_float, { desc = 'Oil: Open parent directory' })
 
     oil.setup {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)

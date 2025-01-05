@@ -20,8 +20,8 @@ return {
     treesj.setup {
       langs = langs,
     }
-    vim.keymap.set('n', '<leader>m', '<cmd>TSJToggle<CR>', { desc = 'Split or Join codeblock with autodetect' })
-    vim.keymap.set('n', '<leader>j', '<cmd>TSJJoin<CR>', { desc = '[J]oin codeblock' })
-    vim.keymap.set('n', '<leader>s', '<cmd>TSJSplit<CR>', { desc = '[S]plit codeblock' })
+    vim.keymap.set('n', '<leader>m', '<cmd>TSJToggle<CR>', { desc = 'TreeSJ: Split or Join codeblock with autodetect' })
+    vim.keymap.set('n', '<leader>j', '<cmd>TSJJoin<CR>', { desc = 'TreeSJ: [J]oin codeblock' })
+    vim.keymap.set('n', '<leader>s', '<cmd>TSJSplit<CR>', { desc = 'TreeSJ: [S]plit codeblock' })
   end,
 }

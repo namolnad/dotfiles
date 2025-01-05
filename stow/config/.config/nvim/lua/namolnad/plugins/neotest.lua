@@ -29,17 +29,17 @@ return {
       -- Test closest
       vim.keymap.set('n', '<leader>tc', function()
         neotest.run.run()
-      end, { desc = '[T]est [c]losest/current test' })
+      end, { desc = 'NeoTest: [T]est [c]losest/current test' })
 
       -- Test file
       vim.keymap.set('n', '<leader>tf', function()
         neotest.run.run(vim.fn.expand '%')
-      end, { desc = '[T]est current [f]ile' })
+      end, { desc = 'NeoTest: [T]est current [f]ile' })
 
       -- Debug the nearest test
       vim.keymap.set('n', '<leader>tD', function()
         neotest.run.run { strategy = 'dap', suite = false }
-      end, { desc = '[T]est and [d]ebug closest/current' })
+      end, { desc = 'NeoTest: [T]est and [d]ebug closest/current' })
     end,
   },
 }

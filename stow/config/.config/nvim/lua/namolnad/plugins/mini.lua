@@ -9,21 +9,18 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
-    -- local indentscope = require('mini.indentscope')
-    -- indentscope.setup {
-    --   draw = {
-    --     delay = 50,
-    --     animation = indentscope.gen_animation.none(),
-    --   },
-    --   symbol = '╎',
-    -- }
-
     -- Add/delete/replace surroundings (brackets, quotes, etc.)
-    --
-    -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-    -- - sd'   - [S]urround [D]elete [']quotes
-    -- - sr)'  - [S]urround [R]eplace [)] [']
-    require('mini.surround').setup()
+    require('mini.surround').setup({
+      mappings = {
+        add = 'ys',          -- [Y]ou add [s]urrounding in Normal and Visual modes
+        delete = 'ds',       -- [D]elete [s]urrounding
+        replace = 'cs',      -- [C]hange [s]urrounding
+        find = '',           -- Find surrounding (to the right)
+        find_left = '',      -- Find surrounding (to the left)
+        highlight = '',      -- Highlight surrounding
+        update_n_lines = '', -- Update `n_lines`
+      },
+    })
 
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,

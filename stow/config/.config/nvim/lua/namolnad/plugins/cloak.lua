@@ -32,6 +32,6 @@ return {
     }
 
     -- Add a command to toggle the cloak plugin. via <leader>ct
-    vim.keymap.set('n', '<leader>ct', cloak.toggle, { desc = '[C]loak toggle' })
+    vim.keymap.set('n', '<leader>ct', cloak.toggle, { desc = '[C]loak: [T]oggle' })
   end,
 }

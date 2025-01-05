@@ -1,18 +1,13 @@
-return { -- Useful plugin to show you pending keybinds.
+return {
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  event = 'VeryLazy',
   keys = {
-    { '<leader>D', group = '[D]ocument' },
-    { '<leader>D_', hidden = true },
-    { '<leader>c', group = '[C]ode' },
-    { '<leader>c_', hidden = true },
-    { '<leader>r', group = '[R]ename' },
-    { '<leader>r_', hidden = true },
-    { '<leader>s', group = '[S]earch' },
-    { '<leader>s_', hidden = true },
-    { '<leader>w', group = '[W]orkspace' },
-    { '<leader>w_', hidden = true },
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "WhichKey: Buffer Local Keymaps",
+    },
   },
-  config = function() -- This is the function that runs, AFTER loading
-  end,
 }
