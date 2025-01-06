@@ -32,9 +32,9 @@ return {
       end, { desc = 'NeoTest: [T]est [c]losest/current test' })
 
       -- Test file
-      vim.keymap.set('n', '<leader>tf', function()
+      vim.keymap.set('n', '<leader>tC', function()
         neotest.run.run(vim.fn.expand '%')
-      end, { desc = 'NeoTest: [T]est current [f]ile' })
+      end, { desc = 'NeoTest: [T]est [C]urrent file' })
 
       -- Debug the nearest test
       vim.keymap.set('n', '<leader>tD', function()

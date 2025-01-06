@@ -1,5 +1,8 @@
 local opt_set = vim.opt_local
-local key_set = vim.keymap.set
+local key_set = function(mode, key, action, desc, buffer)
+  buffer = buffer or false
+  vim.keymap.set(mode, key, action, { buffer = buffer, desc = "Terminal: " .. desc })
+end
 
 local state = {
   term_window = {
@@ -21,7 +24,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
     for _, key in ipairs({ 'gq', '<esc>' }) do
       key_set('n', key, function()
         vim.api.nvim_win_hide(state.term_window.win)
-      end, { buffer = true, desc = 'Hide terminal' })
+      end, 'Hide terminal', true)
     end
   end,
 })
@@ -108,7 +111,6 @@ local toggle_bottom_terminal = function()
 end
 
 -- Easily hit escape in terminal mode.
-key_set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Hit escape in terminal mode' })
-
-key_set('n', '<leader>tb', toggle_bottom_terminal, { desc = 'Toggle [T]erminal. Position [B]ottom' })
-key_set({ 'n', 't' }, '<leader>tF', toggle_float_terminal, { desc = 'Toggle [T]erminal. Position [F]loating' })
+key_set('t', '<esc><esc>', '<c-\\><c-n>', 'Hit escape in terminal mode')
+key_set('n', '<leader>tb', toggle_bottom_terminal, 'Toggle [T]erminal. Position [B]ottom')
+key_set({ 'n', 't' }, '<leader>tf', toggle_float_terminal, 'Toggle [T]erminal. Position [f]loating')
