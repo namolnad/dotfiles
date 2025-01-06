@@ -83,7 +83,7 @@ return {
         ['g.'] = 'actions.toggle_hidden',
         ['g\\'] = 'actions.toggle_trash',
         ['gq'] = 'actions.close',
-        ['<esc>'] = 'actions.close',
+        ['<esc><esc>'] = 'actions.close',
       },
       -- Configuration for the floating keymaps help window
       keymaps_help = {
