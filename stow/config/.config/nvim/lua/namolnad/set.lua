@@ -103,7 +103,9 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.foldenable = true
-vim.opt.foldmethod = 'expr'
+vim.opt.foldmethod = 'syntax'
+-- vim.opt.foldlevel = 99 -- Start with all folds open
+vim.opt.foldlevel = 3
 
 function R(name)
   require('plenary.reload').reload_module(name)
