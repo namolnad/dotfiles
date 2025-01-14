@@ -47,6 +47,15 @@ return {
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+    scratch = {
+      ft = "markdown",
+      -- ft = function()
+      --   if vim.bo.buftype == "" and vim.bo.filetype ~= "" then
+      --     return vim.bo.filetype
+      --   end
+      --   return "markdown"
+      -- end,
+    },
     styles = {
       notification = {
         wo = { wrap = true } -- Wrap notifications
@@ -56,7 +65,7 @@ return {
 
   keys = {
     { "<leader>.",  function() Snacks.scratch() end,                 desc = "Snacks: Toggle Scratch Buffer" },
-    -- { "<leader>S",  function() Snacks.scratch.select() end,          desc = "Snacks: Select Scratch Buffer" },
+    { "<leader>>",  function() Snacks.scratch.select() end,          desc = "Snacks: Select Scratch Buffer" },
     { "<leader>n",  function() Snacks.notifier.show_history() end,   desc = "Snacks: Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end,               desc = "Snacks: Delete Buffer" },
     { "<leader>rf", function() Snacks.rename.rename_file() end,      desc = "Snacks: [R]ename [F]ile" },
