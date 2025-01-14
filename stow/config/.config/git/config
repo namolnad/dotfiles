@@ -1,19 +1,66 @@
+[alias]
+	amend = commit --amend --no-edit
+	commit-count = rev-list @ --count
+	compare-commits = "!f() { git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short origin/releases/$1...origin/releases/$2; }; f"
+	find = "log --pretty=\"format:%C(cyan)%ad %C(yellow)%H %Creset%s\" --name-status --grep"
+	stash-rename = "!f() { rev=$(git rev-parse \"stash@{$1}\") && git stash drop -q \"stash@{$1}\" || exit 1 ; git stash store -m \"$2\" $rev; }; f"
+	recent-branches = "for-each-ref --sort=-committerdate --count=10 --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) (%(color:green)%(committerdate:relative)%(color:reset))' refs/heads/"
+	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
+	stand-up-yesterday = !"git log --reverse --branches --since=\"$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi)\" --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
+	img-diffs = !"git diff @ --cached --name-only | grep .png | xargs imgcat"
+[branch]
+	autosetuprebase = always
+	sort = -committerdate
+[color]
+	ui = true
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[commit]
+	gpgsign = false
 [core]
 	whitespace = trailing-space,space-before-tab
 	trustctime = false
 	excludesfile = ~/.config/git/ignore
 	pager = delta
-[init]
-	defaultBranch = main
-[user]
-	name = Dan Loman
-	email = daniel.h.loman@gmail.com
 [credential]
 	helper = osxkeychain
-[url "ssh://git@github.com/namolnad"]
-	insteadOf = https://github.com/namolnad
+[delta]
+	features = side-by-side line-numbers decorations
+	whitespace-error-style = 22 reverse
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+[diff]
+	mnemonicprefix = true
+	algorithm = histogram
 [fetch]
 	prune = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	stat = true
+	tool = diffconflicts
+	conflictstyle = zdiff3
+[mergetool]
+	keepBackup = false
 [pull]
 	default = current
 	ff = only
@@ -23,66 +70,11 @@
 [rebase]
 	autoStash = true
 	autoSquash = true
-[branch]
-	autosetuprebase = always
-	sort = -committerdate
-[commit]
-	gpgsign = false
-[mergetool]
-	keepBackup = false
-[merge]
-	stat = true
-	tool = diffconflicts
-	conflictstyle = zdiff3
-[diff]
-	mnemonicprefix = true
-	algorithm = histogram
-[interactive]
-	diffFilter = delta --color-only
-[delta]
-	features = side-by-side line-numbers decorations
-	whitespace-error-style = 22 reverse
-[delta "decorations"]
-	commit-decoration-style = bold yellow box ul
-	file-style = bold yellow ul
-	file-decoration-style = none
-[color]
-	ui = true
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[alias]
-	amend = commit -a --amend --no-edit
-	ap = add -p
-	build-number = rev-list @ --count
-	ci = commit
-	cm = "!f(){ git commit -m \"$(echo "${@}")\"; }; f"
-	co = checkout
-	compare-commits = "!_() { git log --left-right --graph --cherry-pick --oneline --format=format:'%cd %C(cyan) %an %C(yellow)%h %Creset %s %Cgreen%d' --date=short origin/releases/$1...origin/releases/$2; }; _"
-	compare-files = "!_() { git diff --name-status origin/releases/$1..origin/releases/$2 | grep ^M; }; _"
-	find = log --pretty=\"format:%C(cyan)%ad %C(yellow)%H %Creset%s\" --name-status --grep
-	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
-	stf = stashfiles
-	recent-branches = for-each-ref --sort=-committerdate --count=10 --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) (%(color:green)%(committerdate:relative)%(color:reset))' refs/heads/
-	squash-branch = "!_() { git reset $(git merge-base master $(git rev-parse --abbrev-ref @)); git commit -am \"$1\"; }; _"
-	stand-up-yesterday = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
-	stand-up = !"git log --reverse --branches --since='1 week ago' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
-	img-diffs = !"git diff @ --cached --name-only | grep .png | xargs imgcat"
-	rename = branch -m
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+[url "ssh://git@github.com/namolnad"]
+	insteadOf = https://github.com/namolnad
+[user]
+	name = Dan Loman
+	email = daniel.h.loman@gmail.com
 [includeIf "gitdir/i:~/Developer/Work/"] ; ordering matters, if this is included early it will be overwritten
 	path = ~/Developer/Environment/.gitconfig-work
 [include]
