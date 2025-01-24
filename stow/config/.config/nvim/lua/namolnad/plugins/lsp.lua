@@ -169,11 +169,11 @@ return { -- LSP Configuration & Plugins
     --  You can press `g?` for help in this menu.
     require('mason').setup()
 
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
     -- remove ruby_lsp from ensure_installed; We want to install from bundle
-    table.remove(ensure_installed, 2)
+    local ensure_installed = vim.tbl_filter(
+      function(server) return server ~= "ruby_lsp" end,
+      vim.tbl_keys(servers or {})
+    )
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
       'rubocop',
