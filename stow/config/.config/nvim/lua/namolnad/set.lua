@@ -114,16 +114,16 @@ function Foldtext()
   return string.format("%s ⋯\n%s", sanitized_first_line, sanitized_last_line)
 end
 
-vim.opt.foldenable = true
-vim.opt.foldcolumn = '1'
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevel = 20 -- Start with all folds open
-vim.opt.foldtext = 'v:lua.Foldtext()'
--- vim.opt.foldtext = ''
-vim.opt.fillchars:append ',fold: '
-vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', blend = 0, bold = true })
-vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', fg = 'NONE', bold = true })
+-- vim.opt.foldenable = true
+-- vim.opt.foldcolumn = '1'
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldlevel = 20 -- Start with all folds open
+-- vim.opt.foldtext = 'v:lua.Foldtext()'
+-- -- vim.opt.foldtext = ''
+-- vim.opt.fillchars:append ',fold: '
+-- vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', blend = 0, bold = true })
+-- vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', fg = 'NONE', bold = true })
 
 function R(name)
   require('plenary.reload').reload_module(name)
