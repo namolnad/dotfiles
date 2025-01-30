@@ -134,11 +134,11 @@ return { -- LSP Configuration & Plugins
     require('mason-lspconfig').setup({
       automatic_installation = false,
       ensure_installed = {}, -- Mason tool installer will handle this and allow either Mason or lspconfig names
-      -- handlers = {
-      --   function(server_name)
-      --     lspconfig[server_name].setup {}
-      --   end,
-      -- }
+      handlers = {
+        function(server_name)
+          lspconfig[server_name].setup {}
+        end,
+      }
     })
 
     vim.diagnostic.config {
