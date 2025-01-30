@@ -7,22 +7,24 @@ local config = wezterm.config_builder()
 
 config.term = "xterm-256color"
 
+config.color_scheme = 'Tokyo Night Storm'
+
 -- local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
 -- config.colors = theme.colors()
 -- config.colors.cursor_bg = "#47FF9C"
 -- config.colors.ansi[8] = "#24EAF7"
-
-config.colors = {
-	foreground = "#CBE0F0",
-	background = "#011423",
-	cursor_bg = "#47FF9C",
-	cursor_border = "#47FF9C",
-	cursor_fg = "#011423",
-	selection_bg = "#033259",
-	selection_fg = "#CBE0F0",
-	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
-	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
-}
+--
+-- config.colors = {
+-- 	foreground = "#CBE0F0",
+-- 	background = "#011423",
+-- 	cursor_bg = "#47FF9C",
+-- 	cursor_border = "#47FF9C",
+-- 	cursor_fg = "#011423",
+-- 	selection_bg = "#033259",
+-- 	selection_fg = "#CBE0F0",
+-- 	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+-- 	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+-- }
 
 config.window_decorations = "RESIZE" -- "INTEGRATED_BUTTONS|RESIZE"
 config.enable_tab_bar = true
