@@ -5,9 +5,6 @@ local pickers = require "telescope.pickers"
 
 local flatten = function(tbl) vim.iter(tbl):flatten():totable() end
 
--- i would like to be able to do telescope
--- and have telescope do some filtering on files and some grepping
-
 return function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
@@ -17,8 +14,8 @@ return function(opts)
         ["v"] = "*.vim",
         ["n"] = "*.{vim,lua}",
         ["c"] = "*.c",
-        ["r"] = "*.rs",
-        ["g"] = "*.go",
+        ["r"] = "*.rb",
+        ["t"] = "*.{ts,tsx}",
       }
   opts.pattern = opts.pattern or "%s"
 

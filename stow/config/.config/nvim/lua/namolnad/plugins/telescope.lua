@@ -122,14 +122,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
+
+    -- vim.keymap.set('n', '<leader>fg', require "custom.telescope.multi-ripgrep", { desc = 'Telescope: [F]ind [g]elp' })
+    vim.keymap.set('n', '<leader>fg', require "custom.telescope.multi-ripgrep", { desc = 'Telescope: [F]ind [g]elp' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope: [F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Telescope: [F]ind [K]eymaps' })
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope: [F]ind [F]iles' })
     vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = 'Telescope: [F]ind [T]elescope commands' })
-    vim.keymap.set('n', '<leader>fs', builtin.live_grep, { desc = 'Telescope: [F]ind by [G]rep' })
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope: [F]ind by [g]rep' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Telescope: [F]ind [D]iagnostics' })
     vim.keymap.set('n', '<leader>fm', builtin.man_pages, { desc = 'Telescope: [F]ind [M]an pages' })
-    vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Telescope: [F]ind [G]it files' })
+    vim.keymap.set('n', '<leader>fG', builtin.git_files, { desc = 'Telescope: [F]ind [G]it files' })
     vim.keymap.set('n', '<leader>fR', builtin.resume, { desc = 'Telescope: [F]ind [R]esume' })
     vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Telescope: [F]ind [R]egisters' })
     vim.keymap.set('n', '<leader>f.', '<cmd>Telescope frecency workspace=CWD<cr>',
