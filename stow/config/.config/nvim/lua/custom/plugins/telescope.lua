@@ -124,7 +124,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
     local builtin = require 'telescope.builtin'
 
     -- vim.keymap.set('n', '<leader>fg', require "custom.telescope.multi-ripgrep", { desc = 'Telescope: [F]ind [g]elp' })
-    vim.keymap.set('n', '<leader>fg', require "custom.telescope.multi-ripgrep", { desc = 'Telescope: [F]ind [g]elp' })
+    vim.keymap.set(
+      'n',
+      '<leader>fs',
+      require "custom.telescope.multi-ripgrep",
+      { desc = 'Telescope: [F]ind [S]tring by MultiGrep' }
+    )
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope: [F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Telescope: [F]ind [K]eymaps' })
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope: [F]ind [F]iles' })
