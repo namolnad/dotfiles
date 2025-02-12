@@ -1,7 +1,7 @@
-require 'namolnad.set'
-require 'namolnad.remap'
-require 'namolnad.autocmds'
-require 'namolnad.terminal'
+require 'custom.set'
+require 'custom.remap'
+require 'custom.autocmds'
+require 'custom.terminal'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -11,7 +11,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  spec = 'namolnad.plugins',
+  spec = 'custom.plugins',
   change_detection = { notify = false },
 }, {
   ui = {

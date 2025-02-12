@@ -1,1 +1,1 @@
-require("namolnad")
+require("custom")

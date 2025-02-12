@@ -4,14 +4,14 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local NamolnadGroup = augroup('Namolnad', { clear = true })
+local CustomGroup = augroup('Custom', { clear = true })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = NamolnadGroup,
+  group = CustomGroup,
   callback = function()
     vim.highlight.on_yank {
       higroup = 'IncSearch',
@@ -23,14 +23,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Remove trailing whitespace on save
 autocmd({ 'BufWritePre' }, {
-  group = NamolnadGroup,
+  group = CustomGroup,
   pattern = '*',
   command = [[%s/\s\+$//e]],
 })
 
 -- Jump to last cursor position unless it's invalid or in an event handler
 autocmd('BufReadPost', {
-  group = NamolnadGroup,
+  group = CustomGroup,
   pattern = '*',
   callback = function()
     if vim.fn.line '\'"' > 0 and vim.fn.line '\'"' <= vim.fn.line '$' then
@@ -40,7 +40,7 @@ autocmd('BufReadPost', {
 })
 
 autocmd({ 'BufRead', 'BufNewFile' }, {
-  group = NamolnadGroup,
+  group = CustomGroup,
   pattern = {
     '*.rake',
     '*.eruby',
