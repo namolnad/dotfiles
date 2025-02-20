@@ -55,8 +55,11 @@ local function multi_ripgrep(opts)
       return flatten {
         args,
         {
+          '--glob=!node_modules',
+          '--glob=!app/assets/builds',
           '--glob=!.git/',
           '--glob=!.DS_Store',
+          '--glob=!log/',
           "--hidden",
           "--no-ignore",
           "--color=never",
