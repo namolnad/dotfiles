@@ -25,6 +25,7 @@ end
 
 tap 'eddieantonio/eddieantonio'
 tap 'heroku/brew'
+tap 'namolnad/formulae'
 
 brew 'aria2'
 brew 'bat'
@@ -44,6 +45,10 @@ brew 'lazygit'
 brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'
+brew 'namolnad/formulae/display-arranger'
+brew 'namolnad/formulae/finch'
+brew 'namolnad/formulae/jt'
+brew 'namolnad/formulae/local-well-known'
 brew 'npm'
 brew 'postgresql@16'
 brew 'powerlevel10k'
