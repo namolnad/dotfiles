@@ -7,13 +7,6 @@ export CODE_DIR="$HOME/Developer"
 export DOTFILES="$HOME/Developer/Environment"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
-# Source the .env file if it exists for secrets, api keys, etc.
-if [ -f $HOME/.env ]; then
-  setopt allexport
-  . $HOME/.env
-  unsetopt allexport
-fi
-
 #   ---------------------------
 #   KEY BINDINGS
 #   ---------------------------
@@ -128,3 +121,16 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+#   ---------------------------
+#   ENVCRYPT
+#   ---------------------------
+envcrypt_key_path="$XDG_CONFIG_HOME/envcrypt/secret.key"
+if [[ ! -f $envcrypt_key_path ]]; then
+  echo $(op item get xdsp7qgsyfo3lgrtcp7npriky4 --reveal --fields password) > $envcrypt_key_path
+fi
+# Check if envcrypt is installed and source its output
+if command -v envcrypt &> /dev/null; then
+  setopt allexport
+  eval "$(envcrypt decrypt $HOME/.env.enc)"
+  unsetopt allexport
+fi
