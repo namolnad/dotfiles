@@ -67,7 +67,7 @@ mkdir -p "${GOPATH}"
 #   ---------------------------
 #   1Password
 #   ---------------------------
-# eval "$(op signin loman)"
+# op signin
 
 #   ---------------------------
 #   Github CLI completion
