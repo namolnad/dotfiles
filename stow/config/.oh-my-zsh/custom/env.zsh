@@ -60,7 +60,7 @@ mkdir -p "${GOPATH}"
 #   ---------------------------
 #   1Password
 #   ---------------------------
-# op signin
+# eval "$(op signin)"
 
 #   ---------------------------
 #   Github CLI completion
@@ -125,9 +125,9 @@ function y() {
 #   ENVCRYPT
 #   ---------------------------
 envcrypt_key_path="$XDG_CONFIG_HOME/envcrypt/secret.key"
-if [[ ! -f $envcrypt_key_path ]]; then
+if [[ ! -f $envcrypt_key_path || ! -s $envcrypt_key_path ]]; then
   mkdir -p $(dirname $envcrypt_key_path)
-  echo $(op item get xdsp7qgsyfo3lgrtcp7npriky4 --reveal --fields password) > $envcrypt_key_path
+  (op item get xdsp7qgsyfo3lgrtcp7npriky4 --reveal --fields password) > $envcrypt_key_path
 fi
 # Check if envcrypt is installed and source its output
 if command -v envcrypt &> /dev/null; then
