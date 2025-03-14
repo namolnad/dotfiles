@@ -5,3 +5,4 @@ stow/config/.config/karabiner/automatic_backups/**
 stow/config/.config/irb/irb_history
 stow/config/.config/github-copilot/apps.json
 stow/config/.config/ngrok/ngrok.yml
+**/*secret.key
