@@ -46,6 +46,7 @@ brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'
 brew 'namolnad/formulae/display-arranger'
+brew 'namolnad/formulae/envcrypt'
 brew 'namolnad/formulae/finch'
 brew 'namolnad/formulae/jt'
 brew 'namolnad/formulae/local-well-known'
@@ -74,6 +75,7 @@ cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Reg
 cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
 
 cask_unless_exists '1password', name: '1Password'
+cask_unless_exists '1password-cli', name: '1Password CLI'
 # cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
 cask_unless_exists 'alfred', name: 'Alfred 5'
 cask_unless_exists 'appcleaner', name: 'AppCleaner'
