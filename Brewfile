@@ -46,7 +46,7 @@ brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'
 brew 'namolnad/formulae/display-arranger'
-brew 'namolnad/formulae/envcrypt'
+brew 'namolnad/formulae/dotenvcrypt'
 brew 'namolnad/formulae/finch'
 brew 'namolnad/formulae/jt'
 brew 'namolnad/formulae/local-well-known'
