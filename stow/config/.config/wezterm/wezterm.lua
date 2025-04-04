@@ -8,23 +8,9 @@ local config = wezterm.config_builder()
 config.term = "xterm-256color"
 
 config.color_scheme = 'Tokyo Night Storm'
-
--- local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
--- config.colors = theme.colors()
--- config.colors.cursor_bg = "#47FF9C"
--- config.colors.ansi[8] = "#24EAF7"
---
--- config.colors = {
--- 	foreground = "#CBE0F0",
--- 	background = "#011423",
--- 	cursor_bg = "#47FF9C",
--- 	cursor_border = "#47FF9C",
--- 	cursor_fg = "#011423",
--- 	selection_bg = "#033259",
--- 	selection_fg = "#CBE0F0",
--- 	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
--- 	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
--- }
+config.colors = {
+	background = "#0f0c29",
+}
 
 config.window_decorations = "RESIZE" -- "INTEGRATED_BUTTONS|RESIZE"
 config.enable_tab_bar = true
@@ -42,29 +28,6 @@ config.window_padding = {
 	right = 10,
 	top = 10,
 	bottom = 10,
-}
-
--- config.window_background_gradient = {
--- 	colors = { "#EEBD89", "#D13ABD" },
--- 	-- Specifies a Linear gradient starting in the top left corner.
--- 	orientation = { Linear = { angle = -45.0 } },
--- }
-
-config.window_background_gradient = {
-	orientation = "Vertical",
-	colors = {
-		"#0f0c29",
-		"#302b63",
-		"#24243e",
-	},
-	-- preset = "Warm",
-	-- "Linear", "Basis" and "CatmullRom" as supported.
-	interpolation = "Linear",
-	-- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
-	blend = "Rgb",
-	-- noise = 64,
-	-- segment_size = 11,
-	-- segment_smoothness = 0.0,
 }
 
 config.status_update_interval = 1000
