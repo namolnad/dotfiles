@@ -6,6 +6,7 @@ return { -- Linting
     lint.linters_by_ft = {
       markdown = { 'markdownlint' },
       ruby = { 'ruby' },
+      eruby = { 'erb_lint' },
     }
 
     -- Create autocommand which carries out the actual linting

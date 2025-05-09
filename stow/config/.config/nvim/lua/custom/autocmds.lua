@@ -43,14 +43,12 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   group = CustomGroup,
   pattern = {
     '*.rake',
-    '*.eruby',
     'Rakefile',
     'Brewfile',
     'Gemfile',
     '*.irbrc',
     '*.ru',
     '*.gemspec',
-    '*.erb',
   },
   callback = function()
     vim.opt_local.filetype = 'ruby'
