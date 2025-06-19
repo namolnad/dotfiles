@@ -30,6 +30,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 -- Esc vs Ctrl-c... Who gives a damn?
 vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Remap: Use <C-c> to escape' })
+vim.keymap.set('n', 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' })
+vim.keymap.set('n', 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
 
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Remap: Disable Ex mode' })
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Remap: Open tmux sessionizer' })
@@ -47,3 +49,9 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', { silent = true
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Remap: Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Remap: Open diagnostic [Q]uickfix list' })
+
+-- Visual mode mappings
+vim.keymap.set('v', '<leader>r', [["hy:%s/<C-r>h//g<left><left>]], { desc = 'Remap: Replace in visual selection' })
+vim.keymap.set('v', '<leader>c', [["hy:%s/<C-r>h//gc<left><left><left>]],
+  { desc = 'Remap: Replace in visual selection with confirmation' })
+vim.keymap.set('v', '<C-s>', [[:sort<CR>]], { desc = 'Remap: Sort visual selection' })
