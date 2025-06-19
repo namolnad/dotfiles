@@ -7,3 +7,5 @@ stow/config/.config/ngrok/ngrok.yml
 stow/config/.config/op/config
 stow/config/.config/vim/undodir/**
 stow/config/.config/vim*/.netrwhist
+stow/config/.config/alfred/Alfred.alfredpreferences/**
+stow/config/.config/github-copilot/versions.json
