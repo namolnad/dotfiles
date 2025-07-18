@@ -67,11 +67,11 @@ return {
     local avante = require("avante")
 
     avante.setup({
-      auto_suggestions_provider = "claude",
+      -- auto_suggestions_provider = "claude",
       provider = "claude",
       -- provider = "openai",
       behavior = {
-        auto_suggestions = true,
+        -- auto_suggestions = true,
         -- diff = true,
         -- suggestion = true,
         -- jump = true,

@@ -118,7 +118,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     telescope.load_extension 'fzf'
     telescope.load_extension 'ui-select'
     telescope.load_extension 'frecency'
-    telescope.load_extension 'rails_schema'
+    -- telescope.load_extension 'rails_schema'
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
