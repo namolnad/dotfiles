@@ -2,6 +2,7 @@ require 'custom.set'
 require 'custom.remap'
 require 'custom.autocmds'
 require 'custom.terminal'
+require 'custom.botd'.setup()
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
