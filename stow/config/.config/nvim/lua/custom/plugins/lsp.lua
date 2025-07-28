@@ -128,6 +128,10 @@ return { -- LSP Configuration & Plugins
       cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
       capabilities = capabilities,
     }
+    lspconfig.sorbet.setup {
+      cmd = { rbenv_root .. '/shims/srb', 'tc', '--lsp' },
+      capabilities = capabilities,
+    }
 
     require('mason').setup()
     require('mason-tool-installer').setup { ensure_installed = vim.tbl_keys(servers) }

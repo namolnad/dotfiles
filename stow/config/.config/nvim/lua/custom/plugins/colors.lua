@@ -1,5 +1,5 @@
 function SetColorScheme(color)
-  color = color or 'rose-pine'
+  color = color or 'tokyonight'
   vim.cmd.colorscheme(color)
 
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
@@ -8,23 +8,12 @@ end
 
 return {
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    config = function()
-      require('catppuccin').setup {
-        flavour = 'mocha',
-      }
-      -- SetColorScheme 'catppuccin'
-    end,
-  },
-  {
     'folke/tokyonight.nvim',
     config = function()
       require('tokyonight').setup {
         -- your configuration comes here
         -- or leave it empty to use the default settings
-        style = 'storm',         -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+        style = 'storm',        -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
         transparent = true,     -- Enable this to disable setting the background color
         terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
         styles = {
@@ -38,23 +27,6 @@ return {
         },
       }
       SetColorScheme 'tokyonight'
-    end,
-  },
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    config = function()
-      require('rose-pine').setup {
-        disable_background = true,
-        variant = 'moon',
-        highlight_groups = {
-          TelescopeBorder = { fg = 'rose', bg = 'rose', blend = 10 },
-          MiniStatuslineFilename = { fg = 'foam', bg = 'foam', blend = 10 },
-          MiniStatuslineDevinfo = { fg = 'foam', bg = 'foam', blend = 10 },
-        },
-      }
-
-      -- SetColorScheme('rose-pine')
     end,
   },
 }

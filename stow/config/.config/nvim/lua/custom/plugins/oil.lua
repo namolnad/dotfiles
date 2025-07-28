@@ -6,7 +6,9 @@ return {
   config = function()
     local oil = require 'oil'
 
-    vim.keymap.set('n', '-', oil.open_float, { desc = 'Oil: Open parent directory' })
+    vim.keymap.set('n', '-', function()
+      oil.open_float(nil, { preview = {} })
+    end, { desc = 'Oil: Open parent directory' })
 
     oil.setup {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
@@ -116,8 +118,6 @@ return {
       },
       -- Configuration for the floating window in oil.open_float
       float = {
-        -- Padding around the floating window
-        padding = 20,
         max_width = 0,
         max_height = 0,
         border = 'rounded',
