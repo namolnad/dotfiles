@@ -1,8 +1,8 @@
-require 'custom.set'
-require 'custom.remap'
-require 'custom.autocmds'
-require 'custom.terminal'
-require 'custom.botd'.setup()
+require 'user.set'
+require 'user.remap'
+require 'user.autocmds'
+require 'user.terminal'
+require 'user.botd'.setup()
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -12,7 +12,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  spec = 'custom.plugins',
+  spec = 'user.plugins',
   change_detection = { notify = false },
 }, {
   ui = {

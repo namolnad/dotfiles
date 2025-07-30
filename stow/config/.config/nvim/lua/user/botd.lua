@@ -88,9 +88,32 @@ local function display_binding(binding)
   )
 end
 
+local function has_been_shown_today()
+  local state = load_state()
+  if not state then
+    return false
+  end
+
+  local today = get_today_string()
+  return state.date == today and state.shown == true
+end
+
+local function mark_as_shown()
+  local state = load_state() or {}
+  state.shown = true
+  save_state(state)
+end
+
 function M.show()
   local binding = M.get_daily_keybinding()
   display_binding(binding)
+  mark_as_shown()
+end
+
+function M.show_if_not_shown_today()
+  if not has_been_shown_today() then
+    M.show()
+  end
 end
 
 function M.next()
@@ -135,12 +158,14 @@ local function setup_command()
   })
 end
 
-local function setup_autocommand()
-  vim.api.nvim_create_autocmd("VimEnter", {
+local function setup_autocommand(show)
+  local callback_fn = (show == "once") and M.show_if_not_shown_today or M.show
+
+  vim.api.nvim_create_autocmd({ "VimEnter", "FocusGained" }, {
     callback = function()
-      vim.defer_fn(M.show, 500) -- Delay 0.5 seconds to let nvim fully load
+      vim.defer_fn(callback_fn, 500) -- Delay 0.5 seconds to let nvim fully load
     end,
-    desc = "Show key binding of the day on startup"
+    desc = "Show key binding of the day on startup and when gaining focus"
   })
 end
 
@@ -152,7 +177,14 @@ function M.setup(opts)
   end
 
   if opts.autocommand ~= false then
-    setup_autocommand()
+    local autocommand_opts = opts.autocommand
+    local show = "once" -- default to show = "once"
+
+    if type(autocommand_opts) == "table" then
+      show = autocommand_opts.show or "once"
+    end
+
+    setup_autocommand(show)
   end
 end
 
