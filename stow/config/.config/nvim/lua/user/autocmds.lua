@@ -28,6 +28,23 @@ autocmd({ 'BufWritePre' }, {
   command = [[%s/\s\+$//e]],
 })
 
+autocmd({ 'BufWritePre' }, {
+  group = CustomGroup,
+  -- pattern = '*',
+  pattern = {
+    '*.rb',
+    '*.erb',
+    '*.rake',
+    'Rakefile',
+    'Brewfile',
+    'Gemfile',
+    '*.irbrc',
+    '*.ru',
+    '*.gemspec',
+  },
+  command = 'lua vim.lsp.buf.format({ async = false })'
+})
+
 -- Jump to last cursor position unless it's invalid or in an event handler
 autocmd('BufReadPost', {
   group = CustomGroup,
