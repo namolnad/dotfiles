@@ -11,29 +11,15 @@ local function get_capabilities()
   return capabilities
 end
 
-local function setup_ruby_servers()
-  local rbenv_root = vim.fn.trim(vim.fn.system('rbenv root'))
-  local lspconfig = require('lspconfig')
-  local capabilities = get_capabilities()
-
-  lspconfig.ruby_lsp.setup {
-    cmd = { rbenv_root .. '/shims/ruby-lsp' },
-    capabilities = capabilities,
-  }
-
-  lspconfig.rubocop.setup {
-    cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
-    capabilities = capabilities,
-  }
-
-  lspconfig.sorbet.setup {
-    cmd = { rbenv_root .. '/shims/srb', 'tc', '--lsp' },
-    capabilities = capabilities,
-  }
-end
 
 local function get_server_configs()
+  local rbenv_root = vim.fn.trim(vim.fn.system('rbenv root'))
+
   return {
+    html_lsp = {
+      filetypes = { 'html' }
+    },
+    ts_ls = {},
     lua_ls = {
       settings = {
         Lua = {
@@ -47,23 +33,27 @@ local function get_server_configs()
         },
       },
     },
-    ts_ls = {},
+    ruby_lsp = {
+      cmd = { rbenv_root .. '/shims/ruby-lsp' },
+    },
+    rubocop = {
+      cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+    },
+    sorbet = {
+      cmd = { rbenv_root .. '/shims/srb', 'tc', '--lsp' },
+    },
   }
 end
 
 function M.setup()
   local servers = get_server_configs()
-  local lspconfig = require('lspconfig')
   local capabilities = get_capabilities()
 
-  setup_ruby_servers()
-
-  require('mason').setup()
-
-  -- Setup Mason-managed servers directly
+  -- Setup all servers using vim.lsp.config and vim.lsp.enable
   for server_name, server_config in pairs(servers) do
     server_config.capabilities = capabilities
-    lspconfig[server_name].setup(server_config)
+    vim.lsp.config(server_name, server_config)
+    vim.lsp.enable(server_name)
   end
 end
 
