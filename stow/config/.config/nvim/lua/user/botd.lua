@@ -178,10 +178,10 @@ function M.setup(opts)
 
   if opts.autocommand ~= false then
     local autocommand_opts = opts.autocommand
-    local show = "once" -- default to show = "once"
+    local show = "always" -- default to show = "always"
 
     if type(autocommand_opts) == "table" then
-      show = autocommand_opts.show or "once"
+      show = autocommand_opts.show or "always"
     end
 
     setup_autocommand(show)
