@@ -7,7 +7,11 @@ return {
     local oil = require 'oil'
 
     vim.keymap.set('n', '-', function()
-      oil.open_float(nil, { preview = {} })
+      local filename = vim.fn.expand('%:t')
+
+      oil.open_float(nil, { preview = {} }, function()
+        vim.fn.search(vim.fn.escape(filename, '[].*\\~^$'))
+      end)
     end, { desc = 'Oil: Open parent directory' })
 
     oil.setup {
