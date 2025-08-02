@@ -7,6 +7,10 @@ return { -- Linting
       markdown = { 'markdownlint' },
       ruby = { 'ruby' },
       eruby = { 'erb_lint' },
+      typescript = { 'eslint_d' },
+      typescriptreact = { 'eslint_d' },
+      javascript = { 'eslint_d' },
+      javascriptreact = { 'eslint_d' },
     }
 
     -- Create autocommand which carries out the actual linting
