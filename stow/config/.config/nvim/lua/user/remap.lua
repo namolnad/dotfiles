@@ -39,6 +39,8 @@ vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { de
 vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = 'Remap: Globally replace word under cursor' })
 
+vim.keymap.set('n', '<leader>x', '<cmd>luafile %<CR>', { desc = 'Remap: Source current lua file' })
+
 vim.keymap.set('n', '<leader><leader>', '<C-^>', { desc = 'Remap: Switch between last two buffers' })
 
 -- TIP: Disable arrow keys in normal mode
