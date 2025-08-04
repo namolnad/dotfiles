@@ -1,0 +1,1 @@
+- Never mention Claude code in git commit messages
