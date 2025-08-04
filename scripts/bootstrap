@@ -74,9 +74,8 @@ setup_ssh() {
         pbcopy < "$HOME/.ssh/id_ed25519.pub"
         open -a Safari https://github.com/settings/keys
         info 'Your ssh public key has been copied to the keyboard. Confirm when you have entered the key in GitHub (y)'
-        exec < /dev/tty
         while : ; do
-            read -n 1 k
+            read -n 1 k <&1
             if [[ $k = 'y' ]] ; then
                 success "\nContinuing setup\n"
                 break

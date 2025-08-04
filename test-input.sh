@@ -5,7 +5,7 @@ echo "Press 'y' to continue:"
 
 exec < /dev/tty
 while : ; do
-    read -n 1 k
+    read -n 1 k <&1
     if [[ $k = 'y' ]] ; then
         echo -e "\nSuccess! Input works correctly."
         break
