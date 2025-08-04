@@ -21,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/Developer/dotfiles/scripts/remove-trailing-whitespace.sh"
+            "command": "jq -r '.tool_input.file_path' | { read file_path; ~/Developer/dotfiles/scripts/remove-trailing-whitespace.sh \"$file_path\"; }"
           }
         ]
       }
