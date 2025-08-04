@@ -152,7 +152,7 @@ wezterm.on("gui-startup", function(cmd)
 		workspace = "lifeos",
 		cwd = wezterm.home_dir .. "/Documents/LifeOS",
 	})
-	lifeos_pane:send_text("nvim\n")
+	lifeos_pane:send_text("claude\n")
 
 	mux.set_active_workspace("editor")
 end)
