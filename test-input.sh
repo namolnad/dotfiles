@@ -4,7 +4,7 @@ echo "Testing interactive input for both direct execution and piped execution...
 echo "Press 'y' to continue:"
 
 while : ; do
-    read -n 1 k </dev/tty
+    read -n 1 k
     if [[ $k = 'y' ]] ; then
         echo -e "\nSuccess! Input works correctly."
         break

@@ -75,7 +75,7 @@ setup_ssh() {
         open -a Safari https://github.com/settings/keys
         info 'Your ssh public key has been copied to the keyboard. Confirm when you have entered the key in GitHub (y)'
         while : ; do
-            read -n 1 k </dev/tty
+            read -n 1 k
             if [[ $k = 'y' ]] ; then
                 success "\nContinuing setup\n"
                 break
