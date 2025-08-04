@@ -10,7 +10,7 @@ return {
       local filename = vim.fn.expand('%:t')
 
       oil.open_float(nil, { preview = {} }, function()
-        vim.fn.search(vim.fn.escape(filename, '[].*\\~^$'))
+        vim.fn.search('\\<' .. vim.fn.escape(filename, '[].*\\~^$') .. '\\>')
       end)
     end, { desc = 'Oil: Open parent directory' })
 
