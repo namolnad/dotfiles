@@ -148,6 +148,12 @@ wezterm.on("gui-startup", function(cmd)
 	})
 	dotfiles_pane:send_text("nvim\n")
 
+	local _, lifeos_pane, _ = mux.spawn_window({
+		workspace = "lifeos",
+		cwd = wezterm.home_dir .. "/Documents/LifeOS",
+	})
+	lifeos_pane:send_text("nvim\n")
+
 	mux.set_active_workspace("editor")
 end)
 
@@ -255,6 +261,13 @@ config.keys = {
 		mods = "SUPER",
 		action = act.SwitchToWorkspace({
 			name = "dotfiles",
+		}),
+	},
+	{
+		key = "5",
+		mods = "SUPER",
+		action = act.SwitchToWorkspace({
+			name = "lifeos",
 		}),
 	},
 	{
