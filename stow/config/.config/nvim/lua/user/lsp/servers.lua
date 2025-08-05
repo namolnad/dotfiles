@@ -23,12 +23,8 @@ local function get_server_configs()
     lua_ls = {
       settings = {
         Lua = {
-          completion = {
-            callSnippet = 'Replace',
-          },
-          diagnostics = {
-            disable = { 'missing-fields' },
-            globals = { 'vim', 'it', 'describe', 'before_each', 'after_each' },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
           },
         },
       },
@@ -52,6 +48,12 @@ function M.setup()
   -- Setup all servers using vim.lsp.config and vim.lsp.enable
   for server_name, server_config in pairs(servers) do
     server_config.capabilities = capabilities
+
+    -- Ensure all servers use Replace behavior for snippets
+    server_config.settings = server_config.settings or {}
+    server_config.settings.completion = server_config.settings.completion or {}
+    server_config.settings.completion.callSnippet = 'Replace'
+
     vim.lsp.config(server_name, server_config)
     vim.lsp.enable(server_name)
   end
