@@ -1,8 +1,8 @@
-require 'user.set'
-require 'user.remap'
-require 'user.autocmds'
-require 'user.terminal'
-require 'user.botd'.setup()
+require 'config.autocmd'
+require 'config.keymap'
+require 'config.options'
+require 'config.terminal'
+require 'config.modules' -- Custom modules
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -12,7 +12,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  spec = 'user.plugins',
+  spec = 'config.plugins',
   change_detection = { notify = false },
 }, {
   ui = {
@@ -35,3 +35,5 @@ require('lazy').setup({
     },
   },
 })
+
+require 'config.lsp' -- Setup depends on blink.cmp (set up in lazy)

@@ -4,7 +4,7 @@ return {
   -- lazy = false,
   -- version = false, -- set this if you want to always pull the latest change
   -- opts = {
-  --   -- auto_suggestions_provider = "claude",
+  --   auto_suggestions_provider = "claude",
   --   -- provider = "openai",
   --   -- openai = {
   --   --   endpoint = "https://api.openai.com/v1",
@@ -67,11 +67,11 @@ return {
   --   local avante = require("avante")
   --
   --   avante.setup({
-  --     -- auto_suggestions_provider = "claude",
+  --     auto_suggestions_provider = "claude",
   --     provider = "claude",
   --     -- provider = "openai",
   --     behavior = {
-  --       -- auto_suggestions = true,
+  --       auto_suggestions = true,
   --       -- diff = true,
   --       -- suggestion = true,
   --       -- jump = true,
