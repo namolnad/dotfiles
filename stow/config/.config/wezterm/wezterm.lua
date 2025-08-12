@@ -150,7 +150,7 @@ wezterm.on("gui-startup", function(cmd)
 
 	local _, lifeos_pane, _ = mux.spawn_window({
 		workspace = "lifeos",
-		cwd = wezterm.home_dir .. "/Documents/LifeOS",
+		cwd = wezterm.home_dir .. "/Library/Mobile Documents/com~apple~CloudDocs/Documents/LifeOS",
 	})
 	lifeos_pane:send_text("claude\n")
 
