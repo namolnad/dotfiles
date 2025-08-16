@@ -21,9 +21,17 @@ vim.api.nvim_create_autocmd('TermOpen', {
     opt_set.signcolumn = 'no'
 
     -- Add the hide terminal keymap to the terminal buffer
+    -- This will find the current window showing this buffer when the key is pressed
     for _, key in ipairs({ 'gq', '<esc>' }) do
       key_set('n', key, function()
-        vim.api.nvim_win_hide(state.term_window.win)
+        -- Get the current buffer
+        local buf = vim.api.nvim_get_current_buf()
+        -- Find the window displaying this buffer
+        local wins = vim.fn.win_findbuf(buf)
+        if #wins > 0 then
+          -- Hide the first window showing this buffer
+          vim.api.nvim_win_hide(wins[1])
+        end
       end, 'Hide terminal', true)
     end
   end,
