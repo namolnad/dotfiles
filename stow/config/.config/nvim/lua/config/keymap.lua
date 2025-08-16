@@ -30,8 +30,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 -- Esc vs Ctrl-c... Who gives a damn?
 vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Remap: Use <C-c> to escape' })
-vim.keymap.set('n', 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' })
-vim.keymap.set('n', 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
+vim.keymap.set({ 'n', 'i' }, 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' })
+vim.keymap.set({ 'n', 'i' }, 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
 
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Remap: Disable Ex mode' })
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Remap: Open tmux sessionizer' })

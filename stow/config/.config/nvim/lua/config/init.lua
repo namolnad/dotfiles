@@ -1,6 +1,6 @@
+require 'config.options' -- Load options first (includes mapleader)
 require 'config.autocmd'
 require 'config.keymap'
-require 'config.options'
 require 'config.terminal'
 require 'config.modules' -- Custom modules
 
