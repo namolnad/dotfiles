@@ -1,7 +1,7 @@
--- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = vim.tbl_deep_extend(
   'force',
-   -- default_capabilities,
+   default_capabilities,
   require('blink.cmp').get_lsp_capabilities(),
   {
     textDocument = {

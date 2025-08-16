@@ -71,6 +71,9 @@ brew 'zsh-completions', args: ['head']
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 
+brew 'lua-language-server'
+brew 'typescript-language-server'
+
 cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
 cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
 
