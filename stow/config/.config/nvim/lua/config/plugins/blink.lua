@@ -8,10 +8,16 @@ return {
     opts = {
       keymap = { preset = 'default' },
       appearance = {
-        use_nvim_cmp_as_default = true,
+        -- use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono'
       },
-
+      cmdline = {
+        keymap = {
+          -- recommended, as the default keymap will only show and select the next item
+          ['<Tab>'] = { 'show', 'accept' },
+        },
+        completion = { menu = { auto_show = true } },
+      },
       -- default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, via `opts_extend`
       sources = {

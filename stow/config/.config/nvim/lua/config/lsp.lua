@@ -1,8 +1,7 @@
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = vim.tbl_deep_extend(
   'force',
-   default_capabilities,
-  require('blink.cmp').get_lsp_capabilities(),
+  default_capabilities,
   {
     textDocument = {
       foldingRange = {
@@ -43,19 +42,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end
 
-    if client:supports_method('textDocument/completion') then
-      vim.opt.completeopt = {
-        'menu',
-        'menuone',
-        'noinsert',
-        'fuzzy',
-        'popup',
-      }
-      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-      vim.keymap.set('i', '<C-Space', function()
-        vim.lsp.completion.get()
-      end)
-    end
+    -- Blink.cmp handles completion, so we don't need the built-in completion
+    -- if client:supports_method('textDocument/completion') then
+    --   vim.opt.completeopt = {
+    --     'menu',
+    --     'menuone',
+    --     'noinsert',
+    --     'fuzzy',
+    --     'popup',
+    --   }
+    --   vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    --   vim.keymap.set('i', '<C-Space>', function()
+    --     vim.lsp.completion.get()
+    --   end)
+    -- end
 
     local map = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })

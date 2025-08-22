@@ -3,6 +3,7 @@ require 'config.autocmd'
 require 'config.keymap'
 require 'config.terminal'
 require 'config.modules' -- Custom modules
+require 'config.lsp'     -- Setup depends on blink.cmp (set up in lazy)
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -35,5 +36,3 @@ require('lazy').setup({
     },
   },
 })
-
-require 'config.lsp' -- Setup depends on blink.cmp (set up in lazy)
