@@ -7,6 +7,7 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/nvim-nio',
       'zidhuss/neotest-minitest',
+      'olimorris/neotest-rspec'
     },
     config = function()
       local neotest = require 'neotest'
@@ -23,6 +24,7 @@ return {
             }):flatten()
           end,
         },
+        require 'neotest-rspec',
       }
       neotest.setup(config)
 
