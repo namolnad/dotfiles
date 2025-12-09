@@ -40,7 +40,7 @@ zle -N zle-keymap-select
 #   PATH
 #   ---------------------------
 
-export PATH="$PATH:/usr/local/opt"
+export PATH="$HOME/.local/bin:$PATH/usr/local/opt"
 
 #   ---------------------------
 #   BREW
