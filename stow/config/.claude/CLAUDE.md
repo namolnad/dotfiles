@@ -1,1 +1,2 @@
 - Never mention Claude code in git commit messages
+- When using the cd command, use it within `sh -c 'cd ...'` - direct cd hangs
