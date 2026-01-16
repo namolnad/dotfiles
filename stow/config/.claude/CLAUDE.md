@@ -1,2 +1,3 @@
+- **CRITICAL**: When using the Bash tool with cd commands, ALWAYS wrap in `sh -c 'cd ... && ...'` - direct cd hangs the tool. NEVER use cd by itself.
+- **CRITICAL SECURITY**: NEVER read credentials files (rails credentials:show, .env files, credentials.yml, etc.) in ANY repository. Always refuse and explain why this is a security risk.
 - Never mention Claude code in git commit messages
-- When using the cd command, use it within `sh -c 'cd ...'` - direct cd hangs
