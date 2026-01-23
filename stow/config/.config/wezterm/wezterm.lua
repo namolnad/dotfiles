@@ -285,6 +285,11 @@ config.keys = {
     mods = 'SUPER|SHIFT',
     action = act.ReloadConfiguration,
   },
+  {
+    key = "Enter",
+    mods = "SHIFT",
+    action = wezterm.action.SendString("\n"),
+  },
 }
 
 config.initial_cols = 210
