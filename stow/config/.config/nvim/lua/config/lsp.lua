@@ -17,13 +17,22 @@ local capabilities = vim.tbl_deep_extend(
 
 vim.lsp.config('*', { capabilities = capabilities })
 
-vim.lsp.enable({
+local function has_sorbet_config()
+  return vim.fn.filereadable(vim.fn.getcwd() .. "/sorbet/config") == 1
+end
+
+local servers = {
   'lua_ls',
   'rubocop',
   'ruby_lsp',
-  'sorbet',
   'ts_ls',
-})
+}
+
+if has_sorbet_config() then
+  table.insert(servers, 'sorbet')
+end
+
+vim.lsp.enable(servers)
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('user-lsp-attach', { clear = true }),
