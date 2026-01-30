@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "feedbackSurveyState": {
-    "lastShownTime": 1754086954960
-  },
   "hooks": {
     "Notification": [
       {
@@ -26,5 +23,11 @@
         ]
       }
     ]
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1754086954960
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
   }
 }
