@@ -10,6 +10,35 @@ PROJECT_NAME=$(basename "$PROJECT_DIR")
 # Get timestamp
 TIMESTAMP=$(date '+%H:%M:%S')
 
+# Get terminal tab information
+TAB_INFO="Unknown"
+if command -v wezterm &> /dev/null; then
+    # For WezTerm - get the active pane's tab title
+    TAB_INFO=$(wezterm cli list --format json 2>/dev/null | jq -r --arg cwd "$PROJECT_DIR" '.[] | select(.cwd == $cwd) | .title' | head -1)
+    if [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
+        TAB_INFO=$(wezterm cli list --format json 2>/dev/null | jq -r '.[] | select(.is_active == true) | .title' | head -1)
+    fi
+fi
+
+# Fallback to trying to get terminal tab name via AppleScript
+if [ "$TAB_INFO" = "Unknown" ] || [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
+    TAB_INFO=$(osascript -e 'tell application "System Events"
+        set frontApp to name of first application process whose frontmost is true
+        if frontApp is "WezTerm" or frontApp is "wezterm-gui" then
+            tell process frontApp to get name of front window
+        else if frontApp is "iTerm2" then
+            tell application "iTerm" to get name of current session of current window
+        else if frontApp is "Terminal" then
+            tell application "Terminal" to get name of front window
+        end if
+    end tell' 2>/dev/null)
+fi
+
+# Clean up TAB_INFO
+if [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
+    TAB_INFO="Current Tab"
+fi
+
 # Check if system is muted (macOS)
 MUTED=$(osascript -e "output muted of (get volume settings)")
 
@@ -30,12 +59,13 @@ if [ "$MUTED" = "false" ]; then
     afplay /System/Library/Sounds/Ping.aiff
 elif [ "$IN_CLAUDE_WINDOW" = "false" ]; then
     # System muted AND not in Claude window - show dialog
-    MESSAGE="Project: $PROJECT_NAME
+    MESSAGE="Tab: $TAB_INFO
+Project: $PROJECT_NAME
 Directory: $PROJECT_DIR
 Time: $TIMESTAMP
 
 Claude Code needs your attention."
-    
+
     osascript -e "tell application \"System Events\" to display dialog \"$MESSAGE\" buttons {\"OK\"} default button 1 with title \"Claude Code Alert\""
 fi
 
