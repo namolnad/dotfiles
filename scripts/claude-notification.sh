@@ -12,16 +12,36 @@ TIMESTAMP=$(date '+%H:%M:%S')
 
 # Get terminal tab information
 TAB_INFO="Unknown"
+WORKSPACE_INFO=""
+
 if command -v wezterm &> /dev/null; then
-    # For WezTerm - get the active pane's tab title
-    TAB_INFO=$(wezterm cli list --format json 2>/dev/null | jq -r --arg cwd "$PROJECT_DIR" '.[] | select(.cwd == $cwd) | .title' | head -1)
-    if [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
-        TAB_INFO=$(wezterm cli list --format json 2>/dev/null | jq -r '.[] | select(.is_active == true) | .title' | head -1)
+    # Get the active pane info from WezTerm
+    ACTIVE_PANE=$(wezterm cli list --format json 2>/dev/null | jq --arg cwd "$PROJECT_DIR" '[.[] | select(.cwd == $cwd)] | .[0] // ([.[] | select(.is_active == true)] | .[0])')
+
+    if [ -n "$ACTIVE_PANE" ] && [ "$ACTIVE_PANE" != "null" ]; then
+        WINDOW_ID=$(echo "$ACTIVE_PANE" | jq -r '.window_id')
+        TAB_ID=$(echo "$ACTIVE_PANE" | jq -r '.tab_id')
+        WORKSPACE=$(echo "$ACTIVE_PANE" | jq -r '.workspace')
+        TAB_TITLE=$(echo "$ACTIVE_PANE" | jq -r '.tab_title // .title')
+
+        # Calculate tab number (index within the window)
+        TAB_NUMBER=$(wezterm cli list --format json 2>/dev/null | jq --arg win "$WINDOW_ID" --arg tab "$TAB_ID" '[.[] | select(.window_id == ($win | tonumber))] | unique_by(.tab_id) | sort_by(.tab_id) | to_entries | .[] | select(.value.tab_id == ($tab | tonumber)) | .key + 1')
+
+        # Build tab info string
+        TAB_INFO="Tab $TAB_NUMBER"
+        if [ -n "$TAB_TITLE" ] && [ "$TAB_TITLE" != "null" ] && [ "$TAB_TITLE" != "" ]; then
+            TAB_INFO="$TAB_INFO ($TAB_TITLE)"
+        fi
+
+        # Add workspace if available
+        if [ -n "$WORKSPACE" ] && [ "$WORKSPACE" != "null" ] && [ "$WORKSPACE" != "" ]; then
+            WORKSPACE_INFO="Workspace: $WORKSPACE"
+        fi
     fi
 fi
 
 # Fallback to trying to get terminal tab name via AppleScript
-if [ "$TAB_INFO" = "Unknown" ] || [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
+if [ "$TAB_INFO" = "Unknown" ] || [ -z "$TAB_INFO" ]; then
     TAB_INFO=$(osascript -e 'tell application "System Events"
         set frontApp to name of first application process whose frontmost is true
         if frontApp is "WezTerm" or frontApp is "wezterm-gui" then
@@ -32,11 +52,10 @@ if [ "$TAB_INFO" = "Unknown" ] || [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]
             tell application "Terminal" to get name of front window
         end if
     end tell' 2>/dev/null)
-fi
 
-# Clean up TAB_INFO
-if [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
-    TAB_INFO="Current Tab"
+    if [ -z "$TAB_INFO" ] || [ "$TAB_INFO" = "null" ]; then
+        TAB_INFO="Current Tab"
+    fi
 fi
 
 # Check if system is muted (macOS)
@@ -59,7 +78,12 @@ if [ "$MUTED" = "false" ]; then
     afplay /System/Library/Sounds/Ping.aiff
 elif [ "$IN_CLAUDE_WINDOW" = "false" ]; then
     # System muted AND not in Claude window - show dialog
-    MESSAGE="Tab: $TAB_INFO
+    MESSAGE="$TAB_INFO"
+    if [ -n "$WORKSPACE_INFO" ]; then
+        MESSAGE="$MESSAGE
+$WORKSPACE_INFO"
+    fi
+    MESSAGE="$MESSAGE
 Project: $PROJECT_NAME
 Directory: $PROJECT_DIR
 Time: $TIMESTAMP
