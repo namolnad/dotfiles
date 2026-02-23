@@ -37,8 +37,10 @@ wezterm.on("update-status", function(window, pane)
   local cells = {}
 
   local cwd_uri = pane:get_current_working_dir()
-  local hostname = cwd_uri.host
-  local cwd = cwd_uri.file_path
+  if not cwd_uri then return end
+
+  local hostname = cwd_uri.host or ""
+  local cwd = cwd_uri.file_path or ""
   local dot = hostname:find("[.]")
   if dot then
     hostname = hostname:sub(1, dot - 1)
