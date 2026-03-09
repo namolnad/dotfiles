@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keybindings Cheatsheet</title>
+<style>
+  :root {
+    --bg: #1a1b26;
+    --bg-surface: #24283b;
+    --bg-card: #1f2335;
+    --bg-hover: #292e42;
+    --text: #c0caf5;
+    --text-dim: #565f89;
+    --text-bright: #e0e6ff;
+    --accent: #7aa2f7;
+    --accent-dim: #3d59a1;
+    --green: #9ece6a;
+    --yellow: #e0af68;
+    --red: #f7768e;
+    --purple: #bb9af7;
+    --cyan: #7dcfff;
+    --orange: #ff9e64;
+    --border: #292e42;
+    --kbd-bg: #343a52;
+    --kbd-border: #444b6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+  }
+
+  .header h1 span { color: var(--text-dim); font-weight: 400; }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .search-bar {
+    padding: 12px 24px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 78px;
+    z-index: 99;
+  }
+
+  .search-bar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+  }
+
+  .search-bar input:focus { border-color: var(--accent-dim); }
+  .search-bar input::placeholder { color: var(--text-dim); }
+
+  .content { padding: 16px 24px 48px; max-width: 1200px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .section { margin-bottom: 24px; }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-note {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  tr.binding-row { border-bottom: 1px solid var(--border); }
+  tr.binding-row:hover { background: var(--bg-hover); }
+  tr.binding-row.hidden { display: none; }
+
+  td { padding: 6px 8px; vertical-align: middle; }
+  td:first-child { width: 200px; white-space: nowrap; }
+  td:nth-child(2) { width: 60px; text-align: center; }
+  td:last-child { color: var(--text-dim); }
+
+  kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    background: var(--kbd-bg);
+    border: 1px solid var(--kbd-border);
+    border-radius: 4px;
+    color: var(--text-bright);
+    line-height: 1.4;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  kbd.mod { background: var(--accent-dim); border-color: var(--accent); color: #fff; }
+  kbd.prefix { background: #3b4261; border-color: #565f89; }
+
+  .mode-badge {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .mode-n { background: var(--green); color: #1a1b26; }
+  .mode-v { background: var(--purple); color: #1a1b26; }
+  .mode-i { background: var(--cyan); color: #1a1b26; }
+  .mode-x { background: var(--yellow); color: #1a1b26; }
+  .mode-o { background: var(--orange); color: #1a1b26; }
+  .mode-t { background: var(--red); color: #1a1b26; }
+  .mode-c { background: var(--text-dim); color: #1a1b26; }
+
+  .context-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .context-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+
+  .context-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .context-card .key-hint {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .ctx-p h3 { color: var(--green); }
+  .ctx-w h3 { color: var(--accent); }
+  .ctx-l h3 { color: var(--yellow); }
+  .ctx-d h3 { color: var(--purple); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .plus { color: var(--text-dim); margin: 0 1px; font-size: 11px; }
+
+  .tip-box {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-dim);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .tip-box strong { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .content { padding: 12px 16px; }
+    td:first-child { width: 140px; }
+    .context-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Keybindings <span>Cheatsheet</span></h1>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-panel="aerospace">AeroSpace</button>
+    <button class="tab" data-panel="nvim">Neovim</button>
+    <button class="tab" data-panel="tmux">Tmux</button>
+    <button class="tab" data-panel="homerow">Homerow</button>
+    <button class="tab" data-panel="karabiner">Karabiner</button>
+    <button class="tab" data-panel="rectangle">Rectangle</button>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="Filter keybindings..." autofocus>
+</div>
+
+<!-- ================================================================== -->
+<!-- AEROSPACE -->
+<!-- ================================================================== -->
+<div class="content">
+<div class="panel active" id="panel-aerospace">
+
+  <div class="tip-box">
+    <strong>How contexts work:</strong> AeroSpace uses binding modes to isolate workspaces.
+    Press <kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>1-4</kbd> to switch context.
+    Per-context keys (T, B, E, C) map to context-prefixed workspaces (e.g. <kbd>Alt+T</kbd> in Work mode &rarr; <kbd>W-T</kbd>).
+    Add <kbd class="mod">Shift</kbd> to any workspace key to move the focused window there.
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contexts</div>
+    <div class="context-cards">
+      <div class="context-card ctx-p">
+        <h3>1 &mdash; Personal</h3>
+        <div class="key-hint"><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>1</kbd> &rarr; P-T (home)</div>
+      </div>
+      <div class="context-card ctx-w">
+        <h3>2 &mdash; Work</h3>
+        <div class="key-hint"><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>2</kbd> &rarr; W-T (home)</div>
+      </div>
+      <div class="context-card ctx-l">
+        <h3>3 &mdash; Loman Group</h3>
+        <div class="key-hint"><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>3</kbd> &rarr; L-T (home)</div>
+      </div>
+      <div class="context-card ctx-d">
+        <h3>4 &mdash; DML Foundation</h3>
+        <div class="key-hint"><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>4</kbd> &rarr; D-T (home)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Per-Context Workspaces</div>
+    <div class="section-note">These map to the active context's prefix (P-, W-, L-, or D-)</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>T</kbd></td><td></td><td>Terminal</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>B</kbd></td><td></td><td>Browser</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>E</kbd></td><td></td><td>Email</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>C</kbd></td><td></td><td>Calendar</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Global Workspaces</div>
+    <div class="section-note">Same workspace regardless of active context</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>M</kbd></td><td></td><td>Media &mdash; Music</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>S</kbd></td><td></td><td>System &mdash; Finder, Stocks, News</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>N</kbd></td><td></td><td>Notes</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>A</kbd></td><td></td><td>AI &mdash; ChatGPT</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>I</kbd></td><td></td><td>IM/Chat &mdash; Slack, Messages</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>V</kbd></td><td></td><td>Video &mdash; Zoom</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>R</kbd></td><td></td><td>Tasks &mdash; Reminders</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Focus &amp; Move</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>H</kbd></td><td></td><td>Focus left</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>J</kbd></td><td></td><td>Focus down</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>K</kbd></td><td></td><td>Focus up</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Focus right</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>H</kbd></td><td></td><td>Move window left</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>J</kbd></td><td></td><td>Move window down</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>K</kbd></td><td></td><td>Move window up</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Move window right</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Layout &amp; Navigation</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>/</kbd></td><td></td><td>Toggle tile layout (H/V)</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>,</kbd></td><td></td><td>Toggle accordion layout</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td></td><td>Fullscreen</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td></td><td>Last workspace (back and forth)</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td></td><td>Move workspace to next monitor</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resize Mode</div>
+    <div class="section-note">Enter with <kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>R</kbd> &mdash; exit with <kbd>Esc</kbd> or <kbd>Enter</kbd></div>
+    <table>
+      <tr class="binding-row"><td><kbd>H</kbd> / <kbd>L</kbd></td><td></td><td>Resize width &minus;/+ 50</td></tr>
+      <tr class="binding-row"><td><kbd>J</kbd> / <kbd>K</kbd></td><td></td><td>Resize height +/&minus; 50</td></tr>
+      <tr class="binding-row"><td><kbd>&minus;</kbd> / <kbd>=</kbd></td><td></td><td>Smart resize &minus;/+ 50</td></tr>
+      <tr class="binding-row"><td><kbd>B</kbd></td><td></td><td>Balance all sizes</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Service Mode</div>
+    <div class="section-note">Enter with <kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>;</kbd></div>
+    <table>
+      <tr class="binding-row"><td><kbd>Esc</kbd></td><td></td><td>Reload config &amp; exit</td></tr>
+      <tr class="binding-row"><td><kbd>R</kbd></td><td></td><td>Reset (flatten workspace tree)</td></tr>
+      <tr class="binding-row"><td><kbd>F</kbd></td><td></td><td>Toggle floating/tiling</td></tr>
+      <tr class="binding-row"><td><kbd>Backspace</kbd></td><td></td><td>Close all windows but current</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td></td><td>Join with direction</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- NEOVIM -->
+<!-- ================================================================== -->
+<div class="panel" id="panel-nvim">
+
+  <div class="tip-box">
+    <strong>Leader key:</strong> <kbd>Space</kbd> &mdash;
+    Mode badges: <span class="mode-badge mode-n">N</span> Normal
+    <span class="mode-badge mode-v">V</span> Visual
+    <span class="mode-badge mode-i">I</span> Insert
+    <span class="mode-badge mode-x">X</span> Select
+    <span class="mode-badge mode-o">O</span> Operator
+    <span class="mode-badge mode-t">T</span> Terminal
+    <span class="mode-badge mode-c">C</span> Command
+  </div>
+
+  <div class="section">
+    <div class="section-title">General</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Esc</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Clear search highlights</td></tr>
+      <tr class="binding-row"><td><kbd>j</kbd><kbd>k</kbd> / <kbd>k</kbd><kbd>j</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-i">I</span></td><td>Escape to normal mode</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></td><td><span class="mode-badge mode-i">I</span></td><td>Escape to normal mode</td></tr>
+      <tr class="binding-row"><td><kbd>Q</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Disabled (no Ex mode)</td></tr>
+      <tr class="binding-row"><td><kbd>J</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Move selection down</td></tr>
+      <tr class="binding-row"><td><kbd>K</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Move selection up</td></tr>
+      <tr class="binding-row"><td><kbd>J</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Join lines (keep cursor)</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>D</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Half page down + center</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>U</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Half page up + center</td></tr>
+      <tr class="binding-row"><td><kbd>n</kbd> / <kbd>N</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Next/prev search result + center</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>Space</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Switch between last two buffers</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Clipboard &amp; Registers</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>y</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-v">V</span></td><td>Yank to system clipboard</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>Y</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Yank line to system clipboard</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>p</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Paste from system clipboard</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>P</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Paste before from system clipboard</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>p</kbd></td><td><span class="mode-badge mode-x">X</span></td><td>Paste over selection (keep register)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-v">V</span></td><td>Delete to black hole register</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Search &amp; Replace</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>S</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Replace word under cursor globally</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Replace in visual selection</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Replace with confirmation</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Sort visual selection</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Telescope (Find)</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find files</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>g</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find by grep</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find string (multi-ripgrep)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>w</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find current word</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find open buffers</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>h</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find help tags</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>k</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find keymaps</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find diagnostics</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find registers</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>G</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find git files</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>R</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Resume last search</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>.</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find recent files</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>n</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find neovim config files</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>m</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find man pages</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>p</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find spell suggestions</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>/</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Fuzzy search in current buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd><kbd>/</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Find in open files</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">File Browser (Oil)</div>
+    <table>
+      <tr class="binding-row"><td><kbd>-</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open parent directory</td></tr>
+      <tr class="binding-row"><td><kbd>Enter</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Select / open</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open in vertical split</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open in horizontal split</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>P</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Preview</td></tr>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>.</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle hidden files</td></tr>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Change sort</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">LSP</div>
+    <table>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Go to definition</td></tr>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Go to references</td></tr>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>I</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Go to implementation</td></tr>
+      <tr class="binding-row"><td><kbd>g</kbd><kbd>D</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Go to declaration</td></tr>
+      <tr class="binding-row"><td><kbd>K</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Hover documentation</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>D</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Type definition</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>d</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Document symbols</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>w</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Workspace symbols</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>r</kbd><kbd>n</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Rename symbol</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>c</kbd><kbd>a</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Code action</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>e</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Show diagnostic float</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>q</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Diagnostic quickfix list</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Format buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>F</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle format-on-save</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Git</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>g</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>l</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit log (cwd)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit current file history</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Git blame line</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>B</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Git browse (open in browser)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>p</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Preview hunk</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open repo in GitHub</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Splits (Smart-Splits + Tmux)</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Move cursor between splits (works across tmux)</td></tr>
+      <tr class="binding-row"><td><kbd>Alt</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Resize split</td></tr>
+      <tr class="binding-row"><td><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Swap buffer with direction</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>z</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Maximize / restore current split</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Flash (Jump)</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-x">X</span><span class="mode-badge mode-o">O</span></td><td>Flash search</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>S</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-x">X</span><span class="mode-badge mode-o">O</span></td><td>Flash treesitter search</td></tr>
+      <tr class="binding-row"><td><kbd>r</kbd></td><td><span class="mode-badge mode-o">O</span></td><td>Remote flash</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></td><td><span class="mode-badge mode-c">C</span></td><td>Toggle flash in search</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Testing &amp; Debug</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Test closest / current</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>C</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Test current file</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>D</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Debug closest test</td></tr>
+      <tr class="binding-row"><td><kbd>F5</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Debug: Start / Continue</td></tr>
+      <tr class="binding-row"><td><kbd>F1</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Debug: Step Into</td></tr>
+      <tr class="binding-row"><td><kbd>F2</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Debug: Step Over</td></tr>
+      <tr class="binding-row"><td><kbd>F3</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Debug: Step Out</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle breakpoint</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>B</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Set conditional breakpoint</td></tr>
+      <tr class="binding-row"><td><kbd>F7</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>DAP: last session result</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">AI / Claude Code</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle Claude panel</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Focus Claude panel</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Resume Claude</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>C</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Continue Claude</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Add current buffer to Claude</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Send selection to Claude</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>a</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Accept diff</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>a</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Deny diff</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Editing</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>m</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Split/Join code block (auto-detect)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>j</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Join code block</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>J</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Split (unjoin) code block</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>n</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Generate function annotation</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>n</kbd><kbd>t</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Generate type annotation</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>x</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Source current lua file</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>r</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Rename file</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Snacks Toggles</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle spelling</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>w</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle wrap</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>l</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle line numbers</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle relative numbers</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle diagnostics</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>h</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle inlay hints</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle conceal level</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>T</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle treesitter</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle dark background</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>n</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Dismiss all notifications</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Misc</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>.</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle scratch buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>></kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Select scratch buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>n</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Notification history</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>N</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Neovim news</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>b</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Delete buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle undotree</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open tmux sessionizer</td></tr>
+      <tr class="binding-row"><td><kbd>]</kbd><kbd>]</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Next reference</td></tr>
+      <tr class="binding-row"><td><kbd>[</kbd><kbd>[</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Prev reference</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle terminal (bottom)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-t">T</span></td><td>Toggle terminal (floating)</td></tr>
+      <tr class="binding-row"><td><kbd>Esc</kbd><kbd>Esc</kbd></td><td><span class="mode-badge mode-t">T</span></td><td>Exit terminal mode</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TMUX -->
+<!-- ================================================================== -->
+<div class="panel" id="panel-tmux">
+
+  <div class="tip-box">
+    <strong>Prefix:</strong> <kbd class="prefix">Ctrl</kbd><span class="plus">+</span><kbd class="prefix">Space</kbd> &mdash;
+    All prefix commands: press prefix first, release, then press the key.
+    Vi mode is enabled for copy mode.
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pane Navigation</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td></td><td>Move between panes (vim-aware, works inside nvim)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>H</kbd></td><td></td><td>Select pane left</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>J</kbd></td><td></td><td>Select pane down</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>K</kbd></td><td></td><td>Select pane up</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>L</kbd></td><td></td><td>Select pane right</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>\</kbd></td><td></td><td>Last pane (vim-aware)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Windows</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Last window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>c</kbd></td><td></td><td>New window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>n</kbd> / <kbd>p</kbd></td><td></td><td>Next / previous window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>0-9</kbd></td><td></td><td>Select window by number</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>,</kbd></td><td></td><td>Rename window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>&</kbd></td><td></td><td>Kill window</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pane Management</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>%</kbd></td><td></td><td>Split vertical</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>"</kbd></td><td></td><td>Split horizontal</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>z</kbd></td><td></td><td>Toggle pane zoom</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>x</kbd></td><td></td><td>Kill pane</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>!</kbd></td><td></td><td>Break pane to window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>Space</kbd></td><td></td><td>Cycle layouts</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Sessions</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>d</kbd></td><td></td><td>Detach from session</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>s</kbd></td><td></td><td>List sessions</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>$</kbd></td><td></td><td>Rename session</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>(</kbd> / <kbd>)</kbd></td><td></td><td>Previous / next session</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Config &amp; Plugins</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>R</kbd></td><td></td><td>Reload tmux config</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>I</kbd></td><td></td><td>Install TPM plugins</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Copy Mode (vi)</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>[</kbd></td><td></td><td>Enter copy mode</td></tr>
+      <tr class="binding-row"><td><kbd>v</kbd></td><td></td><td>Begin selection</td></tr>
+      <tr class="binding-row"><td><kbd>y</kbd></td><td></td><td>Copy selection</td></tr>
+      <tr class="binding-row"><td><kbd>q</kbd></td><td></td><td>Exit copy mode</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- HOMEROW -->
+<!-- ================================================================== -->
+<div class="panel" id="panel-homerow">
+
+  <div class="tip-box">
+    <strong>Homerow</strong> adds keyboard-driven clicking and scrolling to any macOS app.
+    These are common defaults &mdash; check Homerow preferences for your actual config.
+  </div>
+
+  <div class="section">
+    <div class="section-title">Navigation</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Cmd</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>Space</kbd></td><td></td><td>Activate click mode (show labels)</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Cmd</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>J</kbd></td><td></td><td>Activate scroll mode</td></tr>
+      <tr class="binding-row"><td><kbd>Esc</kbd></td><td></td><td>Cancel / dismiss labels</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">During Click Mode</div>
+    <table>
+      <tr class="binding-row"><td>Type label letters</td><td></td><td>Click the labeled element</td></tr>
+      <tr class="binding-row"><td>Hold <kbd class="mod">Shift</kbd> + type label</td><td></td><td>Right-click</td></tr>
+      <tr class="binding-row"><td>Hold <kbd class="mod">Cmd</kbd> + type label</td><td></td><td>Cmd+click (open in new tab, etc.)</td></tr>
+      <tr class="binding-row"><td>Hold <kbd class="mod">Alt</kbd> + type label</td><td></td><td>Hover over element</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">During Scroll Mode</div>
+    <table>
+      <tr class="binding-row"><td><kbd>J</kbd> / <kbd>K</kbd></td><td></td><td>Scroll down / up</td></tr>
+      <tr class="binding-row"><td><kbd>H</kbd> / <kbd>L</kbd></td><td></td><td>Scroll left / right</td></tr>
+      <tr class="binding-row"><td><kbd>D</kbd> / <kbd>U</kbd></td><td></td><td>Half-page down / up</td></tr>
+      <tr class="binding-row"><td><kbd>Esc</kbd></td><td></td><td>Exit scroll mode</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- KARABINER -->
+<!-- ================================================================== -->
+<div class="panel" id="panel-karabiner">
+
+  <div class="tip-box">
+    <strong>Hyper key system:</strong> Hold <kbd class="prefix">Tab</kbd> to activate the Hyper layer.
+    <kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>E</kbd> enters the App launcher sublayer.
+    <kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>W</kbd> enters the Window management sublayer.
+    <strong>Caps Lock</strong> = <kbd>Ctrl</kbd> when held, <kbd>Esc</kbd> when tapped.
+  </div>
+
+  <div class="section">
+    <div class="section-title">Key Remaps</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Caps Lock</kbd> (hold)</td><td></td><td>Left Control</td></tr>
+      <tr class="binding-row"><td><kbd>Caps Lock</kbd> (tap)</td><td></td><td>Escape</td></tr>
+      <tr class="binding-row"><td><kbd>Tab</kbd> (hold)</td><td></td><td>Hyper key (activates layers below)</td></tr>
+      <tr class="binding-row"><td><kbd>Tab</kbd> (tap)</td><td></td><td>Tab (normal)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Hyper Base Layer (Tab held)</div>
+    <div class="section-note">Hold Tab + press key for navigation and control</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>H</kbd></td><td></td><td>Left arrow</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>J</kbd></td><td></td><td>Down arrow</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>K</kbd></td><td></td><td>Up arrow</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Right arrow</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>M</kbd></td><td></td><td>Mission Control (Ctrl+Up)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>,</kbd></td><td></td><td>Desktop left (Ctrl+Left)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>.</kbd></td><td></td><td>Desktop right (Ctrl+Right)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>1-9</kbd></td><td></td><td>Switch to desktop 1-9 (Ctrl+N)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">App Launcher Sublayer (Tab + E, then...)</div>
+    <div class="section-note">Hold Tab, press E to enter sublayer, then press key to launch app</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>H</kbd></td><td></td><td>Gmail (Camino / Work)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>N</kbd></td><td></td><td>Gmail (Personal)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>J</kbd></td><td></td><td>Calendar (Camino / Work)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>M</kbd></td><td></td><td>Calendar (Personal)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>K</kbd></td><td></td><td>Slack</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>L</kbd></td><td></td><td>Zoom</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>,</kbd></td><td></td><td>Messages</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>.</kbd></td><td></td><td>Stocks</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>/</kbd></td><td></td><td>Weather</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>U</kbd></td><td></td><td>WezTerm</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>I</kbd></td><td></td><td>ChatGPT</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>O</kbd></td><td></td><td>Obsidian</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>P</kbd></td><td></td><td>Postman</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>E</kbd> <kbd>Y</kbd></td><td></td><td>Postico 2</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Window Management Sublayer (Tab + W, then...)</div>
+    <div class="section-note">Hold Tab, press W to enter sublayer, then press key for Rectangle action</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>Y</kbd></td><td></td><td>Left half</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>I</kbd></td><td></td><td>Right half</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>U</kbd></td><td></td><td>Center half</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>Enter</kbd></td><td></td><td>Maximize</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>Space</kbd></td><td></td><td>Almost maximize</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>H</kbd></td><td></td><td>First third</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>J</kbd></td><td></td><td>Center third</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>K</kbd></td><td></td><td>Center third</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>L</kbd></td><td></td><td>Last third</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>N</kbd></td><td></td><td>First quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>M</kbd></td><td></td><td>Second quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>,</kbd></td><td></td><td>Third quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>.</kbd></td><td></td><td>Fourth quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>=</kbd></td><td></td><td>Larger</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>-</kbd></td><td></td><td>Smaller</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><kbd>W</kbd> <kbd>P</kbd></td><td></td><td>Cycle windows (Cmd+~)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">German Umlauts</div>
+    <div class="section-note">Option + letter for lowercase, Option + Shift + letter for uppercase</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>A</kbd></td><td></td><td>&auml;</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>A</kbd></td><td></td><td>&Auml;</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>O</kbd></td><td></td><td>&ouml;</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>O</kbd></td><td></td><td>&Ouml;</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>U</kbd></td><td></td><td>&uuml;</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Shift</kbd><span class="plus">+</span><kbd>U</kbd></td><td></td><td>&Uuml;</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Other</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Tab</kbd><span class="plus">+</span><kbd>F</kbd></td><td></td><td>Shortcat (Cmd+Shift+Space)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- RECTANGLE -->
+<!-- ================================================================== -->
+<div class="panel" id="panel-rectangle">
+
+  <div class="tip-box">
+    <strong>Rectangle</strong> (or Magnet) provides window snapping via keyboard shortcuts.
+    These are Rectangle defaults. Magnet uses similar keys but with <kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd> instead of <kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd>.
+    Check your app preferences for actual bindings.
+  </div>
+
+  <div class="section">
+    <div class="section-title">Halves</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&larr;</kbd></td><td></td><td>Left half</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&rarr;</kbd></td><td></td><td>Right half</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&uarr;</kbd></td><td></td><td>Top half</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&darr;</kbd></td><td></td><td>Bottom half</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Corners</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>U</kbd></td><td></td><td>Top-left quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>I</kbd></td><td></td><td>Top-right quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>J</kbd></td><td></td><td>Bottom-left quarter</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>K</kbd></td><td></td><td>Bottom-right quarter</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Thirds</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>D</kbd></td><td></td><td>First third</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>F</kbd></td><td></td><td>Center third</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>G</kbd></td><td></td><td>Last third</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>E</kbd></td><td></td><td>First two-thirds</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>T</kbd></td><td></td><td>Last two-thirds</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Size &amp; Position</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></td><td></td><td>Maximize</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>C</kbd></td><td></td><td>Center window</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>Backspace</kbd></td><td></td><td>Restore (undo last action)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Displays</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Cmd</kbd><span class="plus">+</span><kbd>&rarr;</kbd></td><td></td><td>Next display</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd class="mod">Cmd</kbd><span class="plus">+</span><kbd>&larr;</kbd></td><td></td><td>Previous display</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Magnet Equivalents</div>
+    <div class="section-note">Magnet uses the same concepts but different default shortcuts</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&larr;</kbd></td><td></td><td>Left half (same as Rectangle)</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>&rarr;</kbd></td><td></td><td>Right half (same as Rectangle)</td></tr>
+      <tr class="binding-row"><td><kbd class="mod">Ctrl</kbd><span class="plus">+</span><kbd class="mod">Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></td><td></td><td>Maximize (same as Rectangle)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+</div><!-- /content -->
+
+<script>
+  // Tab switching with hash support
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+
+  function activateTab(panelId) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.panel === panelId));
+    panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + panelId));
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.panel;
+      activateTab(id);
+      history.replaceState(null, '', '#' + id);
+      document.getElementById('search').value = '';
+      document.querySelectorAll('.binding-row').forEach(r => r.classList.remove('hidden'));
+    });
+  });
+
+  // Hash-based routing (for Alfred deep-links)
+  if (location.hash) {
+    const id = location.hash.slice(1);
+    if (document.getElementById('panel-' + id)) activateTab(id);
+  }
+
+  // Search / filter
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    const activePanel = document.querySelector('.panel.active');
+    activePanel.querySelectorAll('.binding-row').forEach(row => {
+      if (!q) { row.classList.remove('hidden'); return; }
+      const text = row.textContent.toLowerCase();
+      row.classList.toggle('hidden', !text.includes(q));
+    });
+  });
+
+  // Keyboard shortcut: Cmd+K or / to focus search
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey && e.key === 'k') || (e.key === '/' && e.target.tagName !== 'INPUT')) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+    // Tab switching with Ctrl+1-5
+    if (e.ctrlKey && e.key >= '1' && e.key <= '6') {
+      e.preventDefault();
+      const tabArr = Array.from(tabs);
+      const idx = parseInt(e.key) - 1;
+      if (tabArr[idx]) tabArr[idx].click();
+    }
+  });
+</script>
+
+</body>
+</html>

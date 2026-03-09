@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.danloman.keybindings-cheatsheet</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>INPUT-KEYWORD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>RUN-SCRIPT</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Dan Loman</string>
+	<key>description</key>
+	<string>Open keybindings cheatsheet. Use "keys" or "keys aerospace/nvim/tmux/homerow/rectangle"</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Keybindings Cheatsheet</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>keys</string>
+				<key>subtext</key>
+				<string>Open keybindings cheatsheet (optionally: aerospace, nvim, tmux, homerow, rectangle)</string>
+				<key>text</key>
+				<string>Keybindings Cheatsheet</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>INPUT-KEYWORD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>query="{query}"
+cheatsheet="$HOME/.config/cheatsheets/keybindings.html"
+
+if [ -n "$query" ]; then
+  open "file://${cheatsheet}#${query}"
+else
+  open "file://${cheatsheet}"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>RUN-SCRIPT</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Type "keys" to open the full cheatsheet.
+Type "keys aerospace" to jump directly to the AeroSpace tab.
+Type "keys nvim" to jump to the Neovim tab.
+Etc.</string>
+	<key>uidata</key>
+	<dict>
+		<key>INPUT-KEYWORD</key>
+		<dict>
+			<key>xpos</key>
+			<real>100</real>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+		<key>RUN-SCRIPT</key>
+		<dict>
+			<key>xpos</key>
+			<real>350</real>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>version</key>
+	<string>1.0.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
