@@ -33,7 +33,11 @@
 #   alt-shift-semicolon  = Service mode (esc=reload, r=reset, f=float toggle)
 
 after-login-command = []
-after-startup-command = []
+after-startup-command = [
+  'workspace P-T',
+  'mode main',
+  'exec-and-forget ~/.config/aerospace/startup.sh',
+]
 start-at-login = true
 
 enable-normalization-flatten-containers = true
@@ -414,6 +418,44 @@ alt-shift-k = ['join-with up', 'mode dml']
 alt-shift-l = ['join-with right', 'mode dml']
 
 # =============================================================================
+# AUTO-ASSIGN: Per-context apps (Gmail & Calendar web apps)
+# =============================================================================
+
+# Gmail web apps → Email workspaces
+[[on-window-detected]]
+if.app-name-regex-substring = 'Gmail - Personal'
+run = "move-node-to-workspace P-E"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Gmail - Camino'
+run = "move-node-to-workspace W-E"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Gmail - Loman'
+run = "move-node-to-workspace L-E"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Gmail - DML'
+run = "move-node-to-workspace D-E"
+
+# Calendar web apps → Calendar workspaces
+[[on-window-detected]]
+if.app-name-regex-substring = 'Calendar - Personal'
+run = "move-node-to-workspace P-C"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Calendar - Camino'
+run = "move-node-to-workspace W-C"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Calendar - Loman'
+run = "move-node-to-workspace L-C"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Calendar - DML'
+run = "move-node-to-workspace D-C"
+
+# =============================================================================
 # AUTO-ASSIGN: Global apps → global workspaces
 # =============================================================================
 [[on-window-detected]]
@@ -456,5 +498,6 @@ run = "move-node-to-workspace S"
 if.app-id = 'com.apple.reminders'
 run = "move-node-to-workspace R"
 
-# NOTE: Terminals and browsers are NOT auto-assigned because they could
-# belong to any context. Place them manually with alt-shift-t / alt-shift-b.
+# NOTE: Terminals and Safari browser windows are NOT auto-assigned because
+# they could belong to any context. Terminals are placed by the startup script.
+# Safari windows can be placed manually with alt-shift-b.
