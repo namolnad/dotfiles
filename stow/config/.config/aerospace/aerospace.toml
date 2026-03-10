@@ -20,6 +20,9 @@
 #   alt-i = IM/Chat     (I)  — Slack, Messages
 #   alt-v = Video       (V)  — Zoom
 #   alt-r = Tasks       (R)  — Reminders (no alt-shift-r move-to; conflicts with resize mode)
+#   alt-g = GitHub      (G)
+#   alt-d = Dev Tools   (DT) — Postman, Postico, Xcode, Windsurf, Docker, GitUp, Boop
+#   alt-p = Passwords   (PW) — 1Password, Passwords
 #
 # NAVIGATION:
 #   alt-h/j/k/l         = Focus left/down/up/right (vim-style)
@@ -121,6 +124,12 @@ alt-shift-a = 'move-node-to-workspace A'
 alt-shift-i = 'move-node-to-workspace I'
 alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
+alt-g = 'workspace G'
+alt-shift-g = 'move-node-to-workspace G'
+alt-d = 'workspace DT'
+alt-shift-d = 'move-node-to-workspace DT'
+alt-p = 'workspace PW'
+alt-shift-p = 'move-node-to-workspace PW'
 
 # Sub-modes
 alt-shift-r = 'mode resize'
@@ -188,6 +197,12 @@ alt-shift-i = 'move-node-to-workspace I'
 alt-v = 'workspace V'
 alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
+alt-g = 'workspace G'
+alt-shift-g = 'move-node-to-workspace G'
+alt-d = 'workspace DT'
+alt-shift-d = 'move-node-to-workspace DT'
+alt-p = 'workspace PW'
+alt-shift-p = 'move-node-to-workspace PW'
 
 # Sub-modes (return to work context on exit)
 alt-shift-r = 'mode resize-work'
@@ -255,6 +270,12 @@ alt-shift-i = 'move-node-to-workspace I'
 alt-v = 'workspace V'
 alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
+alt-g = 'workspace G'
+alt-shift-g = 'move-node-to-workspace G'
+alt-d = 'workspace DT'
+alt-shift-d = 'move-node-to-workspace DT'
+alt-p = 'workspace PW'
+alt-shift-p = 'move-node-to-workspace PW'
 
 # Sub-modes (return to loman context on exit)
 alt-shift-r = 'mode resize-loman'
@@ -322,6 +343,12 @@ alt-shift-i = 'move-node-to-workspace I'
 alt-v = 'workspace V'
 alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
+alt-g = 'workspace G'
+alt-shift-g = 'move-node-to-workspace G'
+alt-d = 'workspace DT'
+alt-shift-d = 'move-node-to-workspace DT'
+alt-p = 'workspace PW'
+alt-shift-p = 'move-node-to-workspace PW'
 
 # Sub-modes (return to dml context on exit)
 alt-shift-r = 'mode resize-dml'
@@ -456,6 +483,34 @@ if.app-name-regex-substring = 'Calendar - DML'
 run = "move-node-to-workspace D-C"
 
 # =============================================================================
+# AUTO-ASSIGN: Safari browser profiles → per-context Browser workspaces
+# =============================================================================
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = '^Personal'
+run = "move-node-to-workspace P-B"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = '^Camino'
+run = "move-node-to-workspace W-B"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = '^Loman Group'
+run = "move-node-to-workspace L-B"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = '^David'
+run = "move-node-to-workspace P-B"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = '^DML Foundation'
+run = "move-node-to-workspace D-B"
+
+# =============================================================================
 # AUTO-ASSIGN: Global apps → global workspaces
 # =============================================================================
 [[on-window-detected]]
@@ -487,6 +542,10 @@ if.app-id = 'com.openai.chat'
 run = "move-node-to-workspace A"
 
 [[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = "move-node-to-workspace A"
+
+[[on-window-detected]]
 if.app-id = 'com.apple.stocks'
 run = "move-node-to-workspace S"
 
@@ -497,6 +556,82 @@ run = "move-node-to-workspace S"
 [[on-window-detected]]
 if.app-id = 'com.apple.reminders'
 run = "move-node-to-workspace R"
+
+[[on-window-detected]]
+if.app-name-regex-substring = '^GitHub$'
+run = "move-node-to-workspace G"
+
+# Passwords (1Password + Apple Passwords) → Passwords
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = "move-node-to-workspace PW"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Passwords'
+run = "move-node-to-workspace PW"
+
+# FaceTime → Video
+[[on-window-detected]]
+if.app-id = 'com.apple.FaceTime'
+run = "move-node-to-workspace V"
+
+# Obsidian → Notes
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = "move-node-to-workspace N"
+
+# Dev Tools → DT
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'at.eggerapps.Postico'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xcode'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'com.exafunction.windsurf'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'com.docker.docker'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'co.gitup.mac'
+run = "move-node-to-workspace DT"
+
+[[on-window-detected]]
+if.app-id = 'com.okatbest.boop'
+run = "move-node-to-workspace DT"
+
+# Notion → Notes
+[[on-window-detected]]
+if.app-id = 'notion.id'
+run = "move-node-to-workspace N"
+
+# Roam → Video
+[[on-window-detected]]
+if.app-id = 'inc.wonder.roam'
+run = "move-node-to-workspace V"
+
+# VLC / GIPHY CAPTURE → Media
+[[on-window-detected]]
+if.app-id = 'org.videolan.vlc'
+run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = 'com.fasthatchapps.gifgrabberosx'
+run = "move-node-to-workspace M"
+
+# Dropbox → System
+[[on-window-detected]]
+if.app-id = 'com.getdropbox.dropbox'
+run = "move-node-to-workspace S"
 
 # NOTE: Terminals and Safari browser windows are NOT auto-assigned because
 # they could belong to any context. Terminals are placed by the startup script.
