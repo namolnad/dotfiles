@@ -57,10 +57,10 @@ on-focus-changed = "move-mouse window-lazy-center"
 [gaps]
 inner.horizontal = 18
 inner.vertical =   18
-outer.left =       18
-outer.bottom =     18
-outer.top =        18
-outer.right =      18
+outer.left =       0
+outer.bottom =     0
+outer.top =        0
+outer.right =      0
 
 # =============================================================================
 # MODE: main (defaults to Personal context)
