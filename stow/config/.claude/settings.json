@@ -16,7 +16,8 @@
       "Read(**/credentials.json)",
       "Read(**/credentials/**)",
       "Read(**/secrets.yml)"
-    ]
+    ],
+    "defaultMode": "plan"
   },
   "hooks": {
     "Notification": [
