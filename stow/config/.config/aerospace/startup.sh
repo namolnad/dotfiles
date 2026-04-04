@@ -11,7 +11,7 @@ sleep 1  # Wait for AeroSpace to fully initialize
 
 # Launch single wezterm attached to tmux
 aerospace workspace T
-wezterm start -- tmux attach -t camino &
+wezterm start &
 sleep 2
 
 # --- Gmail web apps (auto-assigned via on-window-detected) ---
