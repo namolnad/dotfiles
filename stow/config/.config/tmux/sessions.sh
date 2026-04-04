@@ -32,8 +32,14 @@ create_rails_session() {
   tmux new-window -t "$name" -n claude -c "$dir"
   tmux send-keys -t "$name:claude" 'claude' Enter
 
+  # Server window: server (top) + ngrok (bottom, optional)
   tmux new-window -t "$name" -n server -c "$dir"
   tmux send-keys -t "$name:server" "$server_cmd" Enter
+  if [ -n "$ngrok_cmd" ]; then
+    tmux split-window -v -t "$name:server" -c "$dir"
+    tmux send-keys -t "$name:server.2" "$ngrok_cmd" Enter
+    tmux select-pane -t "$name:server.1"
+  fi
 
   # Console window: dev (top) + prod (bottom)
   tmux new-window -t "$name" -n console -c "$dir"
@@ -41,12 +47,6 @@ create_rails_session() {
   tmux split-window -v -t "$name:console" -c "$dir"
   tmux send-keys -t "$name:console.2" 'bin/kamal console' Enter
   tmux select-pane -t "$name:console.1"
-
-  # Ngrok window (optional)
-  if [ -n "$ngrok_cmd" ]; then
-    tmux new-window -t "$name" -n ngrok -c "$dir"
-    tmux send-keys -t "$name:ngrok" "$ngrok_cmd" Enter
-  fi
 
   tmux select-window -t "$name:nvim"
 }

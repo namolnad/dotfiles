@@ -22,6 +22,7 @@
 #   alt-r = Tasks       (R)  — Reminders (no alt-shift-r move-to; conflicts with resize mode)
 #   alt-g = GitHub      (G)
 #   alt-d = Dev Tools   (DT) — Postman, Postico, Xcode, Windsurf, Docker, GitUp, Boop
+#   alt-f = Fylgja      (F)  — Fylgja
 #   alt-p = Passwords   (PW) — 1Password, Passwords
 #
 # NAVIGATION:
@@ -126,6 +127,7 @@ alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
 alt-g = 'workspace G'
 alt-shift-g = 'move-node-to-workspace G'
+alt-f = 'workspace F'
 alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
@@ -199,6 +201,7 @@ alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
 alt-g = 'workspace G'
 alt-shift-g = 'move-node-to-workspace G'
+alt-f = 'workspace F'
 alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
@@ -272,6 +275,7 @@ alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
 alt-g = 'workspace G'
 alt-shift-g = 'move-node-to-workspace G'
+alt-f = 'workspace F'
 alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
@@ -345,6 +349,7 @@ alt-shift-v = 'move-node-to-workspace V'
 alt-r = 'workspace R'
 alt-g = 'workspace G'
 alt-shift-g = 'move-node-to-workspace G'
+alt-f = 'workspace F'
 alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
@@ -632,6 +637,11 @@ run = "move-node-to-workspace M"
 [[on-window-detected]]
 if.app-id = 'com.getdropbox.dropbox'
 run = "move-node-to-workspace S"
+
+# Fylgja → F
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.C5E54F3A-F21C-4458-BF25-D3716D5D0D7B'
+run = "move-node-to-workspace F"
 
 # Terminal → global T workspace
 [[on-window-detected]]
