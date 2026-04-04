@@ -1,13 +1,13 @@
 # AeroSpace Config — Context-Isolated Workspace Layout
 #
 # CONTEXTS (binding modes):
-#   alt-1 = Personal  (P)    alt-shift-1 = move window to P-T
-#   alt-2 = Work      (W)    alt-shift-2 = move window to W-T
-#   alt-3 = Loman Group (L)  alt-shift-3 = move window to L-T
-#   alt-4 = DML Foundation (D) alt-shift-4 = move window to D-T
+#   alt-1 = Personal  (P)    alt-shift-1..4 = move window to T
+#   alt-2 = Work      (W)
+#   alt-3 = Loman Group (L)
+#   alt-4 = DML Foundation (D)
 #
 # PER-CONTEXT WORKSPACES (prefixed by context):
-#   alt-t = Terminal    (P-T, W-T, L-T, D-T)
+#   alt-t = Terminal    (T — single global workspace)
 #   alt-b = Browser     (P-B, W-B, L-B, D-B)
 #   alt-e = Email       (P-E, W-E, L-E, D-E)
 #   alt-c = Calendar    (P-C, W-C, L-C, D-C)
@@ -37,7 +37,7 @@
 
 after-login-command = []
 after-startup-command = [
-  'workspace P-T',
+  'workspace T',
   'mode main',
   'exec-and-forget ~/.config/aerospace/startup.sh',
 ]
@@ -68,10 +68,10 @@ outer.right =      0
 [mode.main.binding]
 
 # Context switching — lands on context's terminal (home)
-alt-1 = ['workspace P-T', 'mode main']
-alt-2 = ['workspace W-T', 'mode work']
-alt-3 = ['workspace L-T', 'mode loman']
-alt-4 = ['workspace D-T', 'mode dml']
+alt-1 = ['workspace T', 'mode main']
+alt-2 = ['workspace T', 'mode work']
+alt-3 = ['workspace T', 'mode loman']
+alt-4 = ['workspace T', 'mode dml']
 
 # Focus (vim-style)
 alt-h = 'focus left'
@@ -94,21 +94,21 @@ alt-shift-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-# Per-context workspaces (Personal)
-alt-t = 'workspace P-T'
+# Per-context workspaces (Personal — terminal is global T)
+alt-t = 'workspace T'
 alt-b = 'workspace P-B'
 alt-e = 'workspace P-E'
 alt-c = 'workspace P-C'
-alt-shift-t = 'move-node-to-workspace P-T'
+alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace P-B'
 alt-shift-e = 'move-node-to-workspace P-E'
 alt-shift-c = 'move-node-to-workspace P-C'
 
-# Move window to another context's home
-alt-shift-1 = 'move-node-to-workspace P-T'
-alt-shift-2 = 'move-node-to-workspace W-T'
-alt-shift-3 = 'move-node-to-workspace L-T'
-alt-shift-4 = 'move-node-to-workspace D-T'
+# Move window to terminal
+alt-shift-1 = 'move-node-to-workspace T'
+alt-shift-2 = 'move-node-to-workspace T'
+alt-shift-3 = 'move-node-to-workspace T'
+alt-shift-4 = 'move-node-to-workspace T'
 
 # Global workspaces
 alt-m = 'workspace M'
@@ -141,10 +141,10 @@ alt-shift-semicolon = 'mode service'
 [mode.work.binding]
 
 # Context switching
-alt-1 = ['workspace P-T', 'mode main']
-alt-2 = ['workspace W-T', 'mode work']
-alt-3 = ['workspace L-T', 'mode loman']
-alt-4 = ['workspace D-T', 'mode dml']
+alt-1 = ['workspace T', 'mode main']
+alt-2 = ['workspace T', 'mode work']
+alt-3 = ['workspace T', 'mode loman']
+alt-4 = ['workspace T', 'mode dml']
 
 # Focus
 alt-h = 'focus left'
@@ -167,21 +167,21 @@ alt-shift-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-# Per-context workspaces (Work)
-alt-t = 'workspace W-T'
+# Per-context workspaces (Work — terminal is global T)
+alt-t = 'workspace T'
 alt-b = 'workspace W-B'
 alt-e = 'workspace W-E'
 alt-c = 'workspace W-C'
-alt-shift-t = 'move-node-to-workspace W-T'
+alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace W-B'
 alt-shift-e = 'move-node-to-workspace W-E'
 alt-shift-c = 'move-node-to-workspace W-C'
 
-# Move window to another context's home
-alt-shift-1 = 'move-node-to-workspace P-T'
-alt-shift-2 = 'move-node-to-workspace W-T'
-alt-shift-3 = 'move-node-to-workspace L-T'
-alt-shift-4 = 'move-node-to-workspace D-T'
+# Move window to terminal
+alt-shift-1 = 'move-node-to-workspace T'
+alt-shift-2 = 'move-node-to-workspace T'
+alt-shift-3 = 'move-node-to-workspace T'
+alt-shift-4 = 'move-node-to-workspace T'
 
 # Global workspaces
 alt-m = 'workspace M'
@@ -214,10 +214,10 @@ alt-shift-semicolon = 'mode service-work'
 [mode.loman.binding]
 
 # Context switching
-alt-1 = ['workspace P-T', 'mode main']
-alt-2 = ['workspace W-T', 'mode work']
-alt-3 = ['workspace L-T', 'mode loman']
-alt-4 = ['workspace D-T', 'mode dml']
+alt-1 = ['workspace T', 'mode main']
+alt-2 = ['workspace T', 'mode work']
+alt-3 = ['workspace T', 'mode loman']
+alt-4 = ['workspace T', 'mode dml']
 
 # Focus
 alt-h = 'focus left'
@@ -240,21 +240,21 @@ alt-shift-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-# Per-context workspaces (Loman Group)
-alt-t = 'workspace L-T'
+# Per-context workspaces (Loman Group — terminal is global T)
+alt-t = 'workspace T'
 alt-b = 'workspace L-B'
 alt-e = 'workspace L-E'
 alt-c = 'workspace L-C'
-alt-shift-t = 'move-node-to-workspace L-T'
+alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace L-B'
 alt-shift-e = 'move-node-to-workspace L-E'
 alt-shift-c = 'move-node-to-workspace L-C'
 
-# Move window to another context's home
-alt-shift-1 = 'move-node-to-workspace P-T'
-alt-shift-2 = 'move-node-to-workspace W-T'
-alt-shift-3 = 'move-node-to-workspace L-T'
-alt-shift-4 = 'move-node-to-workspace D-T'
+# Move window to terminal
+alt-shift-1 = 'move-node-to-workspace T'
+alt-shift-2 = 'move-node-to-workspace T'
+alt-shift-3 = 'move-node-to-workspace T'
+alt-shift-4 = 'move-node-to-workspace T'
 
 # Global workspaces
 alt-m = 'workspace M'
@@ -287,10 +287,10 @@ alt-shift-semicolon = 'mode service-loman'
 [mode.dml.binding]
 
 # Context switching
-alt-1 = ['workspace P-T', 'mode main']
-alt-2 = ['workspace W-T', 'mode work']
-alt-3 = ['workspace L-T', 'mode loman']
-alt-4 = ['workspace D-T', 'mode dml']
+alt-1 = ['workspace T', 'mode main']
+alt-2 = ['workspace T', 'mode work']
+alt-3 = ['workspace T', 'mode loman']
+alt-4 = ['workspace T', 'mode dml']
 
 # Focus
 alt-h = 'focus left'
@@ -313,21 +313,21 @@ alt-shift-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-# Per-context workspaces (DML Foundation)
-alt-t = 'workspace D-T'
+# Per-context workspaces (DML Foundation — terminal is global T)
+alt-t = 'workspace T'
 alt-b = 'workspace D-B'
 alt-e = 'workspace D-E'
 alt-c = 'workspace D-C'
-alt-shift-t = 'move-node-to-workspace D-T'
+alt-shift-t = 'move-node-to-workspace T'
 alt-shift-b = 'move-node-to-workspace D-B'
 alt-shift-e = 'move-node-to-workspace D-E'
 alt-shift-c = 'move-node-to-workspace D-C'
 
-# Move window to another context's home
-alt-shift-1 = 'move-node-to-workspace P-T'
-alt-shift-2 = 'move-node-to-workspace W-T'
-alt-shift-3 = 'move-node-to-workspace L-T'
-alt-shift-4 = 'move-node-to-workspace D-T'
+# Move window to terminal
+alt-shift-1 = 'move-node-to-workspace T'
+alt-shift-2 = 'move-node-to-workspace T'
+alt-shift-3 = 'move-node-to-workspace T'
+alt-shift-4 = 'move-node-to-workspace T'
 
 # Global workspaces
 alt-m = 'workspace M'
@@ -633,6 +633,10 @@ run = "move-node-to-workspace M"
 if.app-id = 'com.getdropbox.dropbox'
 run = "move-node-to-workspace S"
 
-# NOTE: Terminals and Safari browser windows are NOT auto-assigned because
-# they could belong to any context. Terminals are placed by the startup script.
-# Safari windows can be placed manually with alt-shift-b.
+# Terminal → global T workspace
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'
+run = "move-node-to-workspace T"
+
+# NOTE: Safari browser windows are NOT auto-assigned because they could
+# belong to any context. Place manually with alt-shift-b.

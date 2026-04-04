@@ -45,9 +45,11 @@
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
   },
   "autoUpdatesChannel": "latest",
+  "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
   }

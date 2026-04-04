@@ -600,61 +600,67 @@
 <div class="panel" id="panel-tmux">
 
   <div class="tip-box">
-    <strong>Prefix:</strong> <kbd class="prefix">Ctrl</kbd><span class="plus">+</span><kbd class="prefix">Space</kbd> &mdash;
+    <strong>Prefix:</strong> <kbd class="prefix">Alt</kbd><span class="plus">+</span><kbd class="prefix">Space</kbd> &mdash;
     All prefix commands: press prefix first, release, then press the key.
-    Vi mode is enabled for copy mode.
-  </div>
-
-  <div class="section">
-    <div class="section-title">Pane Navigation</div>
-    <table>
-      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td></td><td>Move between panes (vim-aware, works inside nvim)</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>H</kbd></td><td></td><td>Select pane left</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>J</kbd></td><td></td><td>Select pane down</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>K</kbd></td><td></td><td>Select pane up</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>L</kbd></td><td></td><td>Select pane right</td></tr>
-      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>\</kbd></td><td></td><td>Last pane (vim-aware)</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Windows</div>
-    <table>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Last window</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>c</kbd></td><td></td><td>New window</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>n</kbd> / <kbd>p</kbd></td><td></td><td>Next / previous window</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>0-9</kbd></td><td></td><td>Select window by number</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>,</kbd></td><td></td><td>Rename window</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>&</kbd></td><td></td><td>Kill window</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Pane Management</div>
-    <table>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>%</kbd></td><td></td><td>Split vertical</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>"</kbd></td><td></td><td>Split horizontal</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>z</kbd></td><td></td><td>Toggle pane zoom</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>x</kbd></td><td></td><td>Kill pane</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>!</kbd></td><td></td><td>Break pane to window</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>Space</kbd></td><td></td><td>Cycle layouts</td></tr>
-    </table>
+    Vi mode is enabled for copy mode. Double-tap prefix to send literal Alt+Space.
   </div>
 
   <div class="section">
     <div class="section-title">Sessions</div>
     <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>1</kbd></td><td></td><td>Switch to <strong>camino</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>2</kbd></td><td></td><td>Switch to <strong>shopify</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>3</kbd></td><td></td><td>Switch to <strong>dml</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>4</kbd></td><td></td><td>Switch to <strong>fylgja</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>5</kbd></td><td></td><td>Switch to <strong>rune</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>6</kbd></td><td></td><td>Switch to <strong>alpin</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>7</kbd></td><td></td><td>Switch to <strong>dotfiles</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>8</kbd></td><td></td><td>Switch to <strong>lifeos</strong></td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>f</kbd></td><td></td><td>Fuzzy session picker (fzf)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>s</kbd></td><td></td><td>Session tree view</td></tr>
       <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>d</kbd></td><td></td><td>Detach from session</td></tr>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>s</kbd></td><td></td><td>List sessions</td></tr>
       <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>$</kbd></td><td></td><td>Rename session</td></tr>
       <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>(</kbd> / <kbd>)</kbd></td><td></td><td>Previous / next session</td></tr>
     </table>
   </div>
 
   <div class="section">
+    <div class="section-title">Windows</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Alt</kbd><span class="plus">+</span><kbd>[</kbd> / <kbd>]</kbd></td><td></td><td>Previous / next window (no prefix)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>L</kbd></td><td></td><td>Last window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>c</kbd></td><td></td><td>New window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>n</kbd> / <kbd>p</kbd></td><td></td><td>Next / previous window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>0-9</kbd></td><td></td><td>Select window by number</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>,</kbd></td><td></td><td>Rename window</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>&amp;</kbd></td><td></td><td>Kill window</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pane Navigation</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td></td><td>Move between panes (vim-aware, works inside nvim)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>H/J/K/L</kbd></td><td></td><td>Select pane (with prefix)</td></tr>
+      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>\</kbd></td><td></td><td>Last pane (vim-aware)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pane Management</div>
+    <table>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>|</kbd></td><td></td><td>Split horizontal (preserves cwd)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>-</kbd></td><td></td><td>Split vertical (preserves cwd)</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>z</kbd></td><td></td><td>Toggle pane zoom</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>x</kbd></td><td></td><td>Kill pane</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>!</kbd></td><td></td><td>Break pane to window</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
     <div class="section-title">Config &amp; Plugins</div>
     <table>
-      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>R</kbd></td><td></td><td>Reload tmux config</td></tr>
+      <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>r</kbd></td><td></td><td>Reload tmux config</td></tr>
       <tr class="binding-row"><td><kbd class="prefix">Prefix</kbd> <kbd>I</kbd></td><td></td><td>Install TPM plugins</td></tr>
     </table>
   </div>
