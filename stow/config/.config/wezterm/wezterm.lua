@@ -4,7 +4,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.term = "xterm-256color"
-config.default_prog = { '/opt/homebrew/bin/tmux', 'new-session', '-A', '-s', 'camino' }
+config.default_prog = { os.getenv('HOME') .. '/.config/tmux/start.sh' }
 
 config.color_scheme = 'Tokyo Night Storm'
 config.colors = {
