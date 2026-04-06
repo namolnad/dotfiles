@@ -72,6 +72,7 @@ brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 
 brew 'lua-language-server'
+brew 'tree-sitter-cli'
 brew 'typescript-language-server'
 
 cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
@@ -79,7 +80,7 @@ cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font
 
 cask_unless_exists '1password', name: '1Password'
 cask_unless_exists '1password-cli', name: '1Password CLI'
-# cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
+cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
 cask_unless_exists 'alfred', name: 'Alfred 5'
 cask_unless_exists 'appcleaner', name: 'AppCleaner'
 # cask_unless_exists 'boop', name: 'Boop'

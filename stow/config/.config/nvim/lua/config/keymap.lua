@@ -49,6 +49,8 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>', { silent = tru
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', { silent = true, desc = 'Remap: Disable <up>' })
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', { silent = true, desc = 'Remap: Disable <down>' })
 
+vim.keymap.set('n', '<leader>u', '<cmd>Undotree<cr>', { desc = 'Toggle Undotree' })
+
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Remap: Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Remap: Open diagnostic [Q]uickfix list' })
 

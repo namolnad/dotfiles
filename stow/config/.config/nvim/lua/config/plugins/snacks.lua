@@ -1,42 +1,14 @@
-return {
-  "folke/snacks.nvim",
-  priority = 1000,
-  lazy = false,
+return function()
   ---@type snacks.Config
-  opts = {
+  require('snacks').setup {
     bigfile = { enabled = true },
     dashboard = {
       enabled = true,
       sections = {
         { section = "header" },
-        -- {
-        --   pane = 2,
-        --   section = "terminal",
-        --   cmd =
-        --   "chafa ~/.local/share/nvim/dashboard-background.png --format symbols --symbols vhalf --size 30x10 --stretch; sleep 0.1",
-        --   -- cmd = "imgcat ~/.local/share/nvim/dashboard-background.png --width 60 --depth iterm2",
-        --   -- cmd = "ascii-image-converter --color --braille ~/.local/share/nvim/dashboard-background.png",
-        --   height = 10,
-        --   padding = 1,
-        -- },
         { section = "keys", gap = 1, padding = 1 },
-        { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-        { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-        -- {
-        --   pane = 2,
-        --   icon = " ",
-        --   title = "Git Status",
-        --   section = "terminal",
-        --   enabled = function()
-        --     return Snacks.git.get_root() ~= nil
-        --   end,
-        --   cmd = "git status --short --branch --renames",
-        --   height = 5,
-        --   padding = 1,
-        --   ttl = 5 * 60,
-        --   indent = 3,
-        -- },
-        { section = "startup" },
+        { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+        { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
       },
     },
     indent = {},
@@ -49,78 +21,45 @@ return {
     words = { enabled = true },
     scratch = {
       ft = "markdown",
-      -- ft = function()
-      --   if vim.bo.buftype == "" and vim.bo.filetype ~= "" then
-      --     return vim.bo.filetype
-      --   end
-      --   return "markdown"
-      -- end,
     },
     styles = {
       notification = {
-        wo = { wrap = true } -- Wrap notifications
+        wo = { wrap = true }
       }
     }
-  },
+  }
 
-  keys = {
-    { "<leader>.",  function() Snacks.scratch() end,                 desc = "Snacks: Toggle Scratch Buffer" },
-    { "<leader>>",  function() Snacks.scratch.select() end,          desc = "Snacks: Select Scratch Buffer" },
-    { "<leader>n",  function() Snacks.notifier.show_history() end,   desc = "Snacks: Notification History" },
-    { "<leader>bd", function() Snacks.bufdelete() end,               desc = "Snacks: Delete Buffer" },
-    { "<leader>rf", function() Snacks.rename.rename_file() end,      desc = "Snacks: [R]ename [F]ile" },
-    { "<leader>gB", function() Snacks.gitbrowse() end,               desc = "Snacks: Git Browse" },
-    { "<leader>gb", function() Snacks.git.blame_line() end,          desc = "Snacks: Git Blame Line" },
-    { "<leader>gf", function() Snacks.lazygit.log_file() end,        desc = "Snacks: Lazygit Current File History" },
-    { "<leader>gg", function() Snacks.lazygit() end,                 desc = "Snacks: Lazygit" },
-    { "<leader>gl", function() Snacks.lazygit.log() end,             desc = "Snacks: Lazygit Log (cwd)" },
-    { "<leader>un", function() Snacks.notifier.hide() end,           desc = "Snacks: Dismiss All Notifications" },
-    { "]]",         function() Snacks.words.jump(vim.v.count1) end,  desc = "Snacks: Next Reference",              mode = { "n", "t" } },
-    { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Snacks: Prev Reference",              mode = { "n", "t" } },
-    {
-      "<leader>N",
-      desc = "Snacks: Neovim News",
-      function()
-        Snacks.win({
-          file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-          width = 0.6,
-          height = 0.6,
-          wo = {
-            spell = false,
-            wrap = false,
-            signcolumn = "yes",
-            statuscolumn = " ",
-            conceallevel = 3,
-          },
-        })
-      end,
-    }
-  },
-  init = function()
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "VeryLazy",
-      callback = function()
-        -- Setup some globals for debugging (lazy-loaded)
-        _G.dd = function(...)
-          Snacks.debug.inspect(...)
-        end
-        _G.bt = function()
-          Snacks.debug.backtrace()
-        end
-        vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-        -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-        Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.line_number():map("<leader>ul")
-        Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map(
-          "<leader>uc")
-        Snacks.toggle.treesitter():map("<leader>uT")
-        Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-        Snacks.toggle.inlay_hints():map("<leader>uh")
-      end,
+  -- Keymaps
+  vim.keymap.set('n', '<leader>.', function() Snacks.scratch() end, { desc = 'Snacks: Toggle Scratch Buffer' })
+  vim.keymap.set('n', '<leader>>', function() Snacks.scratch.select() end, { desc = 'Snacks: Select Scratch Buffer' })
+  vim.keymap.set('n', '<leader>n', function() Snacks.notifier.show_history() end,
+    { desc = 'Snacks: Notification History' })
+  vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = 'Snacks: Delete Buffer' })
+  vim.keymap.set('n', '<leader>rf', function() Snacks.rename.rename_file() end, { desc = 'Snacks: [R]ename [F]ile' })
+  vim.keymap.set('n', '<leader>gB', function() Snacks.gitbrowse() end, { desc = 'Snacks: Git Browse' })
+  vim.keymap.set('n', '<leader>gb', function() Snacks.git.blame_line() end, { desc = 'Snacks: Git Blame Line' })
+  vim.keymap.set('n', '<leader>gf', function() Snacks.lazygit.log_file() end,
+    { desc = 'Snacks: Lazygit Current File History' })
+  vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Snacks: Lazygit' })
+  vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end, { desc = 'Snacks: Lazygit Log (cwd)' })
+  vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end,
+    { desc = 'Snacks: Dismiss All Notifications' })
+  vim.keymap.set({ 'n', 't' }, ']]', function() Snacks.words.jump(vim.v.count1) end,
+    { desc = 'Snacks: Next Reference' })
+  vim.keymap.set({ 'n', 't' }, '[[', function() Snacks.words.jump(-vim.v.count1) end,
+    { desc = 'Snacks: Prev Reference' })
+  vim.keymap.set('n', '<leader>N', function()
+    Snacks.win({
+      file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+      width = 0.6,
+      height = 0.6,
+      wo = {
+        spell = false,
+        wrap = false,
+        signcolumn = "yes",
+        statuscolumn = " ",
+        conceallevel = 3,
+      },
     })
-  end,
-}
+  end, { desc = 'Snacks: Neovim News' })
+end

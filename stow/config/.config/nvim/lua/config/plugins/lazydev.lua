@@ -1,3 +1,3 @@
-return {
-  { "folke/lazydev.nvim", opts = {} }
-}
+return function()
+  require('lazydev').setup {}
+end
