@@ -128,7 +128,7 @@ symlink_dotfiles() {
     pwd
     info 'Symlinking dotfiles'
     mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
-    for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.oh-my-zsh/custom/plugins"; do
+    for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.rbenv/version" "$HOME/.oh-my-zsh/custom/plugins"; do
         if [ -e "$bak_path" ]; then
             mv "$bak_path" "$bak_path.bak"
             echo "Backed up $bak_path to $bak_path.bak"
