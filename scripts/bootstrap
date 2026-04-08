@@ -125,6 +125,7 @@ clone_dotfiles() {
 # PRIMARY
 
 symlink_dotfiles() {
+    pwd
     info 'Symlinking dotfiles'
     mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
     for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.oh-my-zsh/custom/plugins"; do
@@ -141,7 +142,7 @@ symlink_dotfiles() {
 
 install_applications() {
     info 'Installing gems'
-    bundle install
+    BUNDLE_GEMFILE=$DOTFILES/Gemfile bundle install
 
     info 'Symlinking scripts'
     sudo mkdir -p /usr/local/opt    
