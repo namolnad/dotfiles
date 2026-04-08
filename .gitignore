@@ -12,3 +12,11 @@ stow/config/.config/alfred/Alfred.alfredpreferences/**
 !stow/config/.config/alfred/Alfred.alfredpreferences/workflows/**
 stow/config/.config/github-copilot/versions.json
 stow/config/.config/tmux/plugins/
+stow/config/.claude/backups/
+stow/config/.claude/cache/
+stow/config/.claude/plugins/
+stow/config/.claude/sessions/
+stow/config/.claude/projects/
+stow/config/.claude/history.jsonl
+stow/config/.oh-my-zsh/custom/plugins/
+~/.oh-my-zsh/custom/plugins/

@@ -163,6 +163,10 @@ install_applications() {
         mv $tmp_dir/PJs.app /Applications/
         rm -rf $tmp_dir
     fi
+    info 'Installing Claude'
+    curl -fsSL https://claude.ai/install.sh | bash
+    info 'Installing tmux plugins'
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 }
 
 apply_macos_system_defaults() {
@@ -720,9 +724,10 @@ add_login_items() {
     # Array of applications to add as login items
     login_apps=(
         # "/Applications/Rectangle.app"
+        "/Applications/AeroSpace.app"
         "/Applications/Rocket.app"
         "/Applications/zoom.us.app"
-        "/Applications/ChatGPT.app"
+        # "/Applications/ChatGPT.app"
         "/Applications/1Password.app"
         "/Applications/AutoMute.app"
     )
