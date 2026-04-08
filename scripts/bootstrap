@@ -128,7 +128,7 @@ symlink_dotfiles() {
     pwd
     info 'Symlinking dotfiles'
     mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
-    for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.rbenv/version" "$HOME/.oh-my-zsh/custom/plugins"; do
+    for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.rbenv/version"; do
         if [ -e "$bak_path" ]; then
             mv "$bak_path" "$bak_path.bak"
             echo "Backed up $bak_path to $bak_path.bak"
@@ -145,14 +145,16 @@ install_applications() {
     BUNDLE_GEMFILE=$DOTFILES/Gemfile bundle install
 
     info 'Symlinking scripts'
-    sudo mkdir -p /usr/local/opt    
+    sudo mkdir -p /usr/local/opt
     sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt
     info 'Installing Oh My Zsh'
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     info 'Installing zsh plugins'
-    git clone https://github.com/mroth/evalcache ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/evalcache
-    git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-    git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+    for plugin in "mroth/evalcache" "zsh-users/zsh-completions" "Aloxaf/fzf-tab"; do
+      plugin_path="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$(basename "$plugin")"
+      rm -rf "$plugin_path"
+      git clone "https://github.com/$plugin" "$plugin_path"
+    done
     if [ ! -d "/Applications/PJs.app" ]; then
         info 'Installing PJs'
         tmp_dir=$(mktemp -d)
@@ -200,7 +202,7 @@ apply_macos_system_defaults() {
     defaults write com.apple.LaunchServices LSQuarantine -bool false
 
     # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
-    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -r -domain local -domain system -domain user
 
     # Display ASCII control characters using caret notation in standard text views
     # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
@@ -637,9 +639,6 @@ apply_macos_system_defaults() {
     # Address Book, iCal, TextEdit, and Disk Utility                              #
     ###############################################################################
 
-    # Enable the debug menu in Address Book
-    defaults write com.apple.addressbook ABShowDebugMenu -bool true
-
     # Enable the debug menu in iCal (pre-10.8)
     defaults write com.apple.iCal IncludeDebugMenu -bool true
 
@@ -720,7 +719,7 @@ add_login_items() {
 
     # Array of applications to add as login items
     login_apps=(
-        "/Applications/Rectangle.app"
+        # "/Applications/Rectangle.app"
         "/Applications/Rocket.app"
         "/Applications/zoom.us.app"
         "/Applications/ChatGPT.app"

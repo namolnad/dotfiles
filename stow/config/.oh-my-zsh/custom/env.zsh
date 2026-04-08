@@ -127,6 +127,7 @@ function y() {
 dotenvcrypt_key_path="$XDG_CONFIG_HOME/dotenvcrypt/secret.key"
 if [[ ! -f $dotenvcrypt_key_path || ! -s $dotenvcrypt_key_path ]]; then
   mkdir -p $(dirname $dotenvcrypt_key_path)
+  eval "$(op signin)"
   (op item get xdsp7qgsyfo3lgrtcp7npriky4 --reveal --fields password) > $dotenvcrypt_key_path
 fi
 # Check if dotenvcrypt is installed and source its output
