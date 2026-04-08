@@ -762,6 +762,7 @@ install_xcode
 setup_ssh
 clone_dotfiles
 install_homebrew
+cd $DOTFILES
 symlink_dotfiles
 setup_ruby_environment
 install_applications
