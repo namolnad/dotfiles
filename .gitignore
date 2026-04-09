@@ -17,6 +17,9 @@ stow/config/.claude/cache/
 stow/config/.claude/plugins/
 stow/config/.claude/sessions/
 stow/config/.claude/projects/
+stow/config/.claude/plans/
+stow/config/.claude/file-history/
+stow/config/.claude/shell-snapshots/
 stow/config/.claude/history.jsonl
 stow/config/.claude/mcp-needs-auth-cache.json
 stow/config/.oh-my-zsh/custom/plugins/

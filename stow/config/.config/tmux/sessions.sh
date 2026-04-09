@@ -24,13 +24,13 @@ create_rails_session() {
   tmux new-session -d -s "$name" -c "$dir" -n nvim
   tmux send-keys -t "$name:nvim" 'nvim' Enter
 
-  tmux new-window -t "$name" -n shell -c "$dir"
+  tmux new-window -t "$name" -n claude -c "$dir"
+  tmux send-keys -t "$name:claude" 'claude' Enter
 
   tmux new-window -t "$name" -n lazygit -c "$dir"
   tmux send-keys -t "$name:lazygit" 'lazygit' Enter
 
-  tmux new-window -t "$name" -n claude -c "$dir"
-  tmux send-keys -t "$name:claude" 'claude' Enter
+  tmux new-window -t "$name" -n shell -c "$dir"
 
   # Server window: server (top) + ngrok (bottom, optional)
   tmux new-window -t "$name" -n server -c "$dir"
@@ -60,13 +60,13 @@ create_simple_session() {
   tmux new-session -d -s "$name" -c "$dir" -n nvim
   tmux send-keys -t "$name:nvim" 'nvim' Enter
 
-  tmux new-window -t "$name" -n shell -c "$dir"
+  tmux new-window -t "$name" -n claude -c "$dir"
+  tmux send-keys -t "$name:claude" 'claude' Enter
 
   tmux new-window -t "$name" -n lazygit -c "$dir"
   tmux send-keys -t "$name:lazygit" 'lazygit' Enter
 
-  tmux new-window -t "$name" -n claude -c "$dir"
-  tmux send-keys -t "$name:claude" 'claude' Enter
+  tmux new-window -t "$name" -n shell -c "$dir"
 
   tmux select-window -t "$name:nvim"
 }
