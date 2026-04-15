@@ -136,3 +136,10 @@ if command -v dotenvcrypt &> /dev/null; then
   eval "$(dotenvcrypt decrypt $HOME/.env.enc)"
   set +a
 fi
+
+
+#   ---------------------------
+#   CLAUDECODE
+#   ---------------------------
+export CLAUDE_CODE_EFFORT_LEVEL=max
+export CLAUDE_CODE_DISABLE_ADAPTER_THINKING=1
