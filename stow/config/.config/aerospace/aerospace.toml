@@ -133,6 +133,10 @@ alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
 alt-shift-p = 'move-node-to-workspace PW'
 
+# Safari tab focus (Personal default)
+alt-cmd-e = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh mail.google.com Personal'
+alt-cmd-c = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh calendar.google.com Personal'
+
 # Sub-modes
 alt-shift-r = 'mode resize'
 alt-shift-semicolon = 'mode service'
@@ -206,6 +210,10 @@ alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
 alt-shift-p = 'move-node-to-workspace PW'
+
+# Safari tab focus (Personal default)
+alt-cmd-e = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh mail.google.com Personal'
+alt-cmd-c = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh calendar.google.com Personal'
 
 # Sub-modes (return to work context on exit)
 alt-shift-r = 'mode resize-work'
@@ -281,6 +289,10 @@ alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
 alt-shift-p = 'move-node-to-workspace PW'
 
+# Safari tab focus (Personal default)
+alt-cmd-e = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh mail.google.com Personal'
+alt-cmd-c = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh calendar.google.com Personal'
+
 # Sub-modes (return to loman context on exit)
 alt-shift-r = 'mode resize-loman'
 alt-shift-semicolon = 'mode service-loman'
@@ -354,6 +366,10 @@ alt-d = 'workspace DT'
 alt-shift-d = 'move-node-to-workspace DT'
 alt-p = 'workspace PW'
 alt-shift-p = 'move-node-to-workspace PW'
+
+# Safari tab focus (Personal default)
+alt-cmd-e = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh mail.google.com Personal'
+alt-cmd-c = 'exec-and-forget ~/.config/scripts/safari-focus-tab.sh calendar.google.com Personal'
 
 # Sub-modes (return to dml context on exit)
 alt-shift-r = 'mode resize-dml'
@@ -486,6 +502,16 @@ run = "move-node-to-workspace L-C"
 [[on-window-detected]]
 if.app-name-regex-substring = 'Calendar - DML'
 run = "move-node-to-workspace D-C"
+
+# Native Mail.app → P-E (single instance, all accounts)
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = "move-node-to-workspace P-E"
+
+# Native Calendar.app → P-C (single instance, all accounts)
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = "move-node-to-workspace P-C"
 
 # =============================================================================
 # AUTO-ASSIGN: Safari browser profiles → per-context Browser workspaces

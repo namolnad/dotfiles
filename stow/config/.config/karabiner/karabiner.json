@@ -107,12 +107,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Open Gmail - Camino",
+                                "description": "Focus Camino Gmail tab",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Gmail - Camino.app'" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh mail.google.com Camino" }],
                                 "type": "basic"
                             },
                             {
@@ -123,12 +123,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Open Calendar - Camino",
+                                "description": "Focus Camino Calendar tab",
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Calendar - Camino.app'" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh calendar.google.com Camino" }],
                                 "type": "basic"
                             },
                             {
@@ -171,12 +171,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Open Gmail - Personal",
+                                "description": "Focus Personal Gmail tab",
                                 "from": {
                                     "key_code": "n",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Gmail - Personal.app'" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh mail.google.com Personal" }],
                                 "type": "basic"
                             },
                             {
@@ -187,12 +187,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Open Calendar - Personal",
+                                "description": "Focus Personal Calendar tab",
                                 "from": {
                                     "key_code": "m",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Calendar - Personal.app'" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh calendar.google.com Personal" }],
                                 "type": "basic"
                             },
                             {
