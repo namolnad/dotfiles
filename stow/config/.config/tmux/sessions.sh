@@ -1,23 +1,59 @@
 #!/bin/bash
-# Tmux session creation script — idempotent, safe to re-run
-# Called from aerospace startup.sh or manually
+# Tmux session helpers + auto-boot for camino + dotfiles.
+#
+# Run directly to create the auto-boot sessions (idempotent).
+# Source from another script (e.g. project.sh) to use the helpers without auto-booting.
 
 CAMINO_DIR="$HOME/Developer/camino-app"
-SHOPIFY_DIR="$HOME/Developer/shopify-app-suite"
-DML_DIR="$HOME/Developer/davelomandotcom"
-FYLGJA_DIR="$HOME/Developer/fylgja"
-RUNE_DIR="$HOME/Developer/rune"
-ALPIN_DIR="$HOME/Developer/alpin"
 DOTFILES_DIR="$HOME/Developer/dotfiles"
-LIFEOS_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Documents/LifeOS"
 
-# --- Helper functions ---
+# --- Helpers ---
 
-create_rails_session() {
-  local name="$1"
-  local dir="$2"
-  local server_cmd="${3:-bin/dev}"
-  local ngrok_cmd="$4"  # optional
+# Sanitize a directory basename into a valid tmux session name (no dots, lowercase).
+session_name_from_dir() {
+  basename "$1" | tr '[:upper:]' '[:lower:]' | tr '. ' '__' | tr -cd '[:alnum:]_-'
+}
+
+# Create a session for an arbitrary project directory, auto-detecting type.
+# Always: nvim, claude, lazygit, shell. Adds: server (if bin/dev), console (if Gemfile).
+create_project_session() {
+  local dir="$1"
+  local name="${2:-$(session_name_from_dir "$dir")}"
+
+  if tmux has-session -t "$name" 2>/dev/null; then
+    echo "$name"
+    return
+  fi
+
+  tmux new-session -d -s "$name" -c "$dir" -n nvim
+  tmux send-keys -t "$name:nvim" 'nvim' Enter
+
+  tmux new-window -t "$name" -n claude -c "$dir"
+  tmux send-keys -t "$name:claude" 'claude' Enter
+
+  tmux new-window -t "$name" -n lazygit -c "$dir"
+  tmux send-keys -t "$name:lazygit" 'lazygit' Enter
+
+  tmux new-window -t "$name" -n shell -c "$dir"
+
+  if [ -x "$dir/bin/dev" ]; then
+    tmux new-window -t "$name" -n server -c "$dir"
+    tmux send-keys -t "$name:server" 'bin/dev' Enter
+  fi
+
+  if [ -f "$dir/Gemfile" ]; then
+    tmux new-window -t "$name" -n console -c "$dir"
+    tmux send-keys -t "$name:console" 'rails c' Enter
+  fi
+
+  tmux select-window -t "$name:nvim"
+  echo "$name"
+}
+
+# Camino-specific: rails + ngrok in a split server pane + dual-pane console.
+create_camino_session() {
+  local name="camino"
+  local dir="$CAMINO_DIR"
 
   if tmux has-session -t "$name" 2>/dev/null; then return; fi
 
@@ -32,16 +68,12 @@ create_rails_session() {
 
   tmux new-window -t "$name" -n shell -c "$dir"
 
-  # Server window: server (top) + ngrok (bottom, optional)
   tmux new-window -t "$name" -n server -c "$dir"
-  tmux send-keys -t "$name:server" "$server_cmd" Enter
-  if [ -n "$ngrok_cmd" ]; then
-    tmux split-window -v -t "$name:server" -c "$dir"
-    tmux send-keys -t "$name:server.2" "$ngrok_cmd" Enter
-    tmux select-pane -t "$name:server.1"
-  fi
+  tmux send-keys -t "$name:server" 'HOST=https://lomangroup.ngrok.app bin/dev' Enter
+  tmux split-window -v -t "$name:server" -c "$dir"
+  tmux send-keys -t "$name:server.2" 'ngrok http --domain=lomangroup.ngrok.app 3000' Enter
+  tmux select-pane -t "$name:server.1"
 
-  # Console window: dev (top) + prod (bottom)
   tmux new-window -t "$name" -n console -c "$dir"
   tmux send-keys -t "$name:console" 'rails c' Enter
   tmux split-window -v -t "$name:console" -c "$dir"
@@ -51,53 +83,14 @@ create_rails_session() {
   tmux select-window -t "$name:nvim"
 }
 
-create_simple_session() {
-  local name="$1"
-  local dir="$2"
+# --- Auto-boot ---
 
-  if tmux has-session -t "$name" 2>/dev/null; then return; fi
-
-  tmux new-session -d -s "$name" -c "$dir" -n nvim
-  tmux send-keys -t "$name:nvim" 'nvim' Enter
-
-  tmux new-window -t "$name" -n claude -c "$dir"
-  tmux send-keys -t "$name:claude" 'claude' Enter
-
-  tmux new-window -t "$name" -n lazygit -c "$dir"
-  tmux send-keys -t "$name:lazygit" 'lazygit' Enter
-
-  tmux new-window -t "$name" -n shell -c "$dir"
-
-  tmux select-window -t "$name:nvim"
+main() {
+  create_camino_session
+  create_project_session "$DOTFILES_DIR" "dotfiles"
 }
 
-# --- Rails projects ---
-
-create_rails_session "camino" "$CAMINO_DIR" \
-  "HOST=https://lomangroup.ngrok.app bin/dev" \
-  "ngrok http --domain=lomangroup.ngrok.app 3000"
-
-create_rails_session "shopify" "$SHOPIFY_DIR"
-
-create_rails_session "dml" "$DML_DIR"
-
-# --- Simple projects ---
-
-create_simple_session "fylgja" "$FYLGJA_DIR"
-create_simple_session "rune" "$RUNE_DIR"
-create_simple_session "alpin" "$ALPIN_DIR"
-create_simple_session "dotfiles" "$DOTFILES_DIR"
-
-# --- LifeOS (claude-first, no nvim) ---
-
-if ! tmux has-session -t lifeos 2>/dev/null; then
-  tmux new-session -d -s lifeos -c "$LIFEOS_DIR" -n claude
-  tmux send-keys -t lifeos:claude 'claude' Enter
-
-  tmux new-window -t lifeos -n shell -c "$LIFEOS_DIR"
-
-  tmux new-window -t lifeos -n lazygit -c "$LIFEOS_DIR"
-  tmux send-keys -t lifeos:lazygit 'lazygit' Enter
-
-  tmux select-window -t lifeos:claude
+# Only run main if executed directly (not when sourced).
+if [ "${BASH_SOURCE[0]:-$0}" = "$0" ]; then
+  main "$@"
 fi
