@@ -17,7 +17,7 @@
       "Read(**/credentials/**)",
       "Read(**/secrets.yml)"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "auto"
   },
   "hooks": {
     "Notification": [
@@ -49,8 +49,11 @@
     "lua-lsp@claude-plugins-official": true
   },
   "autoUpdatesChannel": "latest",
+  "editorMode": "vim",
+  "preferredNotifChannel": "terminal_bell",
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
-  }
+  },
+  "skipAutoPermissionPrompt": true
 }
