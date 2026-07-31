@@ -1,10 +1,9 @@
 #!/bin/bash
-# Tmux session helpers + auto-boot for camino + dotfiles.
+# Tmux session helpers + auto-boot for dotfiles.
 #
 # Run directly to create the auto-boot sessions (idempotent).
 # Source from another script (e.g. project.sh) to use the helpers without auto-booting.
 
-CAMINO_DIR="$HOME/Developer/camino-app"
 DOTFILES_DIR="$HOME/Developer/dotfiles"
 
 # --- Helpers ---
@@ -30,11 +29,11 @@ create_project_session() {
 
   tmux new-window -t "$name" -n claude -c "$dir"
   tmux send-keys -t "$name:claude" 'claude' Enter
-
-  tmux new-window -t "$name" -n lazygit -c "$dir"
-  tmux send-keys -t "$name:lazygit" 'lazygit' Enter
-
-  tmux new-window -t "$name" -n shell -c "$dir"
+  #
+  # tmux new-window -t "$name" -n lazygit -c "$dir"
+  # tmux send-keys -t "$name:lazygit" 'lazygit' Enter
+  #
+  # tmux new-window -t "$name" -n shell -c "$dir"
 
   if [ -x "$dir/bin/dev" ]; then
     tmux new-window -t "$name" -n server -c "$dir"
@@ -50,43 +49,9 @@ create_project_session() {
   echo "$name"
 }
 
-# Camino-specific: rails + ngrok in a split server pane + dual-pane console.
-create_camino_session() {
-  local name="camino"
-  local dir="$CAMINO_DIR"
-
-  if tmux has-session -t "$name" 2>/dev/null; then return; fi
-
-  tmux new-session -d -s "$name" -c "$dir" -n nvim
-  tmux send-keys -t "$name:nvim" 'nvim' Enter
-
-  tmux new-window -t "$name" -n claude -c "$dir"
-  tmux send-keys -t "$name:claude" 'claude' Enter
-
-  tmux new-window -t "$name" -n lazygit -c "$dir"
-  tmux send-keys -t "$name:lazygit" 'lazygit' Enter
-
-  tmux new-window -t "$name" -n shell -c "$dir"
-
-  tmux new-window -t "$name" -n server -c "$dir"
-  tmux send-keys -t "$name:server" 'HOST=https://lomangroup.ngrok.app bin/dev' Enter
-  tmux split-window -v -t "$name:server" -c "$dir"
-  tmux send-keys -t "$name:server.2" 'ngrok http --domain=lomangroup.ngrok.app 3000' Enter
-  tmux select-pane -t "$name:server.1"
-
-  tmux new-window -t "$name" -n console -c "$dir"
-  tmux send-keys -t "$name:console" 'rails c' Enter
-  tmux split-window -v -t "$name:console" -c "$dir"
-  tmux send-keys -t "$name:console.2" 'bin/kamal console' Enter
-  tmux select-pane -t "$name:console.1"
-
-  tmux select-window -t "$name:nvim"
-}
-
 # --- Auto-boot ---
 
 main() {
-  create_camino_session
   create_project_session "$DOTFILES_DIR" "dotfiles"
 }
 
