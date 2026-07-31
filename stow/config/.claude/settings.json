@@ -51,9 +51,10 @@
   "autoUpdatesChannel": "latest",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
   },
-  "skipAutoPermissionPrompt": true
+  "tui": "fullscreen"
 }
