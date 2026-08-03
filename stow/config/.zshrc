@@ -53,6 +53,25 @@ source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 # eval "$(rbenv init -)"
 _evalcache rbenv init -
 
+#   ---------------------------
+#   ENVCRYPT
+#   ---------------------------
+# Must run AFTER rbenv init: env.zsh (via oh-my-zsh) loads before rbenv is on
+# PATH, so the decrypt would fall back to system Ruby 2.6 — whose OpenSSL can't
+# run dotenvcrypt's crypto. Running it here uses the rbenv-managed Ruby + CLI.
+dotenvcrypt_key_path="$XDG_CONFIG_HOME/dotenvcrypt/secret.key"
+if [[ ! -f $dotenvcrypt_key_path || ! -s $dotenvcrypt_key_path ]]; then
+  mkdir -p $(dirname $dotenvcrypt_key_path)
+  eval "$(op signin)"
+  (op item get xdsp7qgsyfo3lgrtcp7npriky4 --reveal --fields password) > $dotenvcrypt_key_path
+fi
+# Check if dotenvcrypt is installed and source its output
+if command -v dotenvcrypt &> /dev/null; then
+  set -a
+  eval "$(dotenvcrypt decrypt $HOME/.env.enc)"
+  set +a
+fi
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
