@@ -6,6 +6,12 @@
 
 DOTFILES_DIR="$HOME/Developer/dotfiles"
 
+# Projects auto-booted at wezterm start. The first existing one is attached to.
+AUTO_BOOT_DIRS=(
+  "$HOME/Developer/bagdrop"
+  "$HOME/Developer/shopify-app-suite"
+)
+
 # --- Helpers ---
 
 # Sanitize a directory basename into a valid tmux session name (no dots, lowercase).
@@ -52,7 +58,19 @@ create_project_session() {
 # --- Auto-boot ---
 
 main() {
-  create_project_session "$DOTFILES_DIR" "dotfiles"
+  local primary=""
+  local dir name
+
+  for dir in "${AUTO_BOOT_DIRS[@]}"; do
+    [ -d "$dir" ] || continue
+    name="$(create_project_session "$dir")"
+    [ -n "$primary" ] || primary="$name"
+  done
+
+  create_project_session "$DOTFILES_DIR" "dotfiles" >/dev/null
+
+  # start.sh attaches to the last line we echo.
+  echo "${primary:-dotfiles}"
 }
 
 # Only run main if executed directly (not when sourced).
