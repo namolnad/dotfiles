@@ -1,4 +1,5 @@
 .DS_Store
+*.bak
 **/*secret.key
 stow/config/.config/github-copilot/apps.json
 stow/config/.config/irb/irb_history
