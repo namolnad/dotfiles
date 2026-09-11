@@ -107,12 +107,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Focus Camino Gmail tab",
+                                "description": "Focus BagDrop Gmail tab",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh mail.google.com Camino" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh mail.google.com BagDrop" }],
                                 "type": "basic"
                             },
                             {
@@ -123,12 +123,12 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "Focus Camino Calendar tab",
+                                "description": "Focus BagDrop Calendar tab",
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh calendar.google.com Camino" }],
+                                "to": [{ "shell_command": "$HOME/.config/scripts/safari-focus-tab.sh calendar.google.com BagDrop" }],
                                 "type": "basic"
                             },
                             {

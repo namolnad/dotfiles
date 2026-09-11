@@ -4,7 +4,7 @@
 # matching profile window when one is available, otherwise in a new Safari window.
 #
 # Usage: safari-focus-tab.sh <url-substring> <profile-hint>
-#   e.g.  safari-focus-tab.sh mail.google.com Camino
+#   e.g.  safari-focus-tab.sh mail.google.com BagDrop
 
 URL_SUB="$1"
 PROFILE="$2"
