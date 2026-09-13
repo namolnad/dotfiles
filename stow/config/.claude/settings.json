@@ -1,17 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
-  "model": "claude-fable-5-1[1m]",
-  "modelSettings": {
-    "claude-fable-5-1": {
-      "effortLevel": "medium"
-    },
-    "claude-opus-5": {
-      "effortLevel": "high"
-    }
-  },
-  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "deny": [
       "Read(./.env)",
@@ -60,6 +51,14 @@
     "ruby-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "shopify-ai-toolkit@claude-plugins-official": true
+  },
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5": {
+      "effortLevel": "high"
+    }
   },
   "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
