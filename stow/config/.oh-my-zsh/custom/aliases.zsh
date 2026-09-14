@@ -8,15 +8,30 @@ fi
 #   MAKE TERMINAL BETTER
 #   -----------------------------
 
-# Delgations to more powerful implementatios
-cat() { bat $@; }                           # Delegate cat to bat
-alias ls='eza --long --all --group-directories-first --color-scale --icons --octal-permissions --git --header'                 # Delegate ls to eza
-
-alias cp='cp -iv'                           # Preferred 'cp' implementation
-alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
-cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
+
+# Conveniences for a human at a prompt, skipped for Claude Code.
+#
+# Claude Code snapshots this file's aliases and functions and sources them into
+# a non-interactive shell, where each of these breaks something:
+#
+#   cp/mv -i  prompt for confirmation on a stdin that never answers, so the
+#             call hangs until the tool times out
+#   cd        lists the directory it just entered, burying the output that was
+#             actually asked for -- and on a large tree, eza --git is slow
+#   ls        eza's decorated columns are neither what a script expects nor
+#             worth the tokens
+#   cat       bat decorates and, unpaged, still is not plain cat
+if [[ -z "$CLAUDECODE" ]]; then
+  # Delgations to more powerful implementatios
+  cat() { bat "$@"; }                       # Delegate cat to bat
+  alias ls='eza --long --all --group-directories-first --color-scale --icons --octal-permissions --git --header'                 # Delegate ls to eza
+
+  alias cp='cp -iv'                         # Preferred 'cp' implementation
+  alias mv='mv -iv'                         # Preferred 'mv' implementation
+  cd() { builtin cd "$@"; ls; }             # Always list directory contents upon 'cd'
+fi
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
