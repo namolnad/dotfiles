@@ -126,6 +126,13 @@
     font-style: italic;
   }
 
+  .section-note code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--text-bright);
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -575,6 +582,20 @@
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle dark background</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd><kbd>n</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Dismiss all notifications</td></tr>
     </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Plugins (vim.pack)</div>
+    <div class="section-note">Neovim&rsquo;s built-in package manager &mdash; replaces Lazy. Manifest lives in <code>lua/config/pack.lua</code>.</div>
+    <table>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>l</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Update all plugins &mdash; opens confirmation buffer</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>o</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Review pending updates offline (no fetch)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>s</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Status &mdash; installed plugins + revisions</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Restore revisions from lockfile</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Clean orphaned plugins from disk</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>l</kbd><kbd>g</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open pack update log</td></tr>
+    </table>
+    <div class="section-note">Inside the confirmation buffer: <kbd>:w</kbd> apply &middot; <kbd>:q</kbd> cancel &middot; <kbd>]</kbd><kbd>]</kbd> / <kbd>[</kbd><kbd>[</kbd> next/prev plugin &middot; <kbd>K</kbd> commit details &middot; <kbd>g</kbd><kbd>O</kbd> outline &middot; <kbd>g</kbd><kbd>r</kbd><kbd>a</kbd> per-plugin actions (update / skip / delete). Lines marked <code>&gt;</code> will be applied, <code>&lt;</code> reverted.</div>
   </div>
 
   <div class="section">

@@ -9,6 +9,9 @@ require 'config.lsp'
 -- Plugin manifest (vim.pack.add + build hooks)
 require 'config.pack'
 
+-- Plugin management keymaps (<leader>l)
+require 'config.packui'
+
 -- Loader helper
 local loader = require 'config.loader'
 
