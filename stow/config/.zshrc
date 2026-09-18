@@ -23,7 +23,11 @@ ENABLE_CORRECTION="true"
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew now comes from ~/.zshenv (every shell, including the
+# non-interactive ones ssh runs commands in) and ~/.zprofile (again, after
+# macOS's path_helper reorders PATH). This is only a fallback for a shell
+# that somehow has neither — a half-stowed machine, mostly.
+[[ -n "$HOMEBREW_PREFIX" ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 FPATH="${ZSH_CUSTOM}/plugins/zsh-completions:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
