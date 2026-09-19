@@ -1,7 +1,23 @@
 
-# If Darwin, set tailscale cli alias
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
+# The tailscale CLI, wherever it actually is on this Mac.
+#
+# Two different Tailscales exist and they are not interchangeable. The GUI
+# app bundles a CLI inside itself and runs the node *inside a user
+# session*, so the machine leaves the tailnet when you log out or switch
+# accounts. The Homebrew formula installs `tailscaled` as a system daemon,
+# which is up before anyone logs in and stays up across sessions.
+#
+# A machine that has to be reachable while sitting at a login window — the
+# iMessage bridge, the inference box — needs the daemon. A laptop does
+# not, and the app is nicer there.
+#
+# So: prefer a real `tailscale` on PATH, which is the formula, and fall
+# back to the app's. Hard-coding the app meant that installing the formula
+# on a server changed nothing at the prompt, and the alias quietly kept
+# talking to the wrong one.
+if [[ "$OSTYPE" == "darwin"* ]] && ! command -v tailscale >/dev/null 2>&1; then
+  [[ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ]] && \
+    alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 fi
 
 #   -----------------------------
