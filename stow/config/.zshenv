@@ -37,6 +37,20 @@
 # front rather than appending a second copy.
 typeset -U path PATH fpath
 
+# /usr/local/bin is on /etc/paths, and that is not enough. path_helper reads
+# /etc/paths from /etc/zprofile, which only a *login* shell sources, so the
+# shell `ssh host 'cmd'` gets never sees it: it starts from zsh's compiled-in
+# /usr/bin:/bin:/usr/sbin:/sbin and nothing adds the rest. Casks and hand-made
+# symlinks live there — Ollama.app's CLI is /usr/local/bin/ollama — so
+# `ssh mini 'ollama list'` came back "command not found" about a machine with
+# Ollama running and 35GB of models on it. The same class of quiet failure
+# this file was written for, one directory over.
+#
+# Added ahead of the system directories but behind Homebrew, which the loop
+# below prepends: on an Intel Mac /usr/local/bin *is* the Homebrew prefix and
+# `typeset -U` keeps the first occurrence, so the order stays right there too.
+[[ -d /usr/local/bin ]] && export PATH="/usr/local/bin${PATH+:$PATH}"
+
 # Apple Silicon first, then Intel, so one file serves both machines.
 for _brew_prefix in /opt/homebrew /usr/local; do
   if [[ -x $_brew_prefix/bin/brew ]]; then
