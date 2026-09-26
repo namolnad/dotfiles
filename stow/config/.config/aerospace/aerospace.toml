@@ -566,6 +566,18 @@ run = "move-node-to-workspace V"
 if.app-id = 'com.apple.Music'
 run = "move-node-to-workspace M"
 
+# Finder tabs: macOS reports each native tab as its own window (AeroSpace #68),
+# so a new tab would claim a tile and shrink the window it belongs to. Finder
+# windows start floating, and tile-unless-tab.js tiles the ones that are real
+# windows. Dialogs (Get Info, copy progress) already float and are skipped.
+# A window's first tab holds the tile and later tabs float over it; if the
+# layout shifts while a later tab is showing, bringing the first tab forward
+# snaps the window back into place.
+[[on-window-detected]]
+if = 'test %{app-bundle-id} = com.apple.finder && test-not %{window-layout} = floating'
+check-further-callbacks = true
+run = ['layout floating', 'exec-and-forget ~/.config/scripts/tile-unless-tab.js "$AEROSPACE_WINDOW_ID"']
+
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = "move-node-to-workspace S"
