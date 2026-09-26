@@ -37,6 +37,8 @@
 #   alt-shift-r          = Resize mode (h/j/k/l to resize, b to balance)
 #   alt-shift-semicolon  = Service mode (esc=reload, r=reset, f=float toggle)
 
+config-version = 2
+
 after-login-command = []
 after-startup-command = [
   'workspace T',
