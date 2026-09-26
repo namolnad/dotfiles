@@ -101,5 +101,6 @@
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
-  }
+  },
+  "switchModelsOnFlag": true
 }
