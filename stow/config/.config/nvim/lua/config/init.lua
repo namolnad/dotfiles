@@ -3,6 +3,7 @@ require 'config.options'
 require 'config.autocmd'
 require 'config.keymap'
 require 'config.terminal'
+require 'config.session'
 require 'config.modules'
 require 'config.lsp'
 
