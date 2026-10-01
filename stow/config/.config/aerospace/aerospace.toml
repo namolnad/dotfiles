@@ -708,10 +708,10 @@ if.app-id = 'com.apple.Safari.WebApp.C5E54F3A-F21C-4458-BF25-D3716D5D0D7B'
 run = "move-node-to-workspace F"
 
 # Terminal → global T workspace
-# NOTE: wezterm-gui reports NULL-APP-BUNDLE-ID, so app-id matching never fires;
-# match on app-name instead.
+# NOTE: opened as the app it's WezTerm (com.github.wez.wezterm), but started by
+# the wezterm CLI it's wezterm-gui with NULL-APP-BUNDLE-ID; match either name.
 [[on-window-detected]]
-if.app-name-regex-substring = '^wezterm-gui$'
+if.app-name-regex-substring = '^(WezTerm|wezterm-gui)$'
 run = "move-node-to-workspace T"
 
 # NOTE: Safari and Chrome windows are auto-assigned by profile (see above).
