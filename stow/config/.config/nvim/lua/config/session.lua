@@ -1,14 +1,11 @@
 -- [[ Sessions ]]
--- A bare `nvim` saves its windows and buffers for the current directory when it
--- exits, including when tmux kills it. tmux-resurrect relaunches those panes as
--- `nvim +SessionRestore` (see @resurrect-processes in tmux.conf).
+-- A bare `nvim` keeps a session of its windows and buffers for the current
+-- directory, saved as the layout changes and again on exit, so it survives tmux
+-- killing it. tmux-resurrect relaunches those panes as `nvim +SessionRestore`
+-- (see @resurrect-processes in tmux.conf).
 --  See `:help :mksession`
 
 local session_dir = vim.fn.stdpath 'state' .. '/sessions'
-
--- `nvim <file>` (git commit, lazygit, claude's editor) never saves, so it can't
--- clobber the session of the nvim that's open on the project.
-local started_bare = vim.fn.argc(-1) == 0
 
 -- No folds (ufo manages those) and no terminals (they'd rerun their command)
 vim.opt.sessionoptions = { 'buffers', 'curdir', 'help', 'tabpages', 'winsize' }
@@ -28,23 +25,44 @@ local function has_file_buffers()
   return false
 end
 
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  desc = 'Save the session of a bare nvim',
-  group = vim.api.nvim_create_augroup('Session', { clear = true }),
-  callback = function()
-    if not started_bare then
-      return
-    end
-    local file = session_file()
-    if has_file_buffers() then
-      vim.fn.mkdir(session_dir, 'p')
-      pcall(vim.cmd.mksession, { file, bang = true, magic = { file = false } })
-    else
-      -- Nothing open, so come back empty rather than to an older session
-      os.remove(file)
-    end
-  end,
-})
+local function save()
+  if has_file_buffers() then
+    vim.fn.mkdir(session_dir, 'p')
+    pcall(vim.cmd.mksession, { session_file(), bang = true, magic = { file = false } })
+  end
+end
+
+-- `nvim <file>` (git commit, lazygit, claude's editor) never saves, so it can't
+-- clobber the session of the nvim that's open on the project.
+if vim.fn.argc(-1) == 0 then
+  local group = vim.api.nvim_create_augroup('Session', { clear = true })
+  local timer = assert(vim.uv.new_timer())
+
+  -- Don't count on exit alone: a killed nvim's teardown can be cut short, and a
+  -- crash never gets that far
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'WinNew', 'WinClosed', 'TabClosed' }, {
+    desc = 'Save the session once the layout settles',
+    group = group,
+    callback = function()
+      timer:stop()
+      timer:start(1000, 0, vim.schedule_wrap(save))
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('VimLeavePre', {
+    desc = 'Save the session of a bare nvim',
+    group = group,
+    callback = function()
+      timer:stop()
+      if has_file_buffers() then
+        save()
+      else
+        -- Nothing open, so come back empty rather than to an older session
+        os.remove(session_file())
+      end
+    end,
+  })
+end
 
 vim.api.nvim_create_user_command('SessionRestore', function()
   local file = session_file()
