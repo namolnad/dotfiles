@@ -124,5 +124,6 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
   },
-  "switchModelsOnFlag": true
+  "switchModelsOnFlag": true,
+  "remoteControlAtStartup": true
 }
