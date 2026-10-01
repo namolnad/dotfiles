@@ -15,8 +15,10 @@ TAB_INFO="Unknown"
 WORKSPACE_INFO=""
 
 if command -v wezterm &> /dev/null; then
-    # Get the active pane info from WezTerm
-    ACTIVE_PANE=$(wezterm cli list --format json 2>/dev/null | jq --arg cwd "$PROJECT_DIR" '[.[] | select(.cwd == $cwd)] | .[0] // ([.[] | select(.is_active == true)] | .[0])')
+    # Get the active pane info from WezTerm. --no-auto-start: when it can't
+    # reach the GUI, plain `wezterm cli` starts a background wezterm-mux-server,
+    # which stays running long after this hook exits
+    ACTIVE_PANE=$(wezterm cli --no-auto-start list --format json 2>/dev/null | jq --arg cwd "$PROJECT_DIR" '[.[] | select(.cwd == $cwd)] | .[0] // ([.[] | select(.is_active == true)] | .[0])')
 
     if [ -n "$ACTIVE_PANE" ] && [ "$ACTIVE_PANE" != "null" ]; then
         WINDOW_ID=$(echo "$ACTIVE_PANE" | jq -r '.window_id')
@@ -25,7 +27,7 @@ if command -v wezterm &> /dev/null; then
         TAB_TITLE=$(echo "$ACTIVE_PANE" | jq -r '.tab_title // .title')
 
         # Calculate tab number (index within the window)
-        TAB_NUMBER=$(wezterm cli list --format json 2>/dev/null | jq --arg win "$WINDOW_ID" --arg tab "$TAB_ID" '[.[] | select(.window_id == ($win | tonumber))] | unique_by(.tab_id) | sort_by(.tab_id) | to_entries | .[] | select(.value.tab_id == ($tab | tonumber)) | .key + 1')
+        TAB_NUMBER=$(wezterm cli --no-auto-start list --format json 2>/dev/null | jq --arg win "$WINDOW_ID" --arg tab "$TAB_ID" '[.[] | select(.window_id == ($win | tonumber))] | unique_by(.tab_id) | sort_by(.tab_id) | to_entries | .[] | select(.value.tab_id == ($tab | tonumber)) | .key + 1')
 
         # Build tab info string
         TAB_INFO="Tab $TAB_NUMBER"
