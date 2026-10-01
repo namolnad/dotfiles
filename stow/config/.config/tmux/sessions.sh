@@ -6,7 +6,8 @@
 
 DOTFILES_DIR="$HOME/Developer/dotfiles"
 
-# Projects auto-booted at wezterm start. The first existing one is attached to.
+# Projects auto-booted when start.sh starts tmux clean (--clean, or nothing saved).
+# The first existing one is attached to.
 AUTO_BOOT_DIRS=(
   "$HOME/Developer/bagdrop"
   "$HOME/Developer/shopify-app-suite"
