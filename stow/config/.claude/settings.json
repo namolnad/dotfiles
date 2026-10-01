@@ -72,7 +72,16 @@
     "typescript-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "shopify-ai-toolkit@claude-plugins-official": true
+    "shopify-ai-toolkit@claude-plugins-official": true,
+    "linnaeus@linnaeus": true
+  },
+  "extraKnownMarketplaces": {
+    "linnaeus": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/danloman/Developer/linnaeus"
+      }
+    }
   },
   "modelSettings": {
     "claude-fable-5-1": {
@@ -86,6 +95,7 @@
   "tui": "fullscreen",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
+  "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "autoMode": {
@@ -124,6 +134,5 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
   },
-  "switchModelsOnFlag": true,
   "remoteControlAtStartup": true
 }
