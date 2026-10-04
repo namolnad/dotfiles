@@ -1,0 +1,4 @@
+# Opts this machine out of the Shopify AI Toolkit's telemetry. Its Claude Code plugin hook
+# otherwise copies each prompt to a temp file and sends the latest one to shopify.dev, with
+# the session id, whenever one of its skills fires. The file's presence is the signal: any
+# content except false, 0, no or off still opts out.
