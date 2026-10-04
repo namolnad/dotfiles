@@ -96,6 +96,17 @@ setup_ruby_environment() {
         prompt_sudo
     fi
 
+    # Before the first `rbenv install`, so every Ruby gets the gems in ~/.rbenv/default-gems.
+    # brew bundle runs too late for that: it comes after this function.
+    info 'Installing rbenv-default-gems'
+    if brew list rbenv-default-gems &>/dev/null; then
+        warning 'rbenv-default-gems already installed'
+    else
+        brew install rbenv-default-gems
+        warning "Homebrew called. Must reprompt for sudo."
+        prompt_sudo
+    fi
+
     info 'Installing global ruby'
     RUBY_VERSION=$(cat $DOTFILES/stow/config/.rbenv/version)
     rbenv install -s $RUBY_VERSION
@@ -141,9 +152,6 @@ symlink_dotfiles() {
 }
 
 install_applications() {
-    info 'Installing gems'
-    BUNDLE_GEMFILE=$DOTFILES/Gemfile bundle install
-
     info 'Symlinking scripts'
     sudo mkdir -p /usr/local/opt
     sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt

@@ -69,11 +69,11 @@
     ]
   },
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "shopify-ai-toolkit@claude-plugins-official": true,
-    "linnaeus@linnaeus": true
+    "shopify-ai-toolkit@claude-plugins-official": false,
+    "linnaeus@linnaeus": true,
+    "cc-plugin-you-should-know@builtin": true
   },
   "extraKnownMarketplaces": {
     "linnaeus": {
@@ -96,6 +96,7 @@
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": true,
+  "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "autoMode": {
@@ -133,6 +134,5 @@
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
-  },
-  "remoteControlAtStartup": true
+  }
 }
