@@ -12,6 +12,20 @@ function M.load(plugin, setup_fn)
   end
 end
 
+--- Wrap a setup function so it runs only once, for setup shared by several triggers.
+---@param fn function
+---@return function
+function M.once(fn)
+  local done = false
+  return function(...)
+    if done then
+      return
+    end
+    done = true
+    return fn(...)
+  end
+end
+
 --- Defer loading until one of the given events fires.
 ---@param plugins string|string[] plugin name(s) to packadd
 ---@param events string|string[] autocmd events (e.g. 'BufReadPre', 'UIEnter')

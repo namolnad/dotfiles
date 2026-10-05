@@ -96,7 +96,6 @@ vim.pack.add({
 
   -- Key-deferred (neotest cluster)
   'https://github.com/nvim-neotest/neotest',
-  'https://github.com/antoinemadec/FixCursorHold.nvim',
   'https://github.com/zidhuss/neotest-minitest',
   'https://github.com/olimorris/neotest-rspec',
 

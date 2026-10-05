@@ -130,20 +130,23 @@ loader.on_keys('smart-splits.nvim', {
   { 'n', '<M-S-h>' }, { 'n', '<M-S-j>' }, { 'n', '<M-S-k>' }, { 'n', '<M-S-l>' },
 }, require('config.plugins.smart-splits'))
 
--- DAP cluster: ~30ms saved
-loader.on_keys({
-  'nvim-dap', 'nvim-dap-ui', 'nvim-nio', 'nvim-dap-ruby',
-}, {
+-- DAP cluster: ~30ms saved. Its setup is shared with the neotest cluster below,
+-- so it runs once, whichever cluster loads first.
+local dap_plugins = { 'nvim-dap', 'nvim-dap-ui', 'nvim-nio', 'nvim-dap-ruby' }
+local setup_dap = loader.once(require('config.plugins.dap'))
+loader.on_keys(dap_plugins, {
   { 'n', '<F5>' }, { 'n', '<F1>' }, { 'n', '<F2>' }, { 'n', '<F3>' }, { 'n', '<F7>' },
   { 'n', '<leader>b' }, { 'n', '<leader>B' },
-}, require('config.plugins.dap'))
+}, setup_dap)
 
--- Neotest cluster: ~20ms saved
-loader.on_keys({
-  'neotest', 'FixCursorHold.nvim', 'neotest-minitest', 'neotest-rspec',
-}, {
+-- Neotest cluster: ~20ms saved. neotest needs nvim-nio, and <leader>tD debugs
+-- through DAP, so it brings the DAP cluster with it.
+loader.on_keys(vim.list_extend({ 'neotest', 'neotest-minitest', 'neotest-rspec' }, dap_plugins), {
   { 'n', '<leader>tc' }, { 'n', '<leader>tC' }, { 'n', '<leader>tD' },
-}, require('config.plugins.neotest'))
+}, function()
+  setup_dap()
+  require('config.plugins.neotest')()
+end)
 
 -- TreeSJ: ~15ms saved
 loader.on_keys('treesj', {

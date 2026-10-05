@@ -4,12 +4,7 @@ return function()
   config.adapters = {
     require 'neotest-minitest' {
       test_cmd = function()
-        return vim.iter({
-          'bundle',
-          'exec',
-          'rails',
-          'test',
-        }):flatten()
+        return { 'bundle', 'exec', 'rails', 'test' }
       end,
     },
     require 'neotest-rspec',
