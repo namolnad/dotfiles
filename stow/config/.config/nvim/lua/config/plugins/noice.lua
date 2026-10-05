@@ -25,6 +25,8 @@ return function()
         ['vim.lsp.util.stylize_markdown'] = true,
         ['cmp.entry.get_documentation'] = true,
       },
+      -- blink.cmp shows signature help (blink.lua); two popups otherwise
+      signature = { enabled = false },
     },
     presets = {
       bottom_search = true,
