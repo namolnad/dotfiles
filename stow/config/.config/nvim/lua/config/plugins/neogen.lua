@@ -1,8 +1,9 @@
 return function()
   local neogen = require 'neogen'
 
+  -- Neovim's own snippets, which blink's <Tab> knows how to jump through
   neogen.setup {
-    snippet_engine = 'luasnip',
+    snippet_engine = 'nvim',
   }
 
   vim.keymap.set('n', '<leader>nf', function()

@@ -79,8 +79,7 @@ loader.load('vim-dadbod-completion')
 -- GitHub
 loader.load('openingh.nvim', require('config.plugins.openingh'))
 
--- Doc generation (+ LuaSnip dependency)
-loader.load('LuaSnip')
+-- Doc generation
 loader.load('neogen', require('config.plugins.neogen'))
 
 ------------------------------------------------------------

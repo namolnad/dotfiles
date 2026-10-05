@@ -76,7 +76,6 @@ vim.pack.add({
 
   -- Doc generation
   'https://github.com/danymat/neogen',
-  'https://github.com/L3MON4D3/LuaSnip',
 })
 
 -- Deferred plugins: downloaded but NOT loaded at startup.
