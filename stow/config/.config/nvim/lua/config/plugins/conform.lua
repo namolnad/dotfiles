@@ -38,6 +38,10 @@ return function()
   })
   vim.keymap.set('n', '<leader>F', function()
     vim.b.disable_autoformat = not vim.b.disable_autoformat
-    print("Format-on-save: " .. (vim.b.disable_autoformat and "disabled" or "enabled"))
+    -- :FormatDisable (no bang) still wins over this buffer toggle
+    local state = vim.b.disable_autoformat and 'disabled'
+      or vim.g.disable_autoformat and 'disabled globally (:FormatEnable to undo)'
+      or 'enabled'
+    print('Format-on-save: ' .. state)
   end, { desc = 'Conform: Toggle format-on-save' })
 end
