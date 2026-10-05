@@ -28,10 +28,22 @@ vim.api.nvim_create_autocmd('TermOpen', {
         local buf = vim.api.nvim_get_current_buf()
         -- Find the window displaying this buffer
         local wins = vim.fn.win_findbuf(buf)
-        if #wins > 0 then
-          -- Hide the first window showing this buffer
-          vim.api.nvim_win_hide(wins[1])
+        if #wins == 0 then
+          return
         end
+        -- The last non-floating window can't be hidden (E444), so step back to
+        -- the previous buffer instead
+        local splits = vim.tbl_filter(function(win)
+          return vim.api.nvim_win_get_config(win).relative == ''
+        end, vim.api.nvim_tabpage_list_wins(0))
+        if #splits == 1 and wins[1] == splits[1] then
+          if vim.fn.bufnr '#' > 0 then
+            vim.cmd.buffer '#'
+          end
+          return
+        end
+        -- Hide the first window showing this buffer
+        vim.api.nvim_win_hide(wins[1])
       end, 'Hide terminal', true)
     end
   end,
