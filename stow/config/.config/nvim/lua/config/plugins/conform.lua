@@ -12,6 +12,7 @@ return function()
       ruby = { 'rubocop' },
       yaml = { 'prettier' },
       eruby = { 'erb_format' },
+      go = { 'gofmt' },
     },
   }
 
