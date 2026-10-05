@@ -1,6 +1,32 @@
 -- Plugin manifest for vim.pack (Neovim 0.12 built-in package manager)
 -- All plugins are downloaded to site/pack/core/opt and loaded via packadd.
 
+-- Post-install/update hooks. PackChanged is a built-in event (not a User
+-- pattern), and it has to exist before vim.pack.add() to see fresh installs.
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+
+    -- Build telescope-fzf-native
+    if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
+      if vim.fn.executable('make') == 1 then
+        local result = vim.system({ 'make' }, { cwd = ev.data.path }):wait()
+        if result.code ~= 0 then
+          vim.notify('telescope-fzf-native build failed:\n' .. result.stderr, vim.log.levels.WARN)
+        end
+      end
+    end
+
+    -- Update treesitter parsers (on install the plugin isn't loaded yet, so no :TSUpdate)
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd('nvim-treesitter')
+      end
+      vim.cmd('TSUpdate')
+    end
+  end,
+})
+
 -- Eager plugins: loaded immediately at startup
 vim.pack.add({
   -- UI / Core
@@ -95,20 +121,4 @@ vim.pack.add({
   'https://github.com/mfussenegger/nvim-lint',
 }, {
   load = function() end, -- no-op: don't add to rtp, we'll packadd manually
-})
-
--- Post-install/update hooks
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'PackChanged',
-  callback = function()
-    -- Build telescope-fzf-native
-    if vim.fn.executable('make') == 1 then
-      local fzf_path = vim.fn.stdpath('data') .. '/site/pack/core/opt/telescope-fzf-native.nvim'
-      if vim.fn.isdirectory(fzf_path) == 1 then
-        vim.fn.system({ 'make', '-C', fzf_path })
-      end
-    end
-    -- Update treesitter parsers
-    vim.cmd('TSUpdate')
-  end,
 })
