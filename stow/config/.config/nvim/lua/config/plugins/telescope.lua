@@ -2,6 +2,7 @@ return function()
   local telescope = require 'telescope'
   -- Shared with the multi-ripgrep picker, so every picker skips the same paths
   local ignore = require 'config.modules.telescope.ignore'
+  local wheel = require('config.modules.telescope.mouse').wheel
 
   -- live_grep and grep_string (<leader>fw/fW) search the same files
   local grep_args = vim.list_extend({
@@ -13,7 +14,15 @@ return function()
   telescope.setup {
     defaults = {
       mappings = {
-        i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        i = {
+          ['<c-enter>'] = 'to_fuzzy_refine',
+          ['<ScrollWheelDown>'] = wheel(1),
+          ['<ScrollWheelUp>'] = wheel(-1),
+        },
+        n = {
+          ['<ScrollWheelDown>'] = wheel(1),
+          ['<ScrollWheelUp>'] = wheel(-1),
+        },
       },
       dynamic_preview_title = true,
     },
