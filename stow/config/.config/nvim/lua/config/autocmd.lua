@@ -8,12 +8,12 @@ local CustomGroup = augroup('Custom', { clear = true })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+--  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = CustomGroup,
   callback = function()
-    vim.highlight.on_yank {
+    vim.hl.on_yank {
       higroup = 'IncSearch',
       pattern = '*',
       timeout = 40,
@@ -57,35 +57,25 @@ autocmd('FileType', {
   end,
 })
 
-autocmd({ 'BufRead', 'BufNewFile' }, {
+-- Rakefile, Brewfile, Gemfile, .irbrc, *.rake, *.ru and *.gemspec are detected
+-- as ruby already
+vim.filetype.add { pattern = { ['.*%.irbrc'] = 'ruby' } }
+
+-- Redraw the statusline when macro recording starts and stops, for the macro
+-- indicator in mini.statusline
+autocmd('RecordingEnter', {
   group = CustomGroup,
-  pattern = {
-    '*.rake',
-    'Rakefile',
-    'Brewfile',
-    'Gemfile',
-    '*.irbrc',
-    '*.ru',
-    '*.gemspec',
-  },
   callback = function()
-    vim.opt_local.filetype = 'ruby'
+    vim.cmd 'redrawstatus'
   end,
 })
 
--- Autocmd to track macro recording, And redraw statusline, which trigger
--- macro function of mini.statusline
-vim.api.nvim_create_autocmd("RecordingEnter", {
-  pattern = "*",
+autocmd('RecordingLeave', {
+  group = CustomGroup,
   callback = function()
-    vim.cmd("redrawstatus")
-  end,
-})
-
--- Autocmd to track the end of macro recording
-vim.api.nvim_create_autocmd("RecordingLeave", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("redrawstatus")
+    -- reg_recording() still names the register during this event; redraw after
+    vim.schedule(function()
+      vim.cmd 'redrawstatus'
+    end)
   end,
 })

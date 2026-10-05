@@ -127,7 +127,7 @@ function M.next()
   local state = load_state() or {}
 
   -- Generate new random binding
-  math.randomseed(os.time() + vim.loop.hrtime())
+  math.randomseed(os.time() + vim.uv.hrtime())
   local pick = bindings[math.random(#bindings)]
 
   -- Update state
