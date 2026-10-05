@@ -7,7 +7,11 @@ return function()
   _G.bt = function()
     Snacks.debug.backtrace()
   end
-  vim.print = _G.dd
+  -- Route :=/:lua = through snacks. 0.11+ calls vim._print for those; replacing
+  -- vim.print itself would also swallow plugins' own vim.print output.
+  vim._print = function(_, ...)
+    dd(...)
+  end
 
   Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
   Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
