@@ -39,6 +39,24 @@ autocmd('BufReadPost', {
   end,
 })
 
+-- Don't continue comments onto lines opened with o/O. Most ftplugins add 'o'
+-- back to 'formatoptions' after options.lua runs, and filetype plugins load
+-- after this file, so strip it once they're done. Markdown keeps it (see
+-- after/ftplugin/markdown.lua) to continue lists and quotes.
+autocmd('FileType', {
+  group = CustomGroup,
+  callback = function(args)
+    if args.match == 'markdown' then
+      return
+    end
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(args.buf) then
+        vim.bo[args.buf].formatoptions = vim.bo[args.buf].formatoptions:gsub('o', '')
+      end
+    end)
+  end,
+})
+
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = CustomGroup,
   pattern = {
