@@ -51,8 +51,11 @@ vim.opt.formatoptions:remove 'o'
 
 -- Save undo history
 vim.opt.undofile = true
--- Save undo history in TMPDIR
-vim.opt.undodir = os.getenv 'TMPDIR' .. '/vim/undodir'
+-- Save undo history in TMPDIR. When it's unset (some ssh/cron/launchd shells),
+-- keep Neovim's default undodir rather than erroring out of the whole config.
+if os.getenv 'TMPDIR' then
+  vim.opt.undodir = os.getenv 'TMPDIR' .. '/vim/undodir'
+end
 -- vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
