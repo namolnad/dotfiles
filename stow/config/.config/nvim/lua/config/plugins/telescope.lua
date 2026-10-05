@@ -39,8 +39,9 @@ return function()
         show_scores = true,
         show_unindexed = true,
         ignore_patterns = { '*.git/*', '*/tmp/*' },
+        -- No CWD entry: frecency's built-in CWD tag tracks :cd, while a
+        -- getcwd() here would freeze it at the directory nvim started in
         workspaces = {
-          ['CWD'] = vim.fn.getcwd(),
           ['nvim'] = vim.fn.stdpath 'config',
         },
       },
@@ -75,7 +76,7 @@ return function()
   vim.keymap.set('n', '<leader>fR', builtin.resume, { desc = 'Telescope: [F]ind [R]esume' })
   vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Telescope: [F]ind [R]egisters' })
   vim.keymap.set('n', '<leader>f.', '<cmd>Telescope frecency workspace=CWD<cr>',
-    { desc = 'Telescope: [F]ind [O]ld / recent files' })
+    { desc = 'Telescope: [F]ind [.] Recent files (frecency)' })
   vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope: [F]ind [O]ld Files' })
   vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope: [F]ind Open [B]uffers' })
   vim.keymap.set('n', '<leader>fw', function()
@@ -85,7 +86,7 @@ return function()
   vim.keymap.set('n', '<leader>fW', function()
     local word = vim.fn.expand '<cWORD>'
     builtin.grep_string { search = word }
-  end, { desc = 'Telescope: [F]ind current [W]ord' })
+  end, { desc = 'Telescope: [F]ind current [W]ORD' })
   vim.keymap.set('n', '<leader>/', function()
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown { winblend = 10, previewer = false, })
   end, { desc = 'Telescope: [/] Fuzzily search in current buffer' })
