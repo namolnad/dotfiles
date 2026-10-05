@@ -107,28 +107,12 @@ vim.opt.visualbell = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
-function Foldtext()
-  local foldstart, foldend = vim.v.foldstart, vim.v.foldend
-
-  local first_line = vim.fn.getline(foldstart)
-  local last_line = vim.fn.getline(foldend)
-  local sanitized_first_line = string.gsub(first_line, "^%s*(.*)[{[]$", "%1")
-  -- local sanitized_last_line = string.gsub(last_line, "^%^@(.*)$", "%1")
-  local sanitized_last_line = "hello"
-
-  return string.format("%s ⋯\n%s", sanitized_first_line, sanitized_last_line)
-end
-
--- vim.opt.foldenable = true
--- vim.opt.foldcolumn = '1'
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
--- vim.opt.foldlevel = 20 -- Start with all folds open
--- vim.opt.foldtext = 'v:lua.Foldtext()'
--- -- vim.opt.foldtext = ''
--- vim.opt.fillchars:append ',fold: '
--- vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', blend = 0, bold = true })
--- vim.api.nvim_set_hl(0, 'Folded', { bg = 'NONE', fg = 'NONE', bold = true })
+-- Folds (nvim-ufo provides them; see config/plugins/ufo.lua). Set here, before
+-- any window opens, so every window starts unfolded.
+vim.opt.foldcolumn = '1'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 function R(name)
   require('plenary.reload').reload_module(name)

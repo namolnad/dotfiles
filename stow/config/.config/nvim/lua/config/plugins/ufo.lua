@@ -1,9 +1,5 @@
 return function()
-  vim.o.foldcolumn = '1'
-  vim.o.foldlevel = 99
-  vim.o.foldlevelstart = 99
-  vim.o.foldenable = true
-
+  -- Fold options live in config/options.lua so they reach every window
   vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
   vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
