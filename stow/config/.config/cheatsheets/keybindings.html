@@ -443,7 +443,7 @@
   <div class="section">
     <div class="section-title">Search &amp; Replace</div>
     <table>
-      <tr class="binding-row"><td><kbd>Space</kbd><kbd>S</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Replace word under cursor globally</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>r</kbd><kbd>w</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Replace word under cursor globally</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Replace in visual selection</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>c</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Replace with confirmation</td></tr>
       <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>S</kbd></td><td><span class="mode-badge mode-v">V</span></td><td>Sort visual selection</td></tr>
@@ -511,8 +511,10 @@
     <table>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>g</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>l</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit log (cwd)</td></tr>
-      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit current file history</td></tr>
-      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Git blame line</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>h</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Lazygit current file history</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle inline git blame</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>i</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Git blame info for line (popup)</td></tr>
+      <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>f</kbd></td><td><span class="mode-badge mode-n">N</span><span class="mode-badge mode-v">V</span></td><td>Open file / lines in GitHub</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>B</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Git browse (open in browser)</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>p</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Preview hunk</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>g</kbd><kbd>r</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open repo in GitHub</td></tr>
@@ -523,8 +525,8 @@
     <div class="section-title">Splits (Smart-Splits + Tmux)</div>
     <table>
       <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Move cursor between splits (works across tmux)</td></tr>
-      <tr class="binding-row"><td><kbd>Alt</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Resize split</td></tr>
-      <tr class="binding-row"><td><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>H/J/K/L</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Swap buffer with direction</td></tr>
+      <tr class="binding-row"><td><kbd>&larr;</kbd><kbd>&darr;</kbd><kbd>&uarr;</kbd><kbd>&rarr;</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Resize split</td></tr>
+      <tr class="binding-row"><td><kbd>Shift</kbd><span class="plus">+</span><kbd>&larr;</kbd><kbd>&darr;</kbd><kbd>&uarr;</kbd><kbd>&rarr;</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Swap buffer with direction</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>z</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Maximize / restore current split</td></tr>
     </table>
   </div>
@@ -621,7 +623,6 @@
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>N</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Neovim news</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>b</kbd><kbd>d</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Delete buffer</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>u</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle undotree</td></tr>
-      <tr class="binding-row"><td><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Open tmux sessionizer</td></tr>
       <tr class="binding-row"><td><kbd>]</kbd><kbd>]</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Next reference</td></tr>
       <tr class="binding-row"><td><kbd>[</kbd><kbd>[</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Prev reference</td></tr>
       <tr class="binding-row"><td><kbd>Space</kbd><kbd>t</kbd><kbd>b</kbd></td><td><span class="mode-badge mode-n">N</span></td><td>Toggle terminal (bottom)</td></tr>

@@ -126,8 +126,8 @@ end)
 loader.on_keys('smart-splits.nvim', {
   { 'n', '<C-h>' }, { 'n', '<C-j>' }, { 'n', '<C-k>' }, { 'n', '<C-l>' },
   { 'n', '<C-\\>' },
-  { 'n', '<M-h>' }, { 'n', '<M-j>' }, { 'n', '<M-k>' }, { 'n', '<M-l>' },
-  { 'n', '<M-S-h>' }, { 'n', '<M-S-j>' }, { 'n', '<M-S-k>' }, { 'n', '<M-S-l>' },
+  { 'n', '<Left>' }, { 'n', '<Down>' }, { 'n', '<Up>' }, { 'n', '<Right>' },
+  { 'n', '<S-Left>' }, { 'n', '<S-Down>' }, { 'n', '<S-Up>' }, { 'n', '<S-Right>' },
 }, require('config.plugins.smart-splits'))
 
 -- DAP cluster: ~30ms saved. Its setup is shared with the neotest cluster below,

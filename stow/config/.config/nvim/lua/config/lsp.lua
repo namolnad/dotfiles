@@ -78,7 +78,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
     map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
     map('<leader>f', vim.lsp.buf.format, '[F]ormat')
-    -- K (hover), gD (declaration), grn (rename), gra (code action) are now 0.12 defaults
+    map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    -- K (hover), grn (rename), gra (code action) are 0.12 defaults; gD is not
   end,
 })
 

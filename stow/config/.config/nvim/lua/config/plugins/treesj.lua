@@ -12,7 +12,8 @@ return function()
       array = tsj_utils.set_preset_for_list(options),
     }),
   }
-  require('treesj').setup { langs = langs }
+  -- Its defaults would take <leader>s (flash) the first time TreeSJ loads
+  require('treesj').setup { langs = langs, use_default_keymaps = false }
   vim.keymap.set('n', '<leader>m', '<cmd>TSJToggle<CR>',
     { desc = 'TreeSJ: Split or Join codeblock with autodetect' })
   vim.keymap.set('n', '<leader>j', '<cmd>TSJJoin<CR>', { desc = 'TreeSJ: [j]oin codeblock' })

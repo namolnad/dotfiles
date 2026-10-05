@@ -34,22 +34,19 @@ vim.keymap.set({ 'n', 'i' }, 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' }
 vim.keymap.set({ 'n', 'i' }, 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
 
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Remap: Disable Ex mode' })
-vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Remap: Open tmux sessionizer' })
 
-vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = 'Remap: Globally replace word under cursor' })
+vim.keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = 'Remap: [R]eplace [W]ord under cursor globally' })
 
 vim.keymap.set('n', '<leader>x', '<cmd>luafile %<CR>', { desc = 'Remap: Source current lua file' })
 
 vim.keymap.set('n', '<leader><leader>', '<C-^>', { desc = 'Remap: Switch between last two buffers' })
 
--- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>', { silent = true, desc = 'Remap: Disable <left>' })
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>', { silent = true, desc = 'Remap: Disable <right>' })
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', { silent = true, desc = 'Remap: Disable <up>' })
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', { silent = true, desc = 'Remap: Disable <down>' })
-
-vim.keymap.set('n', '<leader>u', '<cmd>Undotree<cr>', { desc = 'Toggle Undotree' })
+-- :Undotree ships with Neovim 0.12 as an opt-in package
+vim.keymap.set('n', '<leader>u', function()
+  vim.cmd.packadd 'nvim.undotree'
+  vim.cmd.Undotree()
+end, { desc = 'Toggle Undotree' })
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Remap: Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Remap: Open diagnostic [Q]uickfix list' })

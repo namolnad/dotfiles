@@ -37,9 +37,10 @@ return function()
   vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = 'Snacks: Delete Buffer' })
   vim.keymap.set('n', '<leader>rf', function() Snacks.rename.rename_file() end, { desc = 'Snacks: [R]ename [F]ile' })
   vim.keymap.set('n', '<leader>gB', function() Snacks.gitbrowse() end, { desc = 'Snacks: Git Browse' })
-  vim.keymap.set('n', '<leader>gb', function() Snacks.git.blame_line() end, { desc = 'Snacks: Git Blame Line' })
-  vim.keymap.set('n', '<leader>gf', function() Snacks.lazygit.log_file() end,
-    { desc = 'Snacks: Lazygit Current File History' })
+  -- <leader>gb (gitsigns blame toggle) and <leader>gf (openingh) are taken
+  vim.keymap.set('n', '<leader>gi', function() Snacks.git.blame_line() end, { desc = 'Snacks: Git Blame [I]nfo for Line' })
+  vim.keymap.set('n', '<leader>gh', function() Snacks.lazygit.log_file() end,
+    { desc = 'Snacks: Lazygit Current File [H]istory' })
   vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Snacks: Lazygit' })
   vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end, { desc = 'Snacks: Lazygit Log (cwd)' })
   vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end,

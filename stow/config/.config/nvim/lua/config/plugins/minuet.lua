@@ -1,6 +1,8 @@
 return function()
   local secrets = require 'config.modules.secrets'
 
+  -- Used through blink's completion menu (see blink.lua). The inline virtual-text
+  -- frontend is off: its Alt keymaps all belong to AeroSpace or tmux.
   require('minuet').setup {
     -- Only source-code buffers that aren't secrets ever reach the provider
     -- (see config/modules/secrets.lua)
@@ -20,17 +22,6 @@ return function()
           max_tokens = 512,
           stop = { '\n\n' },
         },
-      },
-    },
-    virtualtext = {
-      auto_trigger_ft = { 'lua', 'ruby', },
-      keymap = {
-        accept = '<A-A>',
-        accept_line = '<A-a>',
-        accept_n_lines = '<A-z>',
-        prev = '<A-[>',
-        next = '<A-]>',
-        dismiss = '<A-e>',
       },
     },
   }
