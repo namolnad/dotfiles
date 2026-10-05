@@ -8,7 +8,7 @@ return function()
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      javascript = { { 'prettierd', 'prettier' } },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
       ruby = { 'rubocop' },
       yaml = { 'prettier' },
       eruby = { 'erb_format' },

@@ -1,8 +1,9 @@
 # Gems rbenv-default-gems installs into every Ruby that `rbenv install` builds.
 #
-# Both run under each project's own Ruby (the rbenv shim picks it from .ruby-version), so
-# they have to exist in every version: Claude Code's ruby-lsp plugin and Neovim's ruby_lsp
-# and rubocop servers fail in a project whose Ruby lacks them.
+# They run under each project's own Ruby (the rbenv shim picks it from .ruby-version), so
+# they have to exist in every version: Claude Code's ruby-lsp plugin, Neovim's ruby_lsp and
+# rubocop servers, and conform's erb-format fail in a project whose Ruby lacks them.
 dotenvcrypt
+erb-formatter
 ruby-lsp
 rubocop

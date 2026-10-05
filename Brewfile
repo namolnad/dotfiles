@@ -73,7 +73,13 @@ brew 'zsh-completions', args: ['head']
 brew 'zsh-syntax-highlighting'
 brew 'zoxide'
 
+brew 'delve'
+brew 'eslint_d'
 brew 'lua-language-server'
+brew 'markdownlint-cli'
+brew 'prettier'
+brew 'prettierd'
+brew 'stylua'
 brew 'tree-sitter-cli'
 brew 'typescript-language-server'
 

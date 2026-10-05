@@ -132,8 +132,7 @@ loader.on_keys('smart-splits.nvim', {
 
 -- DAP cluster: ~30ms saved
 loader.on_keys({
-  'nvim-dap', 'nvim-dap-ui', 'nvim-nio',
-  'mason.nvim', 'mason-nvim-dap.nvim', 'nvim-dap-ruby',
+  'nvim-dap', 'nvim-dap-ui', 'nvim-nio', 'nvim-dap-ruby',
 }, {
   { 'n', '<F5>' }, { 'n', '<F1>' }, { 'n', '<F2>' }, { 'n', '<F3>' }, { 'n', '<F7>' },
   { 'n', '<leader>b' }, { 'n', '<leader>B' },
