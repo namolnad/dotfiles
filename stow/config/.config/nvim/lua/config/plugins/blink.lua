@@ -18,7 +18,12 @@ return function()
         'buffer',
         'minuet',
       },
+      -- vim-dadbod-completion: table and column names in SQL buffers
+      per_filetype = {
+        sql = { 'snippets', 'dadbod', 'buffer' },
+      },
       providers = {
+        dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         minuet = {
           name = 'minuet',
           module = 'minuet.blink',
