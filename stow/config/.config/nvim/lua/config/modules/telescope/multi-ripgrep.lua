@@ -8,7 +8,7 @@ local flatten = function(tbl) return vim.iter(tbl):flatten():totable() end
 
 local function multi_ripgrep(opts)
   opts = opts or {}
-  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
+  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.uv.cwd()
   opts.shortcuts = opts.shortcuts
       or {
         ["l"] = "lua",
@@ -37,7 +37,8 @@ local function multi_ripgrep(opts)
         table.insert(args, prompt_split[1])
       end
 
-      if prompt_split[2] then
+      -- Skip an empty glob, or typing the two spaces briefly filters to *. (no results)
+      if prompt_split[2] and prompt_split[2] ~= "" then
         table.insert(args, "-g")
 
         local pattern = prompt_split[2]
@@ -45,8 +46,8 @@ local function multi_ripgrep(opts)
           pattern = opts.shortcuts[pattern]
         end
 
-        -- Add *. prefix if pattern doesn't start with *
-        if not pattern:match("^%*%.") then
+        -- Expand a bare extension (rb, {ts,tsx}) to *.ext; pass real globs (*_spec.rb, app/**) through
+        if not pattern:find "[*/]" then
           pattern = "*." .. pattern
         end
 
