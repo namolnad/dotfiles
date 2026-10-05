@@ -105,8 +105,22 @@ export vim='nvim'
 #   ---------------------------
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden --depth 5 --ignore .git --nocolor -g ""'
 export FZF_DEFAULT_OPS='--extended'
+# Every fzf entry point (fzf, Ctrl-T, Alt-C, **<Tab>) lists files the way nvim's
+# telescope does: gitignored files still show up (.env, CLAUDE.local.md, ...)
+# and only this junk is skipped. Keep the list in step with
+# ~/.config/nvim/lua/config/modules/telescope/ignore.lua.
+_fzf_fd=(fd --hidden --follow --no-ignore-vcs
+  --exclude .git --exclude node_modules --exclude .DS_Store --exclude tmp
+  --exclude .vim/undodir --exclude .rbenv/versions --exclude .rbenv/shims
+  --exclude Alfred.alfredpreferences --exclude app/assets/builds
+  --exclude .build --exclude '*.app' --exclude /build)
+export FZF_DEFAULT_COMMAND="${(j: :)${(@q)_fzf_fd}} --type f"
+export FZF_CTRL_T_COMMAND="${(j: :)${(@q)_fzf_fd}}"
+export FZF_ALT_C_COMMAND="${(j: :)${(@q)_fzf_fd}} --type d"
+# **<Tab> completion; without these it uses fzf's walker, which skips nothing
+_fzf_compgen_path() { "${_fzf_fd[@]}" . "$1" }
+_fzf_compgen_dir() { "${_fzf_fd[@]}" --type d . "$1" }
 
 #   ---------------------------
 #   YAZI

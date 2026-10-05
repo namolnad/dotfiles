@@ -1,5 +1,14 @@
 return function()
   local telescope = require 'telescope'
+  -- Shared with the multi-ripgrep picker, so every picker skips the same paths
+  local ignore = require 'config.modules.telescope.ignore'
+
+  -- live_grep and grep_string (<leader>fw/fW) search the same files
+  local grep_args = vim.list_extend({
+    '--hidden',
+    '--no-ignore',
+    '--smart-case',
+  }, ignore.grep)
 
   telescope.setup {
     defaults = {
@@ -10,45 +19,16 @@ return function()
     },
     pickers = {
       find_files = {
-        find_command = {
+        find_command = vim.list_extend({
           'rg',
           '--hidden',
           '--no-ignore',
           '--files',
           '--smart-case',
-          '--glob=!.git/',
-          '--glob=!node_modules',
-          '--glob=!.DS_Store',
-          '--glob=!.vim/undodir/',
-          '--glob=!.rbenv/versions/',
-          '--glob=!.rbenv/shims/',
-          '--glob=!stow/config/.config/alfred',
-          '--glob=!tmp/**/*'
-        },
+        }, ignore.files),
       },
-      live_grep = {
-        file_ignore_patterns = {
-          'node_modules',
-          'app/assets/builds',
-          '.git/',
-          'log/',
-          'package.lock',
-          'rbenv/versions',
-          'rbenv/shims',
-          'alfredpreferences',
-          'tmp/',
-        },
-        additional_args = {
-          '--hidden',
-          '--no-ignore',
-          '--smart-case',
-          '--glob=!.git/',
-          '--glob=!log/test.log',
-          '--glob=!.DS_Store',
-          '--glob=!.vim/undodir/',
-          '--glob=!tmp/**/*'
-        },
-      },
+      live_grep = { additional_args = grep_args },
+      grep_string = { additional_args = grep_args },
     },
     extensions = {
       ['ui-select'] = {

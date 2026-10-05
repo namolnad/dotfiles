@@ -2,6 +2,7 @@ local conf = require("telescope.config").values
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
 local pickers = require "telescope.pickers"
+local ignore = require "config.modules.telescope.ignore"
 
 local flatten = function(tbl) return vim.iter(tbl):flatten():totable() end
 
@@ -54,12 +55,8 @@ local function multi_ripgrep(opts)
 
       return flatten {
         args,
+        ignore.grep,
         {
-          '--glob=!node_modules',
-          '--glob=!app/assets/builds',
-          '--glob=!.git/',
-          '--glob=!.DS_Store',
-          '--glob=!log/',
           "--hidden",
           "--no-ignore",
           "--color=never",
