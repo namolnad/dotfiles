@@ -62,7 +62,7 @@ vim.pack.add({
 
   -- UI
   'https://github.com/MeanderingProgrammer/render-markdown.nvim',
-  'https://github.com/norcalli/nvim-colorizer.lua',
+  'https://github.com/catgoose/nvim-colorizer.lua', -- maintained fork
   'https://github.com/laytan/cloak.nvim',
   'https://github.com/0x00-ketsu/maximizer.nvim',
 
