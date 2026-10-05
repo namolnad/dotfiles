@@ -10,8 +10,16 @@ return function()
       find_left = '',
       highlight = '',
       update_n_lines = '',
+      -- No csl/csn/dsl/dsn variants, so cs and ds never wait for one
+      suffix_last = '',
+      suffix_next = '',
     },
   })
+  -- Visual surround on S (vim-surround style): a visual ys map would make every
+  -- visual y wait for a possible s
+  vim.keymap.del('x', 'ys')
+  vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]],
+    { silent = true, desc = 'Surround: Add surrounding to selection' })
 
   local statusline = require 'mini.statusline'
 

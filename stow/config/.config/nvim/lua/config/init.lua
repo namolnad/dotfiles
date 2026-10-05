@@ -136,7 +136,7 @@ local dap_plugins = { 'nvim-dap', 'nvim-dap-ui', 'nvim-nio', 'nvim-dap-ruby' }
 local setup_dap = loader.once(require('config.plugins.dap'))
 loader.on_keys(dap_plugins, {
   { 'n', '<F5>' }, { 'n', '<F1>' }, { 'n', '<F2>' }, { 'n', '<F3>' }, { 'n', '<F7>' },
-  { 'n', '<leader>b' }, { 'n', '<leader>B' },
+  { 'n', '<leader>bb' }, { 'n', '<leader>bB' },
 }, setup_dap)
 
 -- Neotest cluster: ~20ms saved. neotest needs nvim-nio, and <leader>tD debugs

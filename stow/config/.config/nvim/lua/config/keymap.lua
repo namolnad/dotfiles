@@ -30,8 +30,9 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 -- Esc vs Ctrl-c... Who gives a damn?
 vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Remap: Use <C-c> to escape' })
-vim.keymap.set({ 'n', 'i' }, 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' })
-vim.keymap.set({ 'n', 'i' }, 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
+-- Insert mode only: in normal mode they'd make every lone j or k wait for a second key
+vim.keymap.set('i', 'kj', '<Esc>', { desc = 'Remap: Use kj to escape' })
+vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Remap: Use jk to escape' })
 
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Remap: Disable Ex mode' })
 
@@ -42,8 +43,9 @@ vim.keymap.set('n', '<leader>x', '<cmd>luafile %<CR>', { desc = 'Remap: Source c
 
 vim.keymap.set('n', '<leader><leader>', '<C-^>', { desc = 'Remap: Switch between last two buffers' })
 
--- :Undotree ships with Neovim 0.12 as an opt-in package
-vim.keymap.set('n', '<leader>u', function()
+-- :Undotree ships with Neovim 0.12 as an opt-in package. <leader>U, since
+-- <leader>u is the prefix for the snacks UI toggles (<leader>us, uw, ...)
+vim.keymap.set('n', '<leader>U', function()
   vim.cmd.packadd 'nvim.undotree'
   vim.cmd.Undotree()
 end, { desc = 'Toggle Undotree' })

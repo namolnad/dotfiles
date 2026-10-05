@@ -15,6 +15,11 @@ return function()
     },
   }
 
+  -- Same formatters as format-on-save, falling back to the LSP's
+  vim.keymap.set('n', '<leader>cf', function()
+    require('conform').format { lsp_format = 'fallback' }
+  end, { desc = 'Conform: [C]ode [F]ormat' })
+
   vim.api.nvim_create_user_command('FormatDisable', function(args)
     if args.bang then
       vim.b.disable_autoformat = true

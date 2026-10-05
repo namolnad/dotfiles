@@ -32,8 +32,9 @@ return function()
   -- Keymaps
   vim.keymap.set('n', '<leader>.', function() Snacks.scratch() end, { desc = 'Snacks: Toggle Scratch Buffer' })
   vim.keymap.set('n', '<leader>>', function() Snacks.scratch.select() end, { desc = 'Snacks: Select Scratch Buffer' })
-  vim.keymap.set('n', '<leader>n', function() Snacks.notifier.show_history() end,
-    { desc = 'Snacks: Notification History' })
+  -- <leader>nh rather than <leader>n, which would wait to rule out neogen's <leader>nf/nt
+  vim.keymap.set('n', '<leader>nh', function() Snacks.notifier.show_history() end,
+    { desc = 'Snacks: [N]otification [H]istory' })
   vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = 'Snacks: Delete Buffer' })
   vim.keymap.set('n', '<leader>rf', function() Snacks.rename.rename_file() end, { desc = 'Snacks: [R]ename [F]ile' })
   vim.keymap.set('n', '<leader>gB', function() Snacks.gitbrowse() end, { desc = 'Snacks: Git Browse' })
@@ -45,9 +46,10 @@ return function()
   vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end, { desc = 'Snacks: Lazygit Log (cwd)' })
   vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end,
     { desc = 'Snacks: Dismiss All Notifications' })
-  vim.keymap.set({ 'n', 't' }, ']]', function() Snacks.words.jump(vim.v.count1) end,
+  -- Normal mode only: in terminal mode every [ and ] would wait for a second keypress
+  vim.keymap.set('n', ']]', function() Snacks.words.jump(vim.v.count1) end,
     { desc = 'Snacks: Next Reference' })
-  vim.keymap.set({ 'n', 't' }, '[[', function() Snacks.words.jump(-vim.v.count1) end,
+  vim.keymap.set('n', '[[', function() Snacks.words.jump(-vim.v.count1) end,
     { desc = 'Snacks: Prev Reference' })
   vim.keymap.set('n', '<leader>N', function()
     Snacks.win({

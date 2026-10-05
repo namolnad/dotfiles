@@ -121,4 +121,6 @@ end
 -- Easily hit escape in terminal mode.
 key_set('t', '<esc><esc>', '<c-\\><c-n>', 'Hit escape in terminal mode')
 key_set('n', '<leader>tb', toggle_bottom_terminal, 'Toggle [T]erminal. Position [B]ottom')
-key_set({ 'n', 't' }, '<leader>tf', toggle_float_terminal, 'Toggle [T]erminal. Position [f]loating')
+-- Normal mode only: a terminal-mode <leader> map makes every space typed in a
+-- terminal wait for the next key. To hide it from terminal mode: <esc><esc> <esc>.
+key_set('n', '<leader>tf', toggle_float_terminal, 'Toggle [T]erminal. Position [f]loating')
