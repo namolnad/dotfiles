@@ -6,15 +6,8 @@ return function()
     highlight_group = 'Comment',
     patterns = {
       {
-        file_pattern = {
-          '.env*',
-          'wrangler.toml',
-          '.dev.vars',
-          '.credentials',
-          '*-production.yml',
-          '*-development.yml',
-          '*-test.yml',
-        },
+        -- Shared with blink/minuet, which stay switched off in these files
+        file_pattern = require('config.modules.secrets').patterns,
         cloak_pattern = {
           '=.+',
           ':.+',

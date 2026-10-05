@@ -22,6 +22,11 @@ return function()
         minuet = {
           name = 'minuet',
           module = 'minuet.blink',
+          -- minuet's own predicates skip manual <C-Space> requests, so blink must
+          -- not call it at all outside the buffers secrets.ai_allowed() permits
+          enabled = function()
+            return require('config.modules.secrets').ai_allowed()
+          end,
           async = true,
           timeout_ms = 3000,
           score_offset = 50,
