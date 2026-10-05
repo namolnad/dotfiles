@@ -5,7 +5,9 @@ return function()
     local filename = vim.fn.expand('%:t')
 
     oil.open_float(nil, { preview = {} }, function()
-      vim.fn.search('\\<' .. vim.fn.escape(filename, '[].*\\~^$') .. '\\>')
+      -- The entry's whole name at the end of its line; \< can't match before a
+      -- dotfile's leading '.'
+      vim.fn.search('\\V ' .. vim.fn.escape(filename, '\\') .. '\\$')
     end)
   end, { desc = 'Oil: Open parent directory' })
 
@@ -49,7 +51,10 @@ return function()
       ['<C-t>'] = 'actions.select_tab',
       ['<C-p>'] = 'actions.preview',
       ['<C-c>'] = 'actions.close',
-      ['<C-l>'] = 'actions.refresh',
+      -- <C-h>/<C-l> stay smart-splits navigation inside oil too
+      ['<C-h>'] = false,
+      ['<C-l>'] = false,
+      ['gR'] = 'actions.refresh',
       ['-'] = 'actions.parent',
       ['_'] = 'actions.open_cwd',
       ['`'] = 'actions.cd',
