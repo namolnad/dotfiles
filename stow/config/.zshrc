@@ -28,7 +28,10 @@ ENABLE_CORRECTION="true"
 # macOS's path_helper reorders PATH). This is only a fallback for a shell
 # that somehow has neither — a half-stowed machine, mostly.
 [[ -n "$HOMEBREW_PREFIX" ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
-FPATH="${ZSH_CUSTOM}/plugins/zsh-completions:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+# zsh-completions is cloned into oh-my-zsh's custom plugins (oh-my-zsh sets
+# ZSH_CUSTOM later, hence the default) and keeps its functions in src/. It goes
+# on fpath here rather than in plugins=() so it's there before compinit runs.
+FPATH="${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-completions/src:$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
