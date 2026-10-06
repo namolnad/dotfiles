@@ -32,7 +32,7 @@ STATE_DIR=$HOME/.local/state/dotfiles
 ZSH_PLUGINS=(mroth/evalcache zsh-users/zsh-completions Aloxaf/fzf-tab)
 
 # gh extensions every machine gets (owner/repo); --update upgrades whatever is installed
-GH_EXTENSIONS=()
+GH_EXTENSIONS=(despreston/gh-worktree)
 
 LOGIN_ITEMS=(
   /Applications/AeroSpace.app
