@@ -2,11 +2,7 @@ return function()
   -- nvim-treesitter v1.0+ (the main branch) only installs parsers and queries.
   -- Ensure parsers are installed (deferred to avoid blocking startup)
   vim.schedule(function()
-    require('nvim-treesitter.install').install({
-      'vimdoc', 'javascript', 'typescript', 'tsx', 'c', 'lua', 'rust',
-      'jsdoc', 'bash', 'ruby', 'embedded_template', 'sql', 'make', 'yaml',
-      'dockerfile', 'html', 'css', 'json', 'regex', 'swift', 'go', 'python',
-    })
+    require('nvim-treesitter.install').install(require('config.parsers'))
   end)
 
   -- Highlighting has to be started per buffer: Neovim 0.12 only does it for

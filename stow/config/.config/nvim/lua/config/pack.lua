@@ -27,6 +27,11 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
+-- vim.pack asks before installing anything new. The headless bootstrap
+-- (scripts/nvim-update.lua) sets g:pack_confirm to false, since nobody is there
+-- to answer on a new machine.
+local confirm = vim.g.pack_confirm ~= false
+
 -- Eager plugins: loaded immediately at startup
 vim.pack.add({
   -- UI / Core
@@ -76,7 +81,7 @@ vim.pack.add({
 
   -- Doc generation
   'https://github.com/danymat/neogen',
-})
+}, { confirm = confirm })
 
 -- Deferred plugins: downloaded but NOT loaded at startup.
 -- Loaded later via packadd (on_event / on_keys in init.lua).
@@ -116,5 +121,6 @@ vim.pack.add({
   -- Event-deferred (BufReadPre)
   'https://github.com/mfussenegger/nvim-lint',
 }, {
+  confirm = confirm,
   load = function() end, -- no-op: don't add to rtp, we'll packadd manually
 })
