@@ -1,0 +1,9 @@
+# Tools mise installs and puts on PATH outside any project. Inside one, the
+# project's .nvmrc, .node-version, .tool-versions or mise.toml takes over.
+[tools]
+node = "24"
+
+[settings]
+# Without this mise only honours .tool-versions and its own files, and would
+# ignore the .nvmrc and .node-version files projects use
+idiomatic_version_file_enable_tools = ["node"]

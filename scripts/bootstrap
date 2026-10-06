@@ -639,6 +639,20 @@ step_ruby() {
   [[ $(rbenv global) == "$version" ]] || run rbenv global "$version"
 }
 
+# Node comes from mise: ~/.config/mise/config.toml (stowed) names the global
+# version, and every Node it installs gets ~/.default-npm-packages. Run from
+# $HOME so that only those global settings apply.
+step_node() {
+  command -v mise >/dev/null || {
+    reason "mise isn't installed"
+    return 1
+  }
+  (cd "$HOME" && run mise install) || return 1
+  if [[ $MODE == update ]]; then
+    (cd "$HOME" && run mise upgrade) || return 1
+  fi
+}
+
 step_fzf() {
   if [[ -f $HOME/.fzf.zsh ]]; then
     skip "$HOME/.fzf.zsh exists"
@@ -924,6 +938,7 @@ main() {
   step "App Store apps" step_app_store
   step "PJs" step_pjs
   step "Ruby" step_ruby
+  step "Node" step_node
   step "fzf shell integration" step_fzf
   step "tmux plugins" step_tmux_plugins
   step "Neovim plugins and parsers" step_neovim

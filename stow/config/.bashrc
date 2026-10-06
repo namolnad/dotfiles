@@ -45,8 +45,7 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# mise: Node on PATH, switched to a project's version as you cd into it
+command -v mise >/dev/null && eval "$(mise activate bash)"
 
 export vim="nvim"

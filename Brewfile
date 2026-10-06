@@ -32,6 +32,7 @@ brew 'lazygit'
 brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'
+brew 'mise'
 brew 'namolnad/formulae/display-arranger', trusted: true
 brew 'namolnad/formulae/dotenvcrypt', trusted: true
 brew 'namolnad/formulae/finch', trusted: true

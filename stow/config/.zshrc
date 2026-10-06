@@ -79,10 +79,9 @@ if command -v dotenvcrypt &> /dev/null; then
   set +a
 fi
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# mise: Node on PATH, switched to a project's version as you cd into it
+# (defaults in ~/.config/mise/config.toml)
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # zoxide
 export _ZO_DATA_DIR="$HOME/.zoxide"
