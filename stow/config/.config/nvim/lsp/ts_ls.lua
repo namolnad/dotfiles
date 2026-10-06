@@ -1,3 +1,32 @@
+-- Where typescript-language-server looks for the workspace's TypeScript: it
+-- walks up from the root and takes the first of these that exists
+local ts_lib_dirs = {
+  'node_modules/typescript/lib',
+  '.vscode/pnpify/typescript/lib',
+  '.yarn/sdks/typescript/lib',
+  '.pnpm/sdks/typescript/lib',
+}
+
+--- Whether typescript-language-server will find a usable tsserver for `root`.
+---@param root string
+---@return boolean
+local function has_workspace_tsserver(root)
+  local dir = root
+  while true do
+    for _, lib in ipairs(ts_lib_dirs) do
+      local path = vim.fs.joinpath(dir, lib)
+      if vim.uv.fs_stat(path) then
+        return vim.uv.fs_stat(vim.fs.joinpath(path, 'tsserver.js')) ~= nil
+      end
+    end
+    local parent = vim.fs.dirname(dir)
+    if parent == dir then
+      return false
+    end
+    dir = parent
+  end
+end
+
 ---@type vim.lsp.Config
 return {
   init_options = { hostInfo = 'neovim' },
@@ -26,7 +55,13 @@ return {
       return
     end
     -- We fallback to the current working directory if no project root is found
-    on_dir(project_root or vim.fn.getcwd())
+    local root = project_root or vim.fn.getcwd()
+    -- Without the workspace's own TypeScript the server can only fail to start:
+    -- Homebrew's typescript is the native compiler from 7.0 on and ships no tsserver
+    if not has_workspace_tsserver(root) then
+      return
+    end
+    on_dir(root)
   end,
   handlers = {
     -- handle rename request for certain code actions like extracting functions / types
