@@ -532,11 +532,19 @@ reconcile_unmanaged_casks() {
   done < <(brew bundle list --cask --file="$DOTFILES/Brewfile" 2>/dev/null)
 }
 
+# Apple's own App Store apps (iWork, GarageBand, iMovie) stay out of the
+# Brewfile on purpose
+apple_app_store_app() {
+  local path
+  path=$(mdfind "kMDItemAppStoreAdamID == $1" 2>/dev/null | head -1)
+  [[ -n $path && $(defaults read "$path/Contents/Info" CFBundleIdentifier 2>/dev/null) == com.apple.* ]]
+}
+
 # Installed packages the Brewfile doesn't list: leaves only, since their
 # dependencies follow them. The same dry run also lists old versions and
 # orphans, which aren't drift.
 report_drift() {
-  local out formulae='' casks='' apps='' taps='' leaves line kind=''
+  local out formulae='' casks='' apps='' taps='' leaves line kind='' id
   out=$(brew bundle cleanup --file="$DOTFILES/Brewfile" 2>/dev/null)
   leaves=$(brew leaves --installed-on-request 2>/dev/null)
   while IFS= read -r line; do
@@ -550,7 +558,11 @@ report_drift() {
         case $kind in
           formula) grep -qxF "$line" <<<"$leaves" && formulae="$formulae $line" ;;
           cask) casks="$casks $line" ;;
-          mas) apps="$apps, ${line% (*}" ;;
+          mas)
+            id=${line##*(}
+            id=${id%)}
+            apple_app_store_app "$id" || apps="$apps, ${line% (*}"
+            ;;
           tap) taps="$taps $line" ;;
         esac
         ;;
