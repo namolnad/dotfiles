@@ -824,7 +824,7 @@ add_reminders() {
 # --- summary -------------------------------------------------------------------
 
 restart_notes() {
-  local tmux_after nvim_after
+  local tmux_after nvim_after old_versions
   tmux_after=$(tmux -V 2>/dev/null)
   if [[ -n $TMUX_BEFORE && $tmux_after != "$TMUX_BEFORE" ]] && pgrep -xq tmux; then
     note "tmux went from ${TMUX_BEFORE#tmux } to ${tmux_after#tmux }; the running server is still the old one until you restart it"
@@ -833,8 +833,11 @@ restart_notes() {
   if [[ -n $NVIM_BEFORE && $nvim_after != "$NVIM_BEFORE" ]] && pgrep -xq nvim; then
     note "Neovim went from ${NVIM_BEFORE#NVIM } to ${nvim_after#NVIM }; restart running instances"
   fi
-  if command -v brew >/dev/null && [[ -n $(brew cleanup --dry-run 2>/dev/null | head -1) ]]; then
-    note "Old Homebrew versions are kept while running programs may still use them; run \`brew cleanup\` after restarting tmux and Neovim"
+  # Only superseded versions count; the dry run also lists download caches
+  command -v brew >/dev/null || return 0
+  old_versions=$(brew cleanup --dry-run 2>/dev/null | grep -c '/Cellar/')
+  if ((old_versions > 0)); then
+    note "$old_versions old Homebrew versions are kept while running programs may still use them; run \`brew cleanup\` after restarting tmux and Neovim"
   fi
 }
 
