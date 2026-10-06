@@ -1,788 +1,946 @@
 #!/usr/bin/env bash
+#
+# Sets up a Mac from this repo, or brings one up to date.
+#
+#   scripts/bootstrap            everything, including macOS settings and login
+#                                items; asks for your password once, up front
+#   scripts/bootstrap --update   packages, plugins and dotfiles only (make update)
+#   scripts/bootstrap --dry-run  print what would change instead of changing it
+#
+# On a new Mac, before anything else is installed:
+#
+#   curl -fsSL https://raw.githubusercontent.com/namolnad/dotfiles/main/scripts/bootstrap | bash
+#
+# That asks for your password, sets up an SSH key and waits for GitHub to
+# accept it, clones this repo and carries on from the clone without asking
+# anything else.
+#
+# Every step checks before it acts, so a re-run only does what's left. A
+# failing step is recorded and the run carries on; the summary at the end lists
+# what failed, what's left to do by hand and what needs a restart, and the exit
+# status is non-zero if any step failed. Written for macOS's bash 3.2.
 
-export DOTFILES=$HOME/Developer/dotfiles
+# Steps run through `step <name> <function>`, which shellcheck can't follow
+# shellcheck disable=SC2329
+set -uo pipefail
 
-# UTILS
+DOTFILES=${DOTFILES:-$HOME/Developer/dotfiles}
+DOTFILES_REPO=git@github.com:namolnad/dotfiles.git
+STATE_DIR=$HOME/.local/state/dotfiles
 
-default_color=$(tput sgr 0)
-red="$(tput setaf 1)"
-yellow="$(tput setaf 3)"
-green="$(tput setaf 2)"
-blue="$(tput setaf 4)"
+# Custom oh-my-zsh plugins, cloned into ~/.oh-my-zsh/custom/plugins
+ZSH_PLUGINS=(mroth/evalcache zsh-users/zsh-completions Aloxaf/fzf-tab)
 
-info() {
-    printf "%s==> %s%s\n" "$blue" "$1" "$default_color"
+# gh extensions every machine gets (owner/repo); --update upgrades whatever is installed
+GH_EXTENSIONS=()
+
+LOGIN_ITEMS=(
+  /Applications/AeroSpace.app
+  /Applications/Rocket.app
+  /Applications/zoom.us.app
+  /Applications/1Password.app
+  /Applications/AutoMute.app
+)
+
+MODE=bootstrap
+DRY_RUN=0
+ARGS=("$@")
+
+RESULTS=() # status|step|detail
+MANUAL=()
+NOTES=()
+STEP_STATUS=
+STEP_DETAIL=
+CASK_SKIP=
+ASKPASS_DIR=${BOOTSTRAP_ASKPASS_DIR:-}
+LOG=''
+TMUX_BEFORE=''
+NVIM_BEFORE=''
+
+if [[ -t 1 ]]; then
+  bold=$'\033[1m' dim=$'\033[2m' red=$'\033[31m' green=$'\033[32m'
+  yellow=$'\033[33m' blue=$'\033[34m' reset=$'\033[0m'
+else
+  bold='' dim='' red='' green='' yellow='' blue='' reset=''
+fi
+
+# --- output and step bookkeeping ---------------------------------------------
+
+heading() { printf '\n%s==> %s%s\n' "$blue$bold" "$*" "$reset"; }
+detail() { printf '    %s\n' "$*"; }
+warn() { printf '    %s! %s%s\n' "$yellow" "$*" "$reset"; }
+manual() { MANUAL+=("$*"); }
+note() { NOTES+=("$*"); }
+
+skip() {
+  STEP_STATUS=skipped STEP_DETAIL=$*
+  detail "${dim}skipped: $*$reset"
 }
 
-success() {
-    printf "%s==> %s%s\n" "$green" "$1" "$default_color"
+# The reason a step is about to fail, for the summary
+reason() { STEP_DETAIL=$*; }
+
+# Marks a step that finished but left something undone
+degrade() {
+  [[ $STEP_STATUS == ok ]] && STEP_STATUS=warning
+  STEP_DETAIL=$*
+  warn "$*"
 }
 
-error() {
-    printf "%s==> %s%s\n" "$red" "$1" "$default_color"
+step() {
+  local name=$1 rc
+  shift
+  STEP_STATUS=ok STEP_DETAIL=
+  heading "$name"
+  "$@"
+  rc=$?
+  if ((rc != 0)); then
+    STEP_STATUS=failed
+    [[ -n $STEP_DETAIL ]] || STEP_DETAIL="exit status $rc"
+    printf '    %s✗ %s%s\n' "$red" "$STEP_DETAIL" "$reset"
+  fi
+  RESULTS+=("$STEP_STATUS|$name|$STEP_DETAIL")
+  return 0
 }
 
-warning() {
-    printf "%s==> %s%s\n" "$yellow" "$1" "$default_color"
+last_step_failed() { [[ ${RESULTS[${#RESULTS[@]} - 1]} == failed\|* ]]; }
+
+# Runs a command that changes something, or only prints it in a dry run. The
+# command line goes to stderr so callers can capture the command's output.
+run() {
+  printf '    %s$ %s%s\n' "$dim" "$*" "$reset" >&2
+  ((DRY_RUN)) && return 0
+  "$@"
 }
 
-prompt_sudo() {
-    sudo -v
-
-    # Keep-alive: update existing `sudo` timestamp until script has finished
-    while true; do
-        sudo -n true
-        sleep 60
-        kill -0 "$$" || exit
-    done 2>/dev/null &
+# run, but shows a label instead of the command (an installer script's text)
+run_as() {
+  local label=$1
+  shift
+  printf '    %s$ %s%s\n' "$dim" "$label" "$reset" >&2
+  ((DRY_RUN)) && return 0
+  "$@"
 }
 
-# PREREQUISITES
+have_tty() { { : </dev/tty; } 2>/dev/null; }
 
-install_xcode() {
-    info "Installing Apple's CLI tools (prerequisites for Git and Homebrew)..."
-    if xcode-select -p >/dev/null; then
-        warning "Xcode is already installed"
+# --- sudo ----------------------------------------------------------------------
+
+# Homebrew resets sudo's timestamp after every command, so a cached sudo
+# doesn't last. The password is asked for once instead, and handed to sudo
+# (ours with -A, Homebrew's whenever SUDO_ASKPASS is set) by a helper in a
+# private temporary directory that's deleted when the run ends.
+ensure_sudo() {
+  [[ -n ${SUDO_ASKPASS:-} && -x ${SUDO_ASKPASS:-} ]] && return 0
+  ((DRY_RUN)) && return 0
+  have_tty || return 1
+  local dir pw tries=0
+  dir=$(mktemp -d "${TMPDIR:-/tmp}/bootstrap-askpass.XXXXXX") || return 1
+  chmod 700 "$dir"
+  while ((tries < 3)); do
+    printf '%sPassword for sudo (asked once):%s ' "$bold" "$reset" >/dev/tty
+    IFS= read -rs pw </dev/tty
+    printf '\n' >/dev/tty
+    printf '%s\n' "$pw" | sudo -S -p '' -v 2>/dev/null && break
+    pw='' tries=$((tries + 1))
+  done
+  if [[ -z $pw ]]; then
+    rmdir "$dir"
+    return 1
+  fi
+  (umask 077 && printf '%s\n' "$pw" >"$dir/password")
+  printf '#!/bin/sh\nexec cat "%s/password"\n' "$dir" >"$dir/askpass"
+  chmod 700 "$dir/askpass"
+  pw=
+  ASKPASS_DIR=$dir
+  export SUDO_ASKPASS=$dir/askpass BOOTSTRAP_ASKPASS_DIR=$dir
+}
+
+cleanup() {
+  if [[ -n $ASKPASS_DIR ]]; then
+    rm -f "$ASKPASS_DIR/password" "$ASKPASS_DIR/askpass"
+    rmdir "$ASKPASS_DIR"
+  fi
+  sudo -k 2>/dev/null
+}
+
+# --- helpers -------------------------------------------------------------------
+
+# Clones a repo, or fast-forwards an existing clone and says what moved
+clone_or_pull() {
+  local url=$1 dir=$2 branch=${3:-} name before after
+  name=$(basename "$dir")
+  if [[ ! -d $dir/.git ]]; then
+    if [[ -e $dir ]]; then
+      warn "$name: $dir exists but isn't a git checkout"
+      return 1
+    fi
+    run git clone --quiet ${branch:+--branch "$branch"} "$url" "$dir" || return 1
+    ((DRY_RUN)) || detail "$name: installed"
+    return 0
+  fi
+  before=$(git -C "$dir" rev-parse --short HEAD) || return 1
+  run git -C "$dir" pull --ff-only --quiet </dev/null || {
+    warn "$name: pull failed"
+    return 1
+  }
+  run git -C "$dir" submodule update --init --recursive --quiet </dev/null || return 1
+  after=$(git -C "$dir" rev-parse --short HEAD)
+  if [[ $before == "$after" ]]; then
+    detail "$name: up to date"
+  else
+    detail "$name: $before -> $after ($(git -C "$dir" rev-list --count "$before..$after") commits)"
+  fi
+}
+
+brewfile_mas_ids() { sed -nE 's/^mas .*id: *([0-9_]+).*/\1/p' "$DOTFILES/Brewfile" | tr -d _ | tr '\n' ' '; }
+
+# Brewfile App Store apps that aren't installed (all of them before mas is)
+missing_mas_ids() {
+  local id installed
+  if ! command -v mas >/dev/null; then
+    brewfile_mas_ids
+    return
+  fi
+  installed=$(mas list 2>/dev/null | awk '{print $1}')
+  for id in $(brewfile_mas_ids); do
+    grep -qx "$id" <<<"$installed" || printf '%s ' "$id"
+  done
+}
+
+# --- steps ---------------------------------------------------------------------
+
+step_preflight() {
+  [[ $(uname -s) == Darwin ]] || {
+    reason "macOS only"
+    return 1
+  }
+  ((EUID != 0)) || {
+    reason "run it as yourself, not root"
+    return 1
+  }
+  curl -fsS --max-time 15 -o /dev/null https://github.com || {
+    reason "can't reach github.com"
+    return 1
+  }
+  command -v jq >/dev/null || warn "jq is missing (macOS 15 and later ship it); some checks will be skipped"
+  detail "macOS $(sw_vers -productVersion) on $(uname -m), $MODE$( ((DRY_RUN)) && printf ', dry run')"
+}
+
+step_password() {
+  ensure_sudo && return 0
+  reason "no password: steps that need sudo will fail"
+  return 1
+}
+
+clt_installed() {
+  local dir
+  dir=$(xcode-select -p 2>/dev/null) && [[ -x $dir/usr/bin/git ]]
+}
+
+step_command_line_tools() {
+  if clt_installed; then
+    # A full Xcode whose license isn't accepted yet makes git refuse to run
+    if [[ $(xcrun clang 2>&1) == *license* ]]; then
+      run sudo -A xcodebuild -license accept || return 1
+    fi
+    skip "installed"
+    return 0
+  fi
+  # softwareupdate only lists the Command Line Tools while this file exists,
+  # which is how Homebrew's installer gets them without the GUI prompt
+  local marker=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress label waited=0
+  run sudo -A touch "$marker"
+  label=$(softwareupdate -l 2>/dev/null | grep -B1 -E 'Command Line Tools' |
+    awk -F'*' '/^ *\*/ {print $2}' | sed -e 's/^ *Label: //' -e 's/^ *//' | sort -V | tail -n1)
+  if [[ -n $label ]]; then
+    run sudo -A softwareupdate -i "$label"
+    run sudo -A xcode-select --switch /Library/Developer/CommandLineTools
+  fi
+  run sudo -A rm -f "$marker"
+  ((DRY_RUN)) && return 0
+  clt_installed && return 0
+  run xcode-select --install
+  detail "Finish the Command Line Tools installer that just opened; this waits for it."
+  until clt_installed; do
+    sleep 10
+    waited=$((waited + 10))
+    ((waited < 3600)) || {
+      reason "timed out waiting for the Command Line Tools"
+      return 1
+    }
+  done
+}
+
+# GitHub's ssh exits 1 even after a successful login (it has no shell to
+# offer), so this goes by what it prints
+github_authenticated() {
+  local out
+  out=$(ssh -T -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new git@github.com </dev/null 2>&1)
+  [[ $out == *'successfully authenticated'* ]]
+}
+
+step_github() {
+  if github_authenticated; then
+    skip "already authenticated"
+    return 0
+  fi
+  if ((DRY_RUN)); then
+    detail "would create ~/.ssh/id_ed25519 if needed and wait for GitHub to accept it"
+    return 0
+  fi
+  have_tty || {
+    reason "no terminal to wait on; add an SSH key to GitHub and re-run"
+    return 1
+  }
+  local key=$HOME/.ssh/id_ed25519 waited=0
+  mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
+  if [[ ! -f $key ]]; then
+    run ssh-keygen -q -t ed25519 -N '' -C "$(id -un)@$(scutil --get LocalHostName 2>/dev/null || hostname -s)" -f "$key" || return 1
+  fi
+  pbcopy <"$key.pub"
+  open 'https://github.com/settings/ssh/new'
+  detail "Your public key is on the clipboard and GitHub's New SSH key page is open."
+  detail "Add it there; this carries on by itself once GitHub accepts it."
+  until github_authenticated; do
+    sleep 5
+    waited=$((waited + 5))
+    ((waited < 1800)) || {
+      reason "timed out waiting for GitHub to accept the key"
+      return 1
+    }
+  done
+}
+
+brew_bin() {
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    echo /opt/homebrew/bin/brew
+  elif [[ -x /usr/local/bin/brew ]]; then
+    echo /usr/local/bin/brew
+  fi
+}
+
+step_homebrew() {
+  local brew installer
+  brew=$(brew_bin)
+  if [[ -z $brew ]]; then
+    ensure_sudo || {
+      reason "installing Homebrew needs sudo"
+      return 1
+    }
+    installer=$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh) || {
+      reason "couldn't download the Homebrew installer"
+      return 1
+    }
+    run_as "NONINTERACTIVE=1 Homebrew/install/install.sh" env NONINTERACTIVE=1 /bin/bash -c "$installer" || return 1
+    ((DRY_RUN)) && return 0
+    brew=$(brew_bin)
+  fi
+  eval "$("$brew" shellenv)"
+  run brew update --quiet || return 1
+  # Every brew command after this one would otherwise check for updates again
+  export HOMEBREW_NO_AUTO_UPDATE=1
+}
+
+step_dotfiles() {
+  local branch
+  if [[ ! -d $DOTFILES/.git ]]; then
+    run mkdir -p "$(dirname "$DOTFILES")"
+    run git clone --quiet "$DOTFILES_REPO" "$DOTFILES" </dev/null
+    return
+  fi
+  # Other work may be in progress in this checkout, so only a clean main
+  # that's behind origin moves
+  branch=$(git -C "$DOTFILES" symbolic-ref --short -q HEAD)
+  if [[ $branch != main ]]; then
+    skip "the checkout is on ${branch:-a detached HEAD}, not main"
+    return 0
+  fi
+  if [[ -n $(git -C "$DOTFILES" status --porcelain --untracked-files=no) ]]; then
+    skip "uncommitted changes in $DOTFILES"
+    return 0
+  fi
+  run git -C "$DOTFILES" fetch --quiet origin </dev/null || return 1
+  if git -C "$DOTFILES" merge-base --is-ancestor origin/main HEAD; then
+    detail "up to date"
+  elif git -C "$DOTFILES" merge-base --is-ancestor HEAD origin/main; then
+    run git -C "$DOTFILES" merge --ff-only --quiet origin/main
+  else
+    skip "main and origin/main have diverged"
+    note "dotfiles: main and origin/main have diverged; merge or rebase by hand"
+  fi
+}
+
+# Run from anywhere else (curl | bash), the rest runs from the clone, so it's
+# the version that matches the repo. Password and log carry over.
+continue_from_clone() {
+  local self
+  self=$(cd "$(dirname "${BASH_SOURCE[0]:-}")" 2>/dev/null && pwd -P)/$(basename "${BASH_SOURCE[0]:-bootstrap}")
+  [[ $self == "$DOTFILES/scripts/bootstrap" ]] && return 0
+  [[ -x $DOTFILES/scripts/bootstrap ]] || return 0
+  ((DRY_RUN)) && return 0
+  heading "Continuing from $DOTFILES/scripts/bootstrap"
+  export BOOTSTRAP_LOG=$LOG
+  exec "$DOTFILES/scripts/bootstrap" ${ARGS[@]+"${ARGS[@]}"}
+}
+
+step_oh_my_zsh() {
+  local zsh_dir=$HOME/.oh-my-zsh before after installer
+  if [[ -d $zsh_dir/.git ]]; then
+    before=$(git -C "$zsh_dir" rev-parse --short HEAD)
+    run env ZSH="$zsh_dir" /bin/zsh -f "$zsh_dir/tools/upgrade.sh" -v minimal -c 0 </dev/null || return 1
+    after=$(git -C "$zsh_dir" rev-parse --short HEAD)
+    if [[ $before == "$after" ]]; then
+      detail "up to date"
     else
-        xcode-select --install
-        sudo xcodebuild -license accept
+      detail "$before -> $after"
     fi
-}
-
-install_homebrew() {
-    info "Installing Homebrew..."
-    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-    if hash brew &>/dev/null; then
-        warning "Homebrew already installed"
-    else
-        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        if [ -f /opt/homebrew/bin/brew ]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
+    # What `omz update` does after the script: restart the auto-update clock
+    # and drop a lock an interrupted shell left behind
+    if ((!DRY_RUN)); then
+      printf 'LAST_EPOCH=%s\n' $(($(date +%s) / 86400)) >"$zsh_dir/cache/.zsh-update"
+      find "$zsh_dir/log" -maxdepth 1 -name update.lock -type d -empty -mmin +60 -exec rmdir {} + 2>/dev/null
     fi
+    return 0
+  fi
+  if [[ -e $zsh_dir ]]; then
+    reason "$zsh_dir exists but isn't an oh-my-zsh checkout"
+    return 1
+  fi
+  installer=$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) || {
+    reason "couldn't download the oh-my-zsh installer"
+    return 1
+  }
+  # --unattended: no chsh and no switching into a new zsh mid-script.
+  # KEEP_ZSHRC leaves an existing ~/.zshrc alone; stow replaces it anyway.
+  run_as "oh-my-zsh install.sh --unattended" env RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$installer" "" --unattended
 }
 
-setup_ssh() {
-    if [[ ! $(ls -A "$HOME/.ssh") ]]; then
-        git_user=$(git config --get user.email)
-        if [ -z "$git_user" ]; then read -r -p 'Enter your git email: ' git_user; fi
-        ssh-keygen -t ed25519 -C "$git_user" -f "$HOME/.ssh/id_ed25519" -N ''
-        eval "$(ssh-agent -s)"
-        echo """Host *
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519""" > "$HOME/.ssh/config"
-        pbcopy < "$HOME/.ssh/id_ed25519.pub"
-        open -a Safari https://github.com/settings/keys
-        info 'Your ssh public key has been copied to the keyboard. Confirm when you have entered the key in GitHub (y)'
-        while : ; do
-            read -n 1 k
-            if [[ $k = 'y' ]] ; then
-                success "\nContinuing setup\n"
-                break
-            else
-                warning "Confirm when you have entered the key in GitHub"
-            fi
-        done
+step_zsh_plugins() {
+  local repo failed=0
+  for repo in "${ZSH_PLUGINS[@]}"; do
+    clone_or_pull "https://github.com/$repo" "$HOME/.oh-my-zsh/custom/plugins/${repo##*/}" || failed=1
+  done
+  return "$failed"
+}
+
+stow_config() { stow --dir="$DOTFILES/stow" --target="$HOME" --ignore='\.DS_Store' "$@" config; }
+
+# What stow would refuse to replace: plain files, and links it didn't make
+stow_conflicts() {
+  stow_config --no --verbose 2>&1 | sed -nE \
+    -e 's/.* over existing target (.+) since neither a link nor a directory.*/\1/p' \
+    -e 's/.*existing target is not owned by stow: (.+)$/\1/p'
+}
+
+step_stow() {
+  local top dir target stamp
+  command -v stow >/dev/null || run brew install --quiet stow || return 1
+  # Real directories, so stow links what's inside them instead of folding a
+  # whole directory into the repo, where the app that owns it would then write
+  # its state. ~/.oh-my-zsh comes from its installer, an earlier step.
+  for top in "$DOTFILES"/stow/config/.[!.]* "$DOTFILES"/stow/config/*; do
+    [[ -d $top ]] || continue
+    dir=$(basename "$top")
+    [[ $dir == .oh-my-zsh || -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
+  done
+  for dir in "Library/Application Support/Code/User" "Library/Workflows/Applications/Folder Actions"; do
+    [[ -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
+  done
+  [[ $(stat -f %Lp "$HOME/.ssh" 2>/dev/null) == 700 ]] || run chmod 700 "$HOME/.ssh"
+  stamp=$(date +%Y%m%d-%H%M%S)
+  while IFS= read -r target; do
+    [[ -n $target ]] || continue
+    run mv "$HOME/$target" "$HOME/$target.pre-dotfiles-$stamp" &&
+      note "Moved ~/$target aside for the dotfiles version: ~/$target.pre-dotfiles-$stamp"
+  done < <(stow_conflicts)
+  ((DRY_RUN)) && {
+    detail "then: stow config into $HOME"
+    return 0
+  }
+  stow_config || {
+    reason "stow failed (see above)"
+    return 1
+  }
+}
+
+# brew bundle checks what's outdated before it applies `trusted: true`, so
+# without this a newly trusted entry would only be upgraded on the next run
+trust_brewfile_entries() {
+  local kind name trusted
+  trusted=$(brew trust --json=v1 2>/dev/null | jq -r '.taps[], .formulae[], .casks[]' 2>/dev/null)
+  while read -r kind name; do
+    grep -qxF "$name" <<<"$trusted" && continue
+    [[ $kind == brew ]] && kind=formula
+    run brew trust --quiet "--$kind" "$name" || return 1
+  done < <(sed -nE "s/^(brew|cask|tap) '([^']+)'.*trusted: true.*/\1 \2/p" "$DOTFILES/Brewfile")
+}
+
+# Outdated casks whose upgrade runs an installer package or removes one, which
+# needs sudo
+outdated_casks_needing_sudo() {
+  local outdated
+  outdated=$(brew outdated --cask --quiet 2>/dev/null)
+  [[ -n $outdated ]] && command -v jq >/dev/null || return 0
+  # shellcheck disable=SC2086 # one argument per cask
+  brew info --cask --json=v2 $outdated 2>/dev/null | jq -r '
+    .casks[] | select(any(.artifacts[]; has("pkg") or has("installer")
+      or (has("uninstall") and (.uninstall | tostring | test("pkgutil|launchctl|kext")))))
+    | .token' | tr '\n' ' '
+}
+
+upgrade_everything() {
+  local sudo_casks other_casks
+  sudo_casks=$(outdated_casks_needing_sudo)
+  if [[ -z ${sudo_casks// /} ]] || ensure_sudo; then
+    run brew upgrade --fetch-HEAD
+    return
+  fi
+  # No password to give: upgrade everything else and say what was left
+  note "Not upgraded, they need your password: brew upgrade --cask $sudo_casks"
+  run brew upgrade --formula --fetch-HEAD || return 1
+  other_casks=$(brew outdated --cask --quiet | grep -vxF -f <(tr ' ' '\n' <<<"$sudo_casks"))
+  # shellcheck disable=SC2086 # one argument per cask
+  [[ -z $other_casks ]] || run brew upgrade --cask $other_casks
+}
+
+# An app already in /Applications that Homebrew didn't install fails its cask
+# in `brew bundle` unless Homebrew can adopt it, which needs the same version.
+# Adopt the ones that match; skip the rest and say how to hand them over.
+reconcile_unmanaged_casks() {
+  local cask json app installed want
+  command -v jq >/dev/null || return 0
+  while IFS= read -r cask; do
+    brew list --cask "$cask" >/dev/null 2>&1 && continue
+    json=$(brew info --cask --json=v2 "$cask" 2>/dev/null) || continue
+    app=$(jq -r '[.casks[0].artifacts[] | select(has("app")) | .app | (.[1].target? // .[0])] | first // empty' <<<"$json")
+    [[ -n $app && -d /Applications/$app ]] || continue
+    if [[ -d /Applications/$app/Contents/_MASReceipt ]]; then
+      CASK_SKIP="$CASK_SKIP $cask"
+      note "$cask: /Applications/$app came from the App Store; give it a mas entry in the Brewfile instead of a cask"
+      continue
     fi
-}
-
-setup_ruby_environment() {
-    info 'Installing rbenv'
-    if hash rbenv &>/dev/null; then
-        warning 'rbenv already installed'
-    else
-        brew install rbenv
-        warning "Homebrew called. Must reprompt for sudo."
-        prompt_sudo
+    installed=$(defaults read "/Applications/$app/Contents/Info" CFBundleShortVersionString 2>/dev/null)
+    want=$(jq -r '.casks[0].version' <<<"$json")
+    want=${want%%,*}
+    if [[ $installed == "$want" ]] && run brew install --cask --adopt --quiet "$cask"; then
+      ((DRY_RUN)) || detail "$cask: adopted the copy in /Applications"
+      continue
     fi
+    CASK_SKIP="$CASK_SKIP $cask"
+    note "$cask: /Applications/$app (${installed:-unknown version}) wasn't installed by Homebrew and isn't the cask's version ($want). Quit it and run \`brew install --cask --force $cask\` to hand it over, or take it out of the Brewfile."
+  done < <(brew bundle list --cask --file="$DOTFILES/Brewfile" 2>/dev/null)
+}
 
-    # Before the first `rbenv install`, so every Ruby gets the gems in ~/.rbenv/default-gems.
-    # brew bundle runs too late for that: it comes after this function.
-    info 'Installing rbenv-default-gems'
-    if brew list rbenv-default-gems &>/dev/null; then
-        warning 'rbenv-default-gems already installed'
-    else
-        brew install rbenv-default-gems
-        warning "Homebrew called. Must reprompt for sudo."
-        prompt_sudo
+# Installed packages the Brewfile doesn't list: leaves only, since their
+# dependencies follow them. The same dry run also lists old versions and
+# orphans, which aren't drift.
+report_drift() {
+  local out formulae='' casks='' apps='' taps='' leaves line kind=''
+  out=$(brew bundle cleanup --file="$DOTFILES/Brewfile" 2>/dev/null)
+  leaves=$(brew leaves --installed-on-request 2>/dev/null)
+  while IFS= read -r line; do
+    case $line in
+      'Would uninstall formulae:') kind=formula ;;
+      'Would uninstall casks:') kind=cask ;;
+      'Would uninstall Mac App Store apps:') kind=mas ;;
+      'Would untap:') kind=tap ;;
+      'Would '* | '==> '* | 'Run '* | 'Warning: '*) kind='' ;;
+      *)
+        case $kind in
+          formula) grep -qxF "$line" <<<"$leaves" && formulae="$formulae $line" ;;
+          cask) casks="$casks $line" ;;
+          mas) apps="$apps, ${line% (*}" ;;
+          tap) taps="$taps $line" ;;
+        esac
+        ;;
+    esac
+  done <<<"$out"
+  [[ -n $formulae$casks$apps$taps ]] || return 0
+  note "Installed but not in the Brewfile:${formulae:+ formulae:$formulae.}${casks:+ Casks:$casks.}${apps:+ App Store:${apps#,}.}${taps:+ Taps:$taps.}"
+}
+
+step_brew_packages() {
+  trust_brewfile_entries || {
+    reason "couldn't apply the Brewfile's tap trust"
+    return 1
+  }
+  if [[ $MODE == update ]]; then
+    # Dependencies nothing needs any more would otherwise be upgraded too
+    run brew autoremove --quiet || degrade "brew autoremove failed"
+    upgrade_everything || {
+      reason "brew upgrade failed (see above)"
+      return 1
+    }
+  fi
+  CASK_SKIP=${HOMEBREW_BUNDLE_CASK_SKIP:-}
+  reconcile_unmanaged_casks
+  # Missing App Store apps are their own step: mas can't sign in, so they
+  # need you signed in to the App Store first, and that shouldn't fail the rest
+  run env HOMEBREW_BUNDLE_CASK_SKIP="$CASK_SKIP" HOMEBREW_BUNDLE_MAS_SKIP="$(missing_mas_ids)" \
+    brew bundle --file="$DOTFILES/Brewfile" || {
+    reason "brew bundle failed (see above)"
+    return 1
+  }
+  report_drift
+}
+
+step_app_store() {
+  local missing
+  command -v mas >/dev/null || {
+    skip "mas isn't installed"
+    return 0
+  }
+  missing=$(missing_mas_ids)
+  if [[ -z ${missing// /} ]]; then
+    skip "everything in the Brewfile is installed"
+    return 0
+  fi
+  # shellcheck disable=SC2086 # one argument per app
+  run mas install $missing || {
+    manual "Sign in to the App Store, then re-run to install these apps: $missing"
+    degrade "not installed: $missing(signed in to the App Store?)"
+  }
+}
+
+# PJs has no cask: it's a single release zip
+step_pjs() {
+  local tmp
+  if [[ -d /Applications/PJs.app ]]; then
+    skip "installed"
+    return 0
+  fi
+  if ((DRY_RUN)); then
+    detail "would download PJs 1.0.0 from github.com/acrookston/pjs into /Applications"
+    return 0
+  fi
+  tmp=$(mktemp -d "${TMPDIR:-/tmp}/bootstrap-pjs.XXXXXX") || return 1
+  run curl -fsSL -o "$tmp/PJs.zip" https://github.com/acrookston/pjs/releases/download/v1.0.0/PJs.zip &&
+    run ditto -x -k "$tmp/PJs.zip" "$tmp" &&
+    run mv "$tmp/PJs.app" /Applications/ || return 1
+  rm -f "$tmp/PJs.zip"
+  rmdir "$tmp" 2>/dev/null
+  return 0
+}
+
+step_ruby() {
+  local version
+  command -v rbenv >/dev/null || {
+    reason "rbenv isn't installed"
+    return 1
+  }
+  version=$(<"$DOTFILES/stow/config/.rbenv/version")
+  if grep -qxF "$version" <<<"$(rbenv versions --bare)"; then
+    detail "Ruby $version is installed"
+  else
+    # rbenv-default-gems installs ~/.rbenv/default-gems into it
+    run rbenv install --skip-existing "$version" || return 1
+  fi
+  [[ $(rbenv global) == "$version" ]] || run rbenv global "$version"
+}
+
+step_fzf() {
+  if [[ -f $HOME/.fzf.zsh ]]; then
+    skip "$HOME/.fzf.zsh exists"
+    return 0
+  fi
+  # --no-update-rc: the rc files are the repo's, and they already source ~/.fzf.*
+  run "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-fish
+}
+
+# tmux-assistant-resurrect rewrites ~/.claude/settings.json with mv, replacing
+# the stow link, whenever its hook commands aren't already in it exactly as it
+# would write them (bash "$HOME"'<path>'). It runs on every tmux start.
+check_claude_settings_link() {
+  local settings=$HOME/.claude/settings.json script cmd
+  [[ -e $settings ]] || return 0
+  if [[ ! -L $settings ]]; then
+    note "$HOME/.claude/settings.json is a plain file, not the dotfiles link: copy any new entries into stow/config/.claude/settings.json and restow"
+    return 0
+  fi
+  [[ -d $HOME/.config/tmux/plugins/tmux-assistant-resurrect ]] && command -v jq >/dev/null || return 0
+  for script in claude-session-track claude-session-cleanup; do
+    # shellcheck disable=SC2016 # $HOME is literal in the hook command
+    cmd='bash "$HOME"'"'/.config/tmux/plugins/tmux-assistant-resurrect/hooks/$script.sh'"
+    jq -e --arg cmd "$cmd" --arg s "$script" '
+      [.. | objects | .command? | strings | select(contains($s))] as $c
+      | ($c | length > 0) and ($c | all(. == $cmd))' "$settings" >/dev/null ||
+      note "tmux-assistant-resurrect will replace the ~/.claude/settings.json link on its next start: its $script hook in the dotfiles settings.json doesn't match what it writes"
+  done
+}
+
+step_tmux_plugins() {
+  local conf=$HOME/.config/tmux/tmux.conf dir=$HOME/.config/tmux/plugins spec url branch failed=0
+  [[ -f $conf ]] || {
+    reason "$conf is missing (did stow fail?)"
+    return 1
+  }
+  # TPM's own scripts ask the running tmux server for the plugin list. Reading
+  # tmux.conf keeps a live server out of it; updated plugins load the next time
+  # tmux starts or sources its config.
+  while IFS= read -r spec; do
+    branch=
+    if [[ $spec == *'#'* ]]; then
+      branch=${spec#*#}
+      spec=${spec%%#*}
     fi
-
-    info 'Installing global ruby'
-    RUBY_VERSION=$(cat $DOTFILES/stow/config/.rbenv/version)
-    rbenv install -s $RUBY_VERSION
-    eval "$(rbenv init -)"
-    rbenv global $RUBY_VERSION
-    info 'Installing bundler'
-    gem install bundler
-    rbenv rehash
+    case $spec in
+      *://* | git@*) url=$spec ;;
+      *) url=https://github.com/$spec ;;
+    esac
+    spec=${spec%.git}
+    clone_or_pull "$url" "$dir/${spec##*/}" "$branch" || failed=1
+  done < <(sed -nE "s/^[[:space:]]*set(-option)?[[:space:]]+-g[[:space:]]+@plugin[[:space:]]+['\"]([^'\"]+)['\"].*/\2/p" "$conf")
+  check_claude_settings_link
+  return "$failed"
 }
 
-clone_dotfiles() {
-    info "Cloning dotfiles into $DOTFILES"
-    mkdir -p $DOTFILES
-    cd $DOTFILES
-    if [ $(git rev-parse --is-inside-work-tree) ]; then
-        warning "Dotfiles already cloned"
-        cd -
-        return
+step_neovim() {
+  local nvim_mode=install scratch rc lockfile=stow/config/.config/nvim/nvim-pack-lock.json
+  command -v nvim >/dev/null || {
+    reason "nvim isn't installed"
+    return 1
+  }
+  [[ $MODE == update ]] && nvim_mode=update
+  scratch=$(mktemp -d "${TMPDIR:-/tmp}/bootstrap-nvim.XXXXXX") || return 1
+  # From an empty directory, with TMUX unset and no shada: a bare nvim deletes
+  # the saved session for its working directory when it quits, and the config's
+  # tmux integration would talk to the live tmux server
+  (cd "$scratch" && run env -u TMUX -u TMUX_PANE nvim --headless -i NONE \
+    --cmd "lua vim.g.pack_confirm = false; vim.g.dotfiles_nvim_mode = '$nvim_mode'" \
+    -c "luafile $DOTFILES/scripts/nvim-update.lua" </dev/null)
+  rc=$?
+  rmdir "$scratch" 2>/dev/null
+
+  if [[ -n $(git -C "$DOTFILES" status --porcelain -- "$lockfile") ]]; then
+    note "Neovim plugins moved: commit $lockfile so other machines install the same versions"
+  fi
+  return "$rc"
+}
+
+step_gh_extensions() {
+  local ext installed
+  command -v gh >/dev/null || {
+    skip "gh isn't installed"
+    return 0
+  }
+  installed=$(gh extension list 2>/dev/null | awk -F'\t' '{print $2}')
+  for ext in ${GH_EXTENSIONS[@]+"${GH_EXTENSIONS[@]}"}; do
+    grep -qxF "$ext" <<<"$installed" || run gh extension install "$ext" || return 1
+  done
+  if [[ -z $installed && ${#GH_EXTENSIONS[@]} -eq 0 ]]; then
+    skip "none installed"
+    return 0
+  fi
+  run gh extension upgrade --all
+}
+
+step_claude_code() {
+  local claude installer id out
+  claude=$(command -v claude || echo "$HOME/.local/bin/claude")
+  if [[ ! -x $claude ]]; then
+    installer=$(curl -fsSL https://claude.ai/install.sh) || {
+      reason "couldn't download the Claude Code installer"
+      return 1
+    }
+    run_as "claude.ai/install.sh" bash -c "$installer" || return 1
+    ((DRY_RUN)) && return 0
+  fi
+  command -v jq >/dev/null || {
+    skip "jq is missing"
+    return 0
+  }
+  # Claude Code updates itself; its marketplaces and plugins don't. Plugins
+  # read from a local folder are always current, and project-scoped ones
+  # update from their project.
+  run "$claude" plugin marketplace update >/dev/null || degrade "marketplace update failed"
+  while IFS= read -r id; do
+    out=$(run "$claude" plugin update "$id" --json </dev/null) || {
+      degrade "$id: update failed"
+      continue
+    }
+    [[ -z $out ]] || jq -r 'select(.updateOutcome == "updated") | "\(.plugin): \(.oldVersion) -> \(.newVersion)"' <<<"$out" | sed 's/^/    /'
+  done < <("$claude" plugin list --json 2>/dev/null |
+    jq -r '.[] | select(.scope == "user" and (.readFromFolder // "") == "") | .id')
+}
+
+step_opt_scripts() {
+  run sudo -A mkdir -p /usr/local/opt || return 1
+  run sudo -A "$(command -v stow)" --dir="$DOTFILES/stow" --target=/usr/local/opt --ignore='\.DS_Store' opt
+}
+
+step_macos_defaults() {
+  # shellcheck source=scripts/macos-defaults.sh
+  source "$DOTFILES/scripts/macos-defaults.sh"
+  apply_macos_defaults || degrade "$DEFAULTS_FAILED settings didn't apply (see above)"
+}
+
+step_login_items() {
+  local app name current
+  if ((DRY_RUN)); then
+    detail "would add any of these that aren't login items yet: ${LOGIN_ITEMS[*]}"
+    return 0
+  fi
+  # The first System Events call asks you to allow it, and waits for an answer
+  current=$(osascript -e 'tell application "System Events" to get the name of every login item' 2>/dev/null) || {
+    manual "Allow your terminal to control System Events (Privacy & Security → Automation), then re-run for the login items"
+    reason "System Events isn't scriptable from this terminal yet"
+    return 1
+  }
+  for app in "${LOGIN_ITEMS[@]}"; do
+    name=$(basename "$app" .app)
+    if [[ ! -d $app ]]; then
+      degrade "$name isn't installed"
+      continue
     fi
-    git init
-    git remote add origin git@github.com:namolnad/dotfiles.git
-    git fetch origin
-    git checkout -b main --track origin/main
-    cd -
+    [[ ", $current, " == *", $name, "* ]] && continue
+    run osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app\", hidden:false}" >/dev/null ||
+      degrade "couldn't add $name"
+  done
 }
 
-# PRIMARY
-
-symlink_dotfiles() {
-    pwd
-    info 'Symlinking dotfiles'
-    mkdir -p $HOME/Library/Workflows/Applications/Folder\ Actions
-    for bak_path in "$HOME/.ssh/config" "$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.rbenv/version"; do
-        if [ -e "$bak_path" ]; then
-            mv "$bak_path" "$bak_path.bak"
-            echo "Backed up $bak_path to $bak_path.bak"
-        else
-            echo "File or directory $bak_path not found, skipping."
-        fi
-    done
-    # We _could_ ensure $HOME/.config exists vs symlinking the entire directory, but this ensures all configs are in one place
-    stow -d stow -R --ignore "\.DS_Store" config -t $HOME
+# Permissions and setup that no script can do
+add_reminders() {
+  manual "Grant Full Disk Access to Alfred"
+  manual "Grant Accessibility access to the apps that ask for it: AeroSpace, Rocket, 1Password, Alfred, AutoMute"
+  manual "Install GPG Suite and set up commit signing"
+  manual "Turn on Folder Actions for the Desktop, with the Screenshot Relocator workflow"
 }
 
-install_applications() {
-    info 'Symlinking scripts'
-    sudo mkdir -p /usr/local/opt
-    sudo stow -d stow -R --ignore "\.DS_Store" opt -t /usr/local/opt
-    info 'Installing Oh My Zsh'
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    info 'Installing zsh plugins'
-    for plugin in "mroth/evalcache" "zsh-users/zsh-completions" "Aloxaf/fzf-tab"; do
-      plugin_path="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$(basename "$plugin")"
-      rm -rf "$plugin_path"
-      git clone "https://github.com/$plugin" "$plugin_path"
-    done
-    if [ ! -d "/Applications/PJs.app" ]; then
-        info 'Installing PJs'
-        tmp_dir=$(mktemp -d)
-        curl -fsSL -o $tmp_dir/PJs.zip https://github.com/acrookston/pjs/releases/download/v1.0.0/PJs.zip $tmp_dir
-        unzip $tmp_dir/PJs.zip -d $tmp_dir
-        mv $tmp_dir/PJs.app /Applications/
-        rm -rf $tmp_dir
-    fi
-    info 'Installing Claude'
-    curl -fsSL https://claude.ai/install.sh | bash
-    info 'Installing tmux plugins'
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+# --- summary -------------------------------------------------------------------
+
+restart_notes() {
+  local tmux_after nvim_after
+  tmux_after=$(tmux -V 2>/dev/null)
+  if [[ -n $TMUX_BEFORE && $tmux_after != "$TMUX_BEFORE" ]] && pgrep -xq tmux; then
+    note "tmux went from ${TMUX_BEFORE#tmux } to ${tmux_after#tmux }; the running server is still the old one until you restart it"
+  fi
+  nvim_after=$(nvim --version 2>/dev/null | head -1)
+  if [[ -n $NVIM_BEFORE && $nvim_after != "$NVIM_BEFORE" ]] && pgrep -xq nvim; then
+    note "Neovim went from ${NVIM_BEFORE#NVIM } to ${nvim_after#NVIM }; restart running instances"
+  fi
+  if command -v brew >/dev/null && [[ -n $(brew cleanup --dry-run 2>/dev/null | head -1) ]]; then
+    note "Old Homebrew versions are kept while running programs may still use them; run \`brew cleanup\` after restarting tmux and Neovim"
+  fi
 }
 
-apply_macos_system_defaults() {
-    info "Applying MacOS system defaults..."
-
-    # FWIW, this `defaults find` is good at finding some set preferences.
-    # e.g.    defaults find com.apple.ActivityMonitor
-
-    # Close any open System Settings panes, to prevent them from overriding
-    # settings we’re about to change
-    osascript -e 'tell application "System Settings" to quit' 2>/dev/null
-    sleep 1
-
-    ###############################################################################
-    # General UI/UX                                                               #
-    ###############################################################################
-
-    # Menu bar: disable transparency
-    # defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
-
-    # Set standby delay to 24 hours (default is 1 hour)
-    # sudo pmset -a standbydelay 86400
-
-    # Set startup sound effect to 60% volume
-    sudo nvram SystemAudioVolume="%60"
-
-    # Set highlight color to red
-    defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.733333 0.721569"
-
-    # Set sidebar icon size to medium
-    defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
-
-    # Increase window resize speed for Cocoa applications
-    defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
-
-    # Disable the “Are you sure you want to open this application?” dialog
-    defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-    # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
-    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -r -domain local -domain system -domain user
-
-    # Display ASCII control characters using caret notation in standard text views
-    # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
-    defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
-
-    # Disable Resume system-wide
-    defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
-
-    # Edit: ALLOW automatic termination of inactive apps
-    defaults write NSGlobalDomain NSDisableAutomaticTermination -bool false
-
-    # Disable the crash reporter
-    defaults write com.apple.CrashReporter DialogType -string "none"
-
-    # Reveal IP address, hostname, OS version, etc. when clicking the clock
-    # in the login window
-    sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
-
-    # Restart automatically if the computer freezes
-    sudo systemsetup -setrestartfreeze on
-
-    # go into computer sleep mode after 40min
-    sudo systemsetup -setcomputersleep 40
-
-    # Check for software updates daily, not just once per week
-    defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-    # Disable Notification Center and remove the menu bar icon
-    # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
-
-    # Disable smart quotes as they’re annoying when typing code
-    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-    # Disable smart dashes as they’re annoying when typing code
-    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
-    ###############################################################################
-    # SSD-specific tweaks                                                         #
-    ###############################################################################
-
-    # Disable hibernation (speeds up entering sleep mode)
-    sudo pmset -a hibernatemode 0
-
-    ###############################################################################
-    # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
-    ###############################################################################
-
-    # Trackpad: enable tap to click for this user and for the login screen
-    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-    defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-    defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-    # Enable three finger drag
-    defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
-
-    # Increase sound quality for Bluetooth headphones/headsets
-    defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
-
-    # Enable full keyboard access for all controls
-    # (e.g. enable Tab in modal dialogs)
-    defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-
-    # Disable press-and-hold for keys in favor of key repeat
-    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
-    # Set a blazingly fast keyboard repeat rate
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain InitialKeyRepeat -int 12
-
-    # Automatically illuminate built-in MacBook keyboard in low light
-    defaults write com.apple.BezelServices kDim -bool true
-    # Turn off keyboard illumination when computer is not used for 5 minutes
-    defaults write com.apple.BezelServices kDimTime -int 300
-
-    # Disable auto-correct
-    defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
-    ###############################################################################
-    # Screen                                                                      #
-    ###############################################################################
-
-    # Save screenshots to the desktop
-    defaults write com.apple.screencapture location -string "${HOME}/Desktop" # For using screenshot relocator automation
-
-    # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-    defaults write com.apple.screencapture type -string "png"
-
-    # Disable shadow in screenshots
-    defaults write com.apple.screencapture disable-shadow -bool false
-
-    # Enable subpixel font rendering on non-Apple LCDs
-    defaults write NSGlobalDomain AppleFontSmoothing -int 2
-
-    # Enable HiDPI display modes (requires restart)
-    sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
-
-    ###############################################################################
-    # Finder                                                                      #
-    ###############################################################################
-
-    # Hide external hard drives on desktop
-    defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
-
-    # Hide hard drives on desktop
-    defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
-
-    # Hide removable media hard drives on desktop
-    defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
-
-    # Hide mounted servers on desktop
-    defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
-
-    # Hide icons on desktop
-    defaults write com.apple.finder CreateDesktop -bool false
-
-    # Avoid creating .DS_Store files on network volumes
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
-    # Show path bar
-    defaults write com.apple.finder ShowPathbar -bool true
-
-    # Show hidden files inside the finder
-    defaults write com.apple.finder "AppleShowAllFiles" -bool true
-
-    # Show Status Bar
-    defaults write com.apple.finder "ShowStatusBar" -bool true
-
-    # Do not show warning when changing the file extension
-    defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-
-    # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-    defaults write com.apple.finder QuitMenuItem -bool true
-
-    # Finder: disable window animations and Get Info animations
-    defaults write com.apple.finder DisableAllAnimations -bool true
-
-    # Finder: show hidden files by default
-    defaults write com.apple.Finder AppleShowAllFiles -bool true
-
-    # Finder: show all filename extensions
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-    # Finder: show status bar
-    defaults write com.apple.finder ShowStatusBar -bool true
-
-    # Finder: show path bar
-    defaults write com.apple.finder ShowPathbar -bool true
-
-    # When performing a search, search the current folder by default
-    defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-    # Disable the warning when changing a file extension
-    defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-    # Enable spring loading for directories
-    defaults write NSGlobalDomain com.apple.springing.enabled -bool true
-
-    # Remove the spring loading delay for directories
-    defaults write NSGlobalDomain com.apple.springing.delay -float 0
-
-    # Avoid creating .DS_Store files on network volumes
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
-    # Automatically open a new Finder window when a volume is mounted
-    defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
-    defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
-    defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
-
-    # Show item info near icons on the desktop and in other icon views
-    /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-
-    # Show item info to the right of the icons on the desktop
-    /usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
-
-    # Enable snap-to-grid for icons on the desktop and in other icon views
-    /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-
-    # Increase grid spacing for icons on the desktop and in other icon views
-    /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-
-    # Increase the size of icons on the desktop and in other icon views
-    /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-
-    # Use list view in all Finder windows by default
-    # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
-    defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
-
-    # Disable the warning before emptying the Trash
-    defaults write com.apple.finder WarnOnEmptyTrash -bool false
-
-    # Empty Trash securely by default
-    defaults write com.apple.finder EmptyTrashSecurely -bool true
-
-    # Enable AirDrop over Ethernet and on unsupported Macs running Lion
-    defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
-
-    # Show the ~/Library folder
-    chflags nohidden ~/Library
-
-    # Show the /Volumes folder
-    sudo chflags nohidden /Volumes
-
-    # Remove Dropbox’s green checkmark icons in Finder
-    file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
-    [ -e "${file}" ] && mv -f "${file}" "${file}.bak"
-
-    # Expand the following File Info panes:
-    # “General”, “Open with”, and “Sharing & Permissions”
-    defaults write com.apple.finder FXInfoPanesExpanded -dict \
-    	General -bool true \
-    	OpenWith -bool true \
-    	Privileges -bool true
-
-    ###############################################################################
-    # Dock, Dashboard, and hot corners                                            #
-    ###############################################################################
-
-    # Enable highlight hover effect for the grid view of a stack (Dock)
-    defaults write com.apple.dock mouse-over-hilite-stack -bool true
-
-    # Set the icon size of Dock items to 48 pixels
-    defaults write com.apple.dock tilesize -int 48
-    defaults write com.apple.dock largesize -float 128
-
-    # Change minimize/maximize window effect
-    # defaults write com.apple.dock mineffect -string "suck"
-    defaults write com.apple.dock mineffect -string "scale"
-
-    # Minimize windows into their application’s icon
-    defaults write com.apple.dock minimize-to-application -bool true
-
-    # Enable spring loading for all Dock items
-    defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
-
-    # Show indicator lights for open applications in the Dock
-    defaults write com.apple.dock show-process-indicators -bool true
-
-    # Wipe all (default) app icons from the Dock
-    # This is only really useful when setting up a new Mac, or if you don’t use
-    # the Dock to launch apps.
-    defaults write com.apple.dock persistent-apps -array
-
-    # Show only open applications in the Dock
-    defaults write com.apple.dock static-only -bool true
-
-    # Don’t animate opening applications from the Dock
-    defaults write com.apple.dock launchanim -bool false
-
-    # Speed up Mission Control animations
-    defaults write com.apple.dock expose-animation-duration -float 0.1
-
-    # Don’t group windows by application in Mission Control
-    # (i.e. use the old Exposé behavior instead)
-    defaults write com.apple.dock expose-group-by-app -bool false
-
-    # Disable Dashboard
-    defaults write com.apple.dashboard mcx-disabled -bool true
-
-    # Spaces span all displays
-    defaults write com.apple.spaces "spans-displays" -bool false
-
-    # Don’t automatically rearrange Spaces based on most recent use
-    defaults write com.apple.dock mru-spaces -bool false
-
-
-        # Set Dock autohide
-    # Remove the auto-hiding Dock delay
-    defaults write com.apple.dock autohide-delay -float 0
-    # Remove the animation when hiding/showing the Dock
-    defaults write com.apple.dock autohide-time-modifier -float 0
-
-    # Automatically hide and show the Dock
-    defaults write com.apple.dock autohide -bool true
-
-    # Orient the dock on the left of the screen
-    defaults write com.apple.dock orientation -string "left"
-
-    # Make Dock icons of hidden applications translucent
-    defaults write com.apple.dock showhidden -bool true
-
-    # Disable the Launchpad gesture (pinch with thumb and three fingers)
-    defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
-
-    # Add a spacer to the left side of the Dock (where the applications are)
-    defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="small-spacer-tile";}'
-    defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="small-spacer-tile";}'
-    # Add a spacer to the right side of the Dock (where the Trash is)
-    #defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-    ###############################################################################
-    # Safari & WebKit                                                             #
-    ###############################################################################
-
-    # Privacy: don’t send search queries to Apple
-    sudo defaults write com.apple.Safari UniversalSearchEnabled -bool false
-    sudo defaults write com.apple.Safari SuppressSearchSuggestions -bool true
-
-    # Press Tab to highlight each item on a web page
-    sudo defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
-    sudo defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
-
-    # Show the full URL in the address bar (note: this still hides the scheme)
-    sudo defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
-
-    # Set Safari’s home page to `about:blank` for faster loading
-    sudo defaults write com.apple.Safari HomePage -string "about:blank"
-
-    # Prevent Safari from opening ‘safe’ files automatically after downloading
-    sudo defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-    # Hide Safari’s bookmarks bar by default
-    sudo defaults write com.apple.Safari ShowFavoritesBar -bool false
-
-    # Hide Safari’s sidebar in Top Sites
-    sudo defaults write com.apple.Safari ShowSidebarInTopSites -bool false
-
-    # Disable Safari’s thumbnail cache for History and Top Sites
-    # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
-
-    # Enable Safari’s debug menu
-    sudo defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-
-    # Make Safari’s search banners default to Contains instead of Starts With
-    sudo defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
-
-    # Remove useless icons from Safari’s bookmarks bar
-    sudo defaults write com.apple.Safari ProxiesInBookmarksBar "()"
-
-    # Enable the Develop menu and the Web Inspector in Safari
-    sudo defaults write com.apple.Safari IncludeDevelopMenu -bool true
-    sudo defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-    sudo defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-
-    # Add a context menu item for showing the Web Inspector in web views
-    defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-    ###############################################################################
-    # Spotlight                                                                   #
-    ###############################################################################
-
-    # Hide Spotlight tray-icon (and subsequent helper)
-    #sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-    # Disable Spotlight indexing for any volume that gets mounted and has not yet
-    # been indexed before.
-    # Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-    # sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-    # Change indexing order and disable some search results
-    defaults write com.apple.spotlight orderedItems -array \
-    	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
-    	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-    	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
-    	'{"enabled" = 1;"name" = "PDF";}' \
-    	'{"enabled" = 1;"name" = "FONTS";}' \
-    	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
-    	'{"enabled" = 0;"name" = "MESSAGES";}' \
-    	'{"enabled" = 0;"name" = "CONTACT";}' \
-    	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
-    	'{"enabled" = 0;"name" = "IMAGES";}' \
-    	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
-    	'{"enabled" = 0;"name" = "MUSIC";}' \
-    	'{"enabled" = 0;"name" = "MOVIES";}' \
-    	'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-    	'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-    	'{"enabled" = 0;"name" = "SOURCE";}' \
-    	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
-    	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
-    	'{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
-    	'{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
-    	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
-    	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
-    # Load new settings before rebuilding the index
-    killall mds > /dev/null 2>&1
-    # Make sure indexing is enabled for the main volume
-    sudo mdutil -i on / > /dev/null
-    # Rebuild the index from scratch
-    sudo mdutil -E / > /dev/null
-
-    ###############################################################################
-    # Time Machine                                                                #
-    ###############################################################################
-
-    # Prevent Time Machine from prompting to use new hard drives as backup volume
-    defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-    # Disable local Time Machine backups
-    # hash tmutil &> /dev/null && sudo tmutil disablelocal
-
-    ###############################################################################
-    # Activity Monitor                                                            #
-    ###############################################################################
-
-    # Show the main window when launching Activity Monitor
-    defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
-
-    # Visualize CPU usage in the Activity Monitor Dock icon
-    defaults write com.apple.ActivityMonitor IconType -int 5
-
-    # Show all processes in Activity Monitor
-    defaults write com.apple.ActivityMonitor ShowCategory -int 0
-
-    # Sets columns for all tabs
-    # defaults read com.apple.ActivityMonitor "UserColumnsPerTab v5.0" -dict \
-    #     '0' '( Command, CPUUsage, CPUTime, Threads, PID, UID, Ports )' \
-    #     '1' '( Command, ResidentSize, Threads, Ports, PID, UID,  )' \
-    #     '2' '( Command, PowerScore, 12HRPower, AppSleep, UID, powerAssertion )' \
-    #     '3' '( Command, bytesWritten, bytesRead, Architecture, PID, UID, CPUUsage )' \
-    #     '4' '( Command, txBytes, rxBytes, PID, UID, txPackets, rxPackets, CPUUsage )'
-
-    # Set sort column
-    # defaults write com.apple.ActivityMonitor UserColumnSortPerTab -dict \
-    #     '0' '{ direction = 0; sort = CPUUsage; }' \
-    #     '1' '{ direction = 0; sort = ResidentSize; }' \
-    #     '2' '{ direction = 0; sort = 12HRPower; }' \
-    #     '3' '{ direction = 0; sort = bytesWritten; }' \
-    #     '4' '{ direction = 0; sort = rxBytes; }'
-    defaults write com.apple.ActivityMonitor SortDirection -int 0
-
-    # Show Data in the Disk graph (instead of IO)
-    defaults write com.apple.ActivityMonitor DiskGraphType -int 1
-
-    # Show Data in the Network graph (instead of packets)
-    defaults write com.apple.ActivityMonitor NetworkGraphType -int 1
-
-    ###############################################################################
-    # Address Book, iCal, TextEdit, and Disk Utility                              #
-    ###############################################################################
-
-    # Enable the debug menu in iCal (pre-10.8)
-    defaults write com.apple.iCal IncludeDebugMenu -bool true
-
-    # Use plain text mode for new TextEdit documents
-    defaults write com.apple.TextEdit RichText -int 0
-    # Open and save files as UTF-8 in TextEdit
-    defaults write com.apple.TextEdit PlainTextEncoding -int 4
-    defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
-
-    # Enable the debug menu in Disk Utility
-    defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
-    defaults write com.apple.DiskUtility advanced-image-options -bool true
-
-    # Auto-play videos when opened with QuickTime Player
-    defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
-
-    ###############################################################################
-    # Mac App Store                                                               #
-    ###############################################################################
-
-    # Enable the WebKit Developer Tools in the Mac App Store
-    defaults write com.apple.appstore WebKitDeveloperExtras -bool true
-
-    # Enable Debug Menu in the Mac App Store
-    defaults write com.apple.appstore ShowDebugMenu -bool true
-
-    ###############################################################################
-    # Photos                                                                      #
-    ###############################################################################
-
-    # Prevent Photos from opening automatically when devices are plugged in
-    defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
-
-    ###############################################################################
-    # Messages                                                                    #
-    ###############################################################################
-
-    # Disable automatic emoji substitution (i.e. use plain text smileys)
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
-
-    # Disable smart quotes as it’s annoying for messages that contain code
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
-
-    # Disable continuous spell checking
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+summary() {
+  local r status name info failed=0 symbol item
+  heading "Summary"
+  for r in ${RESULTS[@]+"${RESULTS[@]}"}; do
+    status=${r%%|*}
+    r=${r#*|}
+    name=${r%%|*}
+    info=${r#*|}
+    case $status in
+      ok) symbol="${green}✓${reset}" ;;
+      skipped) symbol="${dim}-${reset}" ;;
+      warning) symbol="${yellow}!${reset}" ;;
+      *)
+        symbol="${red}✗${reset}"
+        failed=$((failed + 1))
+        ;;
+    esac
+    printf '  %s %s%s\n' "$symbol" "$name" "${info:+ $dim($info)$reset}"
+  done
+  if ((${#MANUAL[@]})); then
+    printf '\n%sTo do by hand:%s\n' "$bold" "$reset"
+    for item in "${MANUAL[@]}"; do printf '  - %s\n' "$item"; done
+  fi
+  if ((${#NOTES[@]})); then
+    printf '\n%sNotes:%s\n' "$bold" "$reset"
+    for item in "${NOTES[@]}"; do printf '  - %s\n' "$item"; done
+  fi
+  [[ -z $LOG ]] || printf '\nLog: %s\n' "$LOG"
+  ((failed == 0))
 }
 
-install_homebrew_applications() {
-    # NOTE: Should run at the end because calling `brew` will reset the sudo timestamp (https://github.com/Homebrew/brew/pull/17694/commits/2adf25dcaf8d8c66124c5b76b8a41ae228a7bb02)
-    info 'Running brew bundle'
-    brew bundle
-    info 'Starting services'
-    brew services start --all
-    info 'Installing FZF'
-    yes | $(brew --prefix)/opt/fzf/install
+finish() {
+  restart_notes
+  summary
+  exit $?
 }
 
-apply_application_defaults() {
-    # Rectangle
-    defaults write com.knollsoft.Rectangle curtainChangeSize -int 2
-    defaults write com.knollsoft.Rectangle almostMaximizeHeight -float 1
-    defaults write com.knollsoft.Rectangle almostMaximizeWidth -float 0.85
+usage() { sed -n '3,9p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
-    # Rectangle custom window size with Shift + Alt + Ctrl + Cmd + N
-    defaults write com.knollsoft.Rectangle specified -dict-add keyCode -float 45 modifierFlags -float 1966379
-    defaults write com.knollsoft.Rectangle specifiedHeight -float 1055
-    defaults write com.knollsoft.Rectangle specifiedWidth -float 1876
+# --- main ----------------------------------------------------------------------
 
-    # Rocket settings
-    defaults write new.matthewpalmer.Rocket deactivated-apps -array Slack Xcode Terminal iTerm2 wezterm-gui
-    defaults write net.matthewpalmer.Rocket launch-at-login -bool true
-    defaults write net.matthewpalmer.Rocket use-fuzzy-search -bool true
-    defaults write net.matthewpalmer.Rocket use-double-trigger -bool true
+main() {
+  local arg
+  for arg in "$@"; do
+    case $arg in
+      --update) MODE=update ;;
+      --dry-run) DRY_RUN=1 ;;
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      *)
+        printf 'unknown option: %s\n' "$arg" >&2
+        exit 2
+        ;;
+    esac
+  done
+
+  # oh-my-zsh's env.zsh exports DOTFILES through a symlink; comparisons need
+  # the real path
+  [[ -d $DOTFILES ]] && DOTFILES=$(cd "$DOTFILES" && pwd -P)
+  mkdir -p "$STATE_DIR"
+  LOG=${BOOTSTRAP_LOG:-$STATE_DIR/bootstrap-$(date +%Y%m%d-%H%M%S).log}
+  if [[ -z ${BOOTSTRAP_LOG:-} ]]; then
+    exec > >(tee -a "$LOG") 2>&1
+  fi
+  trap cleanup EXIT
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+
+  # Same trust store as an interactive shell (oh-my-zsh's env.zsh sets this)
+  export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+  # Running programs (the tmux server, Neovim) may still use the versions an
+  # upgrade replaces; the summary says when to clean them up
+  export HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_ENV_HINTS=1
+  TMUX_BEFORE=$(tmux -V 2>/dev/null)
+  NVIM_BEFORE=$(nvim --version 2>/dev/null | head -1)
+
+  step "Preflight" step_preflight
+  last_step_failed && finish
+
+  if [[ $MODE == bootstrap ]]; then
+    step "Password" step_password
+    step "Command Line Tools" step_command_line_tools
+    last_step_failed && finish
+    step "GitHub SSH key" step_github
+  fi
+  step "Homebrew" step_homebrew
+  last_step_failed && finish
+  step "Dotfiles repo" step_dotfiles
+  [[ -d $DOTFILES/.git ]] || ((DRY_RUN)) || finish
+  continue_from_clone
+
+  step "oh-my-zsh" step_oh_my_zsh
+  step "zsh plugins" step_zsh_plugins
+  step "Dotfiles into ~" step_stow
+  step "Homebrew packages" step_brew_packages
+  step "App Store apps" step_app_store
+  step "PJs" step_pjs
+  step "Ruby" step_ruby
+  step "fzf shell integration" step_fzf
+  step "tmux plugins" step_tmux_plugins
+  step "Neovim plugins and parsers" step_neovim
+  step "gh extensions" step_gh_extensions
+  step "Claude Code" step_claude_code
+  if [[ $MODE == bootstrap ]]; then
+    step "Scripts in /usr/local/opt" step_opt_scripts
+    step "macOS and app settings" step_macos_defaults
+    step "Login items" step_login_items
+    add_reminders
+  fi
+  finish
 }
 
-add_login_items() {
-    info "Adding login items..."
-
-    # Array of applications to add as login items
-    login_apps=(
-        # "/Applications/Rectangle.app"
-        "/Applications/AeroSpace.app"
-        "/Applications/Rocket.app"
-        "/Applications/zoom.us.app"
-        # "/Applications/ChatGPT.app"
-        "/Applications/1Password.app"
-        "/Applications/AutoMute.app"
-    )
-
-    for app in "${login_apps[@]}"; do
-        if [ -d "$app" ]; then
-            # Check if app is already a login item
-            if ! osascript -e "tell application \"System Events\" to get the name of every login item" | grep -q "$(basename "$app" .app)"; then
-                osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app\", hidden:false}"
-                success "Added $(basename "$app") to login items"
-            else
-                warning "$(basename "$app") is already a login item"
-            fi
-        else
-            error "Could not find $app"
-        fi
-    done
-}
-
-display_manual_tasks_remaining() {
-    success """
-
-    Tasks remaining:
-    1) Grant full disk access to Alfred
-    2) Install GPG Suite; set up GPG signing
-    3) Grant various applications accessibility permissions (Rocket, Rectangle, ChatGPT, 1Password, Alfred, AutoMute, etc.)
-    4) Enable Folder actions for Desktop w/ Screenshot Relocators
-
-    """
-}
-
-info 'Bootstrapping machine'
-
-# NOTE: Order is important
-prompt_sudo
-install_xcode
-setup_ssh
-clone_dotfiles
-install_homebrew
-cd $DOTFILES
-symlink_dotfiles
-setup_ruby_environment
-install_applications
-apply_macos_system_defaults
-install_homebrew_applications
-apply_application_defaults
-add_login_items
-display_manual_tasks_remaining
-
-success 'Bootstrapping complete'
+# Sourced (to test a step), it only defines the functions. Piped into bash,
+# BASH_SOURCE is empty and it runs.
+if [[ -n ${BASH_SOURCE[0]:-} && ${BASH_SOURCE[0]} != "$0" ]]; then
+  return 0
+fi
+main "$@"
