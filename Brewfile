@@ -39,7 +39,8 @@ brew 'namolnad/formulae/finch', trusted: true
 brew 'namolnad/formulae/local-well-known', trusted: true
 brew 'neovim'
 brew 'node'
-brew 'postgresql@17'
+brew 'pgvector'
+brew 'postgresql@17', restart_service: :changed # always running; restarted after an upgrade
 brew 'powerlevel10k'
 brew 'rbenv'
 brew 'rbenv-default-gems'
