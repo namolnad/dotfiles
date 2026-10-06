@@ -1,78 +1,64 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/GlobalVars
-$existing_apps = []
-
-def app_exists?(app_name)
-  exists = File.exist?("/Applications/#{app_name}.app")
-
-  $existing_apps << app_name if exists
-
-  exists
-end
-
-def cask_unless_exists(brew_name, name:)
-  return if app_exists?(name)
-
-  cask brew_name
-end
-
-def mas_unless_exists(app_name, id:)
-  return if app_exists?(app_name)
-
-  mas app_name, id:
-end
+# Everything every machine gets. scripts/bootstrap runs `brew bundle` on it,
+# which installs what's missing, upgrades what's outdated and adopts an app
+# already in /Applications when it matches the cask.
+#
+# `trusted: true` records Homebrew's tap trust for a third-party package before
+# bundle loads it, so a new machine needs no separate `brew trust`.
 
 tap 'eddieantonio/eddieantonio'
-tap 'heroku/brew'
 tap 'namolnad/formulae'
+tap 'nikitabobko/tap'
 
 brew 'aria2'
 brew 'bat'
 brew 'blueutil'
 brew 'chafa'
 brew 'csvkit'
-brew 'eddieantonio/eddieantonio/imgcat'
+brew 'eddieantonio/eddieantonio/imgcat', trusted: true
 brew 'exiftool'
 brew 'eza'
 brew 'fd'
+brew 'ffmpeg-full', link: true # keg-only; linked so it's the ffmpeg on PATH
 brew 'fzf'
 brew 'gh'
 brew 'git-delta'
-brew 'golang'
+brew 'go'
+brew 'infisical'
 brew 'lazygit'
 brew 'lesspipe'
 brew 'libpq', link: true
 brew 'mas'
-brew 'namolnad/formulae/display-arranger'
-brew 'namolnad/formulae/dotenvcrypt'
-brew 'namolnad/formulae/finch'
-# brew 'namolnad/formulae/jt'
-brew 'namolnad/formulae/local-well-known'
-brew 'npm'
-brew 'ollama'
-brew 'opencode'
+brew 'namolnad/formulae/display-arranger', trusted: true
+brew 'namolnad/formulae/dotenvcrypt', trusted: true
+brew 'namolnad/formulae/finch', trusted: true
+# brew 'namolnad/formulae/jt', trusted: true
+brew 'namolnad/formulae/local-well-known', trusted: true
+brew 'neovim'
+brew 'node'
 brew 'postgresql@17'
 brew 'powerlevel10k'
 brew 'rbenv'
 brew 'rbenv-default-gems'
-brew 'rg'
+brew 'ripgrep'
 brew 'sd'
 brew 'stow'
+brew 'swiftformat'
+brew 'tea'
 brew 'the_silver_searcher'
 brew 'tmux'
-brew 'tpm'
 brew 'tree'
-brew 'nvim'
+brew 'vips'
 brew 'wget'
-brew 'xsv'
+brew 'xcodegen'
 brew 'yarn'
 brew 'yazi'
-brew 'zsh-autosuggestions'
-brew 'zsh-completions', args: ['head']
-brew 'zsh-syntax-highlighting'
 brew 'zoxide'
+brew 'zsh-autosuggestions'
+brew 'zsh-syntax-highlighting'
 
+# Language servers, formatters and linters that Neovim runs
 brew 'delve'
 brew 'eslint_d'
 brew 'lua-language-server'
@@ -83,43 +69,39 @@ brew 'stylua'
 brew 'tree-sitter-cli'
 brew 'typescript-language-server'
 
-cask 'font-meslo-lg-nerd-font' unless File.exist?('Library/Fonts/MesloLGS NF Regular.ttf')
-cask 'font-hack-nerd-font' unless File.exist?('Library/Fonts/Hack Bold Nerd Font Complete.ttf')
+cask '1password'
+cask '1password-cli'
+cask 'alfred'
+cask 'appcleaner'
+# cask 'boop'
+cask 'chatgpt'
+cask 'cleanupbuddy'
+cask 'dropbox'
+cask 'font-hack-nerd-font'
+cask 'font-meslo-lg-nerd-font'
+cask 'gitup-app'
+cask 'homerow'
+cask 'karabiner-elements'
+cask 'macpacker'
+cask 'markedit'
+cask 'ngrok'
+cask 'nikitabobko/tap/aerospace', trusted: true
+cask 'notion'
+cask 'obsidian'
+cask 'postico'
+cask 'postman'
+cask 'rocket'
+cask 'textream'
+cask 'vlc'
+cask 'wezterm'
+cask 'xcodes-app'
+cask 'zoom'
 
-cask_unless_exists '1password', name: '1Password'
-cask_unless_exists '1password-cli', name: '1Password CLI'
-cask_unless_exists 'nikitabobko/tap/aerospace', name: 'Aerospace'
-cask_unless_exists 'alfred', name: 'Alfred 5'
-cask_unless_exists 'appcleaner', name: 'AppCleaner'
-# cask_unless_exists 'boop', name: 'Boop'
-cask_unless_exists 'chatgpt', name: 'ChatGPT'
-cask_unless_exists 'cleanupbuddy', name: 'CleanupBuddy'
-cask_unless_exists 'dropbox', name: 'Dropbox'
-cask_unless_exists 'gitup', name: 'GitUp'
-cask_unless_exists 'homerow', name: 'HomeRow'
-cask_unless_exists 'karabiner-elements', name: 'Karabiner-Elements'
-cask_unless_exists 'macpacker', name: 'MacPacker'
-cask_unless_exists 'markedit', name: 'MarkEdit'
-cask_unless_exists 'notion', name: 'Notion'
-cask_unless_exists 'ngrok', name: 'Ngrok'
-cask_unless_exists 'obsidian', name: 'Obsidian'
-cask_unless_exists 'postico', name: 'Postico 2'
-cask_unless_exists 'postman', name: 'Postman'
-# cask_unless_exists 'rectangle', name: 'Rectangle'
-cask_unless_exists 'rocket', name: 'Rocket'
-cask_unless_exists 'slack', name: 'Slack'
-cask_unless_exists 'textream', name: 'Textream'
-cask_unless_exists 'vlc', name: 'VLC'
-cask_unless_exists 'wezterm', name: 'WezTerm'
-cask_unless_exists 'xcodes', name: 'Xcodes'
-cask_unless_exists 'zoom', name: 'Zoom'
-
-mas_unless_exists 'AutoMute', id: 1_118_136_179
-mas_unless_exists 'GIPHY CAPTURE', id: 668_208_984
-# mas_unless_exists 'Magnet', id: 441_258_766
-mas_unless_exists 'Pixelmator Pro', id: 1_289_583_905
-mas_unless_exists 'Simplefax', id: 1_165_017_252
-mas_unless_exists 'Vimari', id: 1_480_933_944
-
-puts "App(s) already exist, install skipped: #{$existing_apps.join(', ')}\n" unless $existing_apps.empty?
-# rubocop:enable Style/GlobalVars
+mas 'AutoMute', id: 1_118_136_179
+mas 'GIPHY CAPTURE', id: 668_208_984
+# mas 'Magnet', id: 441_258_766
+mas 'Pixelmator Pro', id: 1_289_583_905
+mas 'Remote Desktop', id: 409_907_375
+mas 'Simplefax', id: 1_165_017_252
+mas 'Slack', id: 803_453_959
+mas 'Vimari', id: 1_480_933_944
