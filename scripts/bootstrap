@@ -37,7 +37,6 @@ GH_EXTENSIONS=(despreston/gh-worktree)
 LOGIN_ITEMS=(
   /Applications/AeroSpace.app
   /Applications/Rocket.app
-  /Applications/zoom.us.app
   /Applications/1Password.app
   /Applications/AutoMute.app
 )
