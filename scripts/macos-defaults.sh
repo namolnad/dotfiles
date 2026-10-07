@@ -82,7 +82,6 @@ apply_macos_defaults() {
   (( DRY_RUN )) || osascript -e 'tell application "System Settings" to quit' >/dev/null 2>&1
 
   # General UI/UX
-  setting sudo -A nvram SystemAudioVolume="%60" # startup sound at 60%
   setting defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.733333 0.721569"
   setting defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2 # medium sidebar icons
   setting defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
@@ -94,12 +93,14 @@ apply_macos_defaults() {
   setting defaults write com.apple.CrashReporter DialogType -string "none"
   setting sudo -A defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName # host info on the login window clock
   setting sudo -A systemsetup -setrestartfreeze on
-  setting sudo -A systemsetup -setcomputersleep 40
   setting defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1 # check daily
   setting defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
   setting defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-  # Sleep: no hibernation, so entering sleep is quicker
+  # Sleep, on the charger and on battery (minutes; 0 is never). No
+  # hibernation, so entering sleep is quicker.
+  setting sudo -A pmset -c sleep 40 displaysleep 10
+  setting sudo -A pmset -b sleep 1 displaysleep 0
   setting sudo -A pmset -a hibernatemode 0
 
   # Trackpad, keyboard and input
@@ -117,7 +118,8 @@ apply_macos_defaults() {
   setting defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
   # Screen
-  setting defaults write com.apple.screencapture location -string "$HOME/Desktop" # where the screenshot relocator looks
+  setting mkdir -p "$HOME/Documents/Screenshots"
+  setting defaults write com.apple.screencapture location -string "$HOME/Documents/Screenshots"
   setting defaults write com.apple.screencapture type -string "png"
   setting defaults write com.apple.screencapture disable-shadow -bool false
   setting sudo -A defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
@@ -234,7 +236,7 @@ apply_macos_defaults() {
   # Activity Monitor
   setting defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
   setting defaults write com.apple.ActivityMonitor IconType -int 5 # CPU usage in the Dock icon
-  setting defaults write com.apple.ActivityMonitor ShowCategory -int 0 # all processes
+  setting defaults write com.apple.ActivityMonitor ShowCategory -int 100 # all processes
   setting defaults write com.apple.ActivityMonitor SortDirection -int 0
   setting defaults write com.apple.ActivityMonitor DiskGraphType -int 1
   setting defaults write com.apple.ActivityMonitor NetworkGraphType -int 1
@@ -254,7 +256,7 @@ apply_macos_defaults() {
   setting defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
   # Rocket
-  setting defaults write net.matthewpalmer.Rocket deactivated-apps -array Slack Xcode Terminal iTerm2 wezterm-gui
+  setting defaults write net.matthewpalmer.Rocket deactivated-apps -array Slack Xcode Terminal iTerm2 WezTerm wezterm-gui # wezterm-gui is WezTerm started from a shell
   setting defaults write net.matthewpalmer.Rocket launch-at-login -bool true
   setting defaults write net.matthewpalmer.Rocket use-fuzzy-search -bool true
   setting defaults write net.matthewpalmer.Rocket use-double-trigger -bool true

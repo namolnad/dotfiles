@@ -444,9 +444,8 @@ step_stow() {
     dir=$(basename "$top")
     [[ $dir == .oh-my-zsh || -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
   done
-  for dir in "Library/Application Support/Code/User" "Library/Workflows/Applications/Folder Actions"; do
-    [[ -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
-  done
+  dir="Library/Application Support/Code/User"
+  [[ -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
   [[ $(stat -f %Lp "$HOME/.ssh" 2>/dev/null) == 700 ]] || run chmod 700 "$HOME/.ssh"
   stamp=$(date +%Y%m%d-%H%M%S)
   while IFS= read -r target; do
@@ -830,7 +829,6 @@ add_reminders() {
   manual "Grant Full Disk Access to Alfred"
   manual "Grant Accessibility access to the apps that ask for it: AeroSpace, Rocket, 1Password, Alfred, AutoMute"
   manual "Install GPG Suite and set up commit signing"
-  manual "Turn on Folder Actions for the Desktop, with the Screenshot Relocator workflow"
 }
 
 # --- summary -------------------------------------------------------------------
