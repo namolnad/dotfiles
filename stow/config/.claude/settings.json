@@ -74,7 +74,7 @@
     ]
   },
   "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": true,
     "shopify-ai-toolkit@claude-plugins-official": false,
     "linnaeus@linnaeus": true,
@@ -139,5 +139,8 @@
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
+  },
+  "skillOverrides": {
+    "find-skills": "off"
   }
 }
