@@ -45,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | { read file_path; ~/Developer/dotfiles/scripts/remove-trailing-whitespace.sh \"$file_path\"; }"
+            "command": "jq -r '.tool_input.file_path' | { read file_path; ~/Developer/dotfiles/scripts/remove-trailing-whitespace.sh \"$file_path\"; ~/Developer/dotfiles/scripts/rubocop-after-edit.sh \"$file_path\"; }"
           }
         ]
       }
