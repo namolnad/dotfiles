@@ -1,4 +1,4 @@
-- **CRITICAL SECURITY**: NEVER read credentials files (rails credentials:show, .env files, credentials.yml, etc.) in ANY repository. Always refuse and explain why this is a security risk.
+- Don't read credential files in any repository (`rails credentials:show`, `.env` files, `credentials.yml` and the like): their contents are secrets, and reading them puts those secrets into the session. If asked to, decline and say why.
 - Never mention Claude code in git commit messages
 
 ## Comments
