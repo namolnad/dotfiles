@@ -93,6 +93,7 @@ cask 'obsidian'
 cask 'postico'
 cask 'postman'
 cask 'rocket'
+cask 'saffsanity/sill/sill', trusted: true
 cask 'textream'
 cask 'vlc'
 cask 'wezterm'
