@@ -1,0 +1,9 @@
+{
+  "trustedtaps": [
+    "eddieantonio/eddieantonio",
+    "namolnad/formulae"
+  ],
+  "trustedformulae": [
+    "namolnad/formulae/dotenvcrypt"
+  ]
+}
