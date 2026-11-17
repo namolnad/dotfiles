@@ -59,6 +59,26 @@ source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 # rbenv
 # eval "$(rbenv init -)"
 _evalcache rbenv init -
+# Install the global Ruby named in ~/.rbenv/version (tracked in dotfiles) when it's
+# missing, so every machine runs the version the dotfiles name. The lock keeps
+# shells opened together (e.g. a tmux restore) from installing over each other.
+() {
+  local root=${RBENV_ROOT:-$HOME/.rbenv}
+  [[ -r $root/version ]] || return
+  local v=$(<$root/version)
+  [[ -d $root/versions/$v ]] && return
+  local lock=${TMPDIR:-/tmp}/rbenv-install-$v.lock
+  if mkdir $lock 2>/dev/null; then
+    {
+      print -u2 "rbenv: installing global Ruby $v…"
+      rbenv install --skip-existing $v
+    } always {
+      rmdir $lock
+    }
+  else
+    print -u2 "rbenv: Ruby $v is being installed by another shell"
+  fi
+}
 
 #   ---------------------------
 #   ENVCRYPT
