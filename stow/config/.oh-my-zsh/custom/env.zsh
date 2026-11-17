@@ -4,7 +4,7 @@
 
 export DEFAULT_USER='danloman'
 export CODE_DIR="$HOME/Developer"
-export DOTFILES="$HOME/Developer/Environment"
+export DOTFILES="$HOME/Developer/dotfiles"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 #   ---------------------------

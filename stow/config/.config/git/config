@@ -76,6 +76,6 @@
 	name = Dan Loman
 	email = daniel.h.loman@gmail.com
 [includeIf "gitdir/i:~/Developer/Work/"] ; ordering matters, if this is included early it will be overwritten
-	path = ~/Developer/Environment/.gitconfig-work
+	path = ~/Developer/dotfiles/.gitconfig-work
 [include]
 	path = ~/.config/git/.gitconfig.private
