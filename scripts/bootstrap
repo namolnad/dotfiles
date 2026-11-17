@@ -633,26 +633,11 @@ step_pjs() {
   return 0
 }
 
-step_ruby() {
-  local version
-  command -v rbenv >/dev/null || {
-    reason "rbenv isn't installed"
-    return 1
-  }
-  version=$(<"$DOTFILES/stow/config/.rbenv/version")
-  if grep -qxF "$version" <<<"$(rbenv versions --bare)"; then
-    detail "Ruby $version is installed"
-  else
-    # rbenv-default-gems installs ~/.rbenv/default-gems into it
-    run rbenv install --skip-existing "$version" || return 1
-  fi
-  [[ $(rbenv global) == "$version" ]] || run rbenv global "$version"
-}
-
-# Node comes from mise: ~/.config/mise/config.toml (stowed) names the global
-# version, and every Node it installs gets ~/.default-npm-packages. Run from
-# $HOME so that only those global settings apply.
-step_node() {
+# Ruby and Node come from mise: ~/.config/mise/config.toml (stowed) names the
+# global versions, every Ruby it installs gets ~/.default-gems and every Node
+# ~/.default-npm-packages. Run from $HOME so that only those global settings
+# apply.
+step_mise_tools() {
   command -v mise >/dev/null || {
     reason "mise isn't installed"
     return 1
@@ -949,8 +934,7 @@ main() {
   step "Homebrew packages" step_brew_packages
   step "App Store apps" step_app_store
   step "PJs" step_pjs
-  step "Ruby" step_ruby
-  step "Node" step_node
+  step "Ruby and Node" step_mise_tools
   step "fzf shell integration" step_fzf
   step "tmux plugins" step_tmux_plugins
   step "Neovim plugins and parsers" step_neovim

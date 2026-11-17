@@ -43,8 +43,6 @@ brew 'node'
 brew 'pgvector'
 brew 'postgresql@17', restart_service: :changed # always running; restarted after an upgrade
 brew 'powerlevel10k'
-brew 'rbenv'
-brew 'rbenv-default-gems'
 brew 'ripgrep'
 brew 'sd'
 brew 'stow'

@@ -56,16 +56,17 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
-# rbenv
-# eval "$(rbenv init -)"
-_evalcache rbenv init -
+# mise: Ruby and Node on PATH, switched to a project's versions as you cd into
+# it (defaults in ~/.config/mise/config.toml). Activation sets PATH at once,
+# not only at the next prompt, so what follows already sees mise's Ruby.
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 #   ---------------------------
 #   ENVCRYPT
 #   ---------------------------
-# Must run AFTER rbenv init: env.zsh (via oh-my-zsh) loads before rbenv is on
-# PATH, so the decrypt would fall back to system Ruby 2.6 — whose OpenSSL can't
-# run dotenvcrypt's crypto. Running it here uses the rbenv-managed Ruby + CLI.
+# Must run AFTER mise activate: env.zsh (via oh-my-zsh) loads before mise's Ruby
+# is on PATH, so the decrypt would fall back to system Ruby 2.6 — whose OpenSSL
+# can't run dotenvcrypt's crypto. Running it here uses the mise-managed Ruby + CLI.
 dotenvcrypt_key_path="$XDG_CONFIG_HOME/dotenvcrypt/secret.key"
 if [[ ! -f $dotenvcrypt_key_path || ! -s $dotenvcrypt_key_path ]]; then
   mkdir -p $(dirname $dotenvcrypt_key_path)
@@ -78,10 +79,6 @@ if command -v dotenvcrypt &> /dev/null; then
   eval "$(dotenvcrypt decrypt $HOME/.env.enc)"
   set +a
 fi
-
-# mise: Node on PATH, switched to a project's version as you cd into it
-# (defaults in ~/.config/mise/config.toml)
-(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # zoxide
 export _ZO_DATA_DIR="$HOME/.zoxide"

@@ -68,11 +68,6 @@ mkdir -p "${GOPATH}"
 _evalcache gh completion -s zsh
 
 #   ---------------------------
-#   RBENV
-#   ---------------------------
-# export RBENV_ROOT="${XDG_CONFIG_HOME}/rbenv"
-
-#   ---------------------------
 #   RIPGREP
 #   ---------------------------
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
@@ -112,7 +107,7 @@ export FZF_DEFAULT_OPS='--extended'
 # ~/.config/nvim/lua/config/modules/telescope/ignore.lua.
 _fzf_fd=(fd --hidden --follow --no-ignore-vcs
   --exclude .git --exclude node_modules --exclude .DS_Store --exclude tmp
-  --exclude .vim/undodir --exclude .rbenv/versions --exclude .rbenv/shims
+  --exclude .vim/undodir --exclude .local/share/mise
   --exclude Alfred.alfredpreferences --exclude app/assets/builds
   --exclude .build --exclude '*.app' --exclude /build)
 export FZF_DEFAULT_COMMAND="${(j: :)${(@q)_fzf_fd}} --type f"

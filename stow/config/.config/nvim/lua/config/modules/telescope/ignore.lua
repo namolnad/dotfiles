@@ -12,8 +12,7 @@ local ignored = {
   '.DS_Store',
   'tmp/',
   '.vim/undodir/',
-  '.rbenv/versions/',
-  '.rbenv/shims/',
+  '.local/share/mise/',
   'Alfred.alfredpreferences/',
   -- Build output
   'app/assets/builds/',

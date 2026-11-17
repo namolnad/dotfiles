@@ -66,8 +66,8 @@
     # laravel_version       # laravel php framework version (https://laravel.com/)
     # java_version          # java version (https://www.java.com/)
     # package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
-    rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
-    rvm                     # ruby version from rvm (https://rvm.io)
+    mise_ruby               # ruby version from mise (prompt_mise_ruby below)
+    rvm                    # ruby version from rvm (https://rvm.io)
     fvm                     # flutter version management (https://github.com/leoafarias/fvm)
     luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
     jenv                    # java version from jenv (https://github.com/jenv/jenv)
@@ -1758,6 +1758,25 @@
   # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='at '
+
+  # The global Ruby: the `ruby = "<version>"` line of mise's global config
+  () {
+    [[ -r $HOME/.config/mise/config.toml ]] || return
+    local line=${(M)${(f)"$(<$HOME/.config/mise/config.toml)"}:#ruby = *}
+    typeset -g _mise_ruby_global=${${line#ruby = }//\"/}
+  }
+
+  # Ruby version from mise, hidden when it's the global one. Read off PATH, where
+  # mise activate puts .../installs/ruby/<version>/bin, so that no prompt runs mise.
+  function prompt_mise_ruby() {
+    local bin=${path[(r)*/mise/installs/ruby/*/bin]}
+    [[ -n $bin ]] || return
+    local v=${bin:h:t}
+    [[ $v == $_mise_ruby_global ]] && return
+    p10k segment -i RUBY_ICON -t $v
+  }
+  typeset -g POWERLEVEL9K_MISE_RUBY_FOREGROUND=0
+  typeset -g POWERLEVEL9K_MISE_RUBY_BACKGROUND=1
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
