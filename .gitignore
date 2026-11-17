@@ -25,3 +25,4 @@ stow/config/.claude/history.jsonl
 stow/config/.claude/mcp-needs-auth-cache.json
 stow/config/.oh-my-zsh/custom/plugins/
 ~/.oh-my-zsh/custom/plugins/
+stow/config/.config/gh/hosts.yml
