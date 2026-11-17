@@ -4,6 +4,14 @@
     "namolnad/formulae"
   ],
   "trustedformulae": [
-    "namolnad/formulae/dotenvcrypt"
+    "eddieantonio/eddieantonio/imgcat",
+    "namolnad/formulae/display-arranger",
+    "namolnad/formulae/dotenvcrypt",
+    "namolnad/formulae/finch",
+    "namolnad/formulae/local-well-known"
+  ],
+  "trustedcasks": [
+    "nikitabobko/tap/aerospace",
+    "saffsanity/sill/sill"
   ]
 }
