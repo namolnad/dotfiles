@@ -34,6 +34,22 @@ ZSH_PLUGINS=(mroth/evalcache zsh-users/zsh-completions Aloxaf/fzf-tab)
 # gh extensions every machine gets (owner/repo); --update upgrades whatever is installed
 GH_EXTENSIONS=(despreston/gh-worktree)
 
+# Directories of stow/config that stow links whole, as one link into the repo:
+# the app that owns each rewrites its own files there, or new files made in it
+# belong in the repo. Every other directory is a real one in ~ holding links to
+# files, so state an app writes beside its config stays out of the repo.
+STOW_FOLDED=(
+  .claude/agents
+  .claude/commands
+  .config/alfred
+  .config/cheatsheets
+  .config/homebrew
+  .config/iterm2
+  .config/karabiner
+  .config/nvim
+  .config/scripts
+)
+
 LOGIN_ITEMS=(
   /Applications/AeroSpace.app
   /Applications/Rocket.app
@@ -432,19 +448,54 @@ stow_conflicts() {
     -e 's/.*existing target is not owned by stow: (.+)$/\1/p'
 }
 
-step_stow() {
-  local top dir target stamp
-  command -v stow >/dev/null || run brew install --quiet stow || return 1
-  # Real directories, so stow links what's inside them instead of folding a
-  # whole directory into the repo, where the app that owns it would then write
-  # its state. ~/.oh-my-zsh comes from its installer, an earlier step.
-  for top in "$DOTFILES"/stow/config/.[!.]* "$DOTFILES"/stow/config/*; do
-    [[ -d $top ]] || continue
-    dir=$(basename "$top")
-    [[ $dir == .oh-my-zsh || -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
+stow_folded() {
+  local dir
+  for dir in "${STOW_FOLDED[@]}"; do
+    [[ $1 == "$dir" || $1 == "$dir"/* ]] && return 0
   done
-  dir="Library/Application Support/Code/User"
-  [[ -d $HOME/$dir ]] || run mkdir -p "$HOME/$dir"
+  return 1
+}
+
+# Makes ~/$1, a directory stow folded into one link, a real directory again.
+# What git ignores in the repo's copy is state the app wrote through the link,
+# so it moves out to the same place in ~.
+unfold_stowed_dir() {
+  local rel=$1 entry dest
+  run rm "$HOME/$rel" &&
+    run mkdir -m "$(stat -f %Lp "$DOTFILES/stow/config/$rel")" "$HOME/$rel" || return 1
+  while IFS= read -r -d '' entry; do
+    entry=${entry%/}
+    entry=${entry#stow/config/}
+    dest=$HOME/$entry
+    [[ -d $(dirname "$dest") ]] || run mkdir -p "$(dirname "$dest")" || return 1
+    run mv "$DOTFILES/stow/config/$entry" "$dest" || return 1
+    note "Moved $entry out of the repo to ~/$entry: git ignores it, so it's its app's own state"
+  done < <(git -C "$DOTFILES" ls-files -z --others --ignored --exclude-standard --directory -- "stow/config/$rel")
+}
+
+step_stow() {
+  local pkg=$DOTFILES/stow/config rel target stamp
+  command -v stow >/dev/null || run brew install --quiet stow || return 1
+  # Each directory of the package is a real one in ~, so stow links what's
+  # inside it instead of folding the directory into the repo, where the app that
+  # owns it would then write its state. A test with -d passes for a folded link,
+  # so those are found by where they point. STOW_FOLDED is left for stow to
+  # fold. ~/.oh-my-zsh comes from its installer, an earlier step.
+  while IFS= read -r rel; do
+    stow_folded "$rel" && continue
+    [[ ($rel == .oh-my-zsh || $rel == .oh-my-zsh/*) && ! -d $HOME/.oh-my-zsh ]] && continue
+    if [[ -L $HOME/$rel ]]; then
+      [[ $(cd "$HOME/$rel" 2>/dev/null && pwd -P) == "$pkg/$rel" ]] || continue
+      unfold_stowed_dir "$rel" || {
+        reason "couldn't make ~/$rel a real directory"
+        return 1
+      }
+    elif [[ ! -e $HOME/$rel ]]; then
+      run mkdir -p "$HOME/$rel" || return 1
+    fi
+  # sort reads all of find's output first, so moving state out of the repo
+  # can't disturb the walk
+  done < <(cd "$pkg" && find . -mindepth 1 -type d | sed 's|^\./||' | sort)
   [[ $(stat -f %Lp "$HOME/.ssh" 2>/dev/null) == 700 ]] || run chmod 700 "$HOME/.ssh"
   stamp=$(date +%Y%m%d-%H%M%S)
   while IFS= read -r target; do
