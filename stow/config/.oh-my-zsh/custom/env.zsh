@@ -133,5 +133,6 @@ function y() {
 #   ---------------------------
 #   CLAUDECODE
 #   ---------------------------
-export CLAUDE_CODE_EFFORT_LEVEL=medium
-export CLAUDE_CODE_DISABLE_ADAPTER_THINKING=1
+# Effort defaults live in ~/.claude/settings.json (modelSettings), not here: an
+# exported CLAUDE_CODE_EFFORT_LEVEL overrides /effort for a whole session, and a
+# long-running shell keeps whatever value it started with.
