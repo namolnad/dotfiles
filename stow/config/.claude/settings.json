@@ -27,6 +27,9 @@
     ],
     "defaultMode": "auto"
   },
+  "skillOverrides": {
+    "find-skills": "off"
+  },
   "hooks": {
     "Notification": [
       {
@@ -94,6 +97,9 @@
     },
     "claude-opus-5": {
       "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
     }
   },
   "autoUpdatesChannel": "latest",
@@ -139,8 +145,5 @@
   "voiceEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086954960
-  },
-  "skillOverrides": {
-    "find-skills": "off"
   }
 }
