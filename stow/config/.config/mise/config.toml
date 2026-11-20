@@ -4,7 +4,7 @@
 # `make bootstrap`/`make update`) or the first time the tool is run.
 [tools]
 # Exact, so every machine runs the same Ruby; ~/.default-gems goes into each one
-ruby = "4.0.9"
+ruby = "4.0.10"
 node = "24"
 
 [settings]
